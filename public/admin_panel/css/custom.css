@@ -1,0 +1,60 @@
+
+.nav-item {
+    position: relative;
+}
+
+.nav-item a {
+    display: block;
+    padding: 10px 15px;
+    color: #ddd; /* Default link color */
+    text-decoration: none; /* Remove default underline */
+    font-family: Arial, Helvetica, sans-serif; /* Apply a fantasy font */
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-item.active a {
+    background-color: #007bff; /* Active link background */
+    color: #fff; /* Active link text color */
+}
+
+.nav-item a:hover {
+    background-color: #0056b3; /* Hover background */
+    color: #fff; /* Hover text color */
+}
+
+.hover-options {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background: #7DA0FA;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.nav-item:hover .hover-options {
+    display: block;
+}
+
+.hover-options a {
+    padding: 5px 10px;
+    color: #007bff; /* Default color for hover options */
+    text-decoration: none;
+}
+
+.hover-options a:hover {
+    background-color: #f1f1f1; /* Hover background for options */
+}
+
+@media (max-width: 768px) {
+    .side-navbar {
+        position: relative; /* Stack elements vertically on mobile */
+    }
+    .hover-options {
+        position: static; /* Change position for mobile */
+        box-shadow: none; /* Remove shadow on mobile */
+    }
+}

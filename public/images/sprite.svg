@@ -1,0 +1,26 @@
+<svg width="0" height="0" class="hidden">
+  <symbol xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 31 31" id="instagram">
+    <path fill="#fff" d="M22.4 0H8.6A8.6 8.6 0 0 0 0 8.6v13.8C0 27.2 3.8 31 8.6 31h13.8c4.8 0 8.6-3.8 8.6-8.6V8.6C31 3.8 27.2 0 22.4 0Zm5.8 22.4c0 3.2-2.6 5.8-5.8 5.8H8.6a5.8 5.8 0 0 1-5.8-5.8V8.6c0-3.2 2.6-5.8 5.8-5.8h13.8c3.2 0 5.8 2.6 5.8 5.8v13.8Z"></path>
+    <path fill="#fff" d="M15.5 7.5a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm0 13.2a5.2 5.2 0 1 1 0-10.4 5.2 5.2 0 0 1 0 10.4ZM23.8 5.2a2 2 0 0 0-2 2 2 2 0 0 0 2 2c.6 0 1-.2 1.4-.6a2 2 0 0 0 0-2.8 2 2 0 0 0-1.4-.6Z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 26" id="link-arrow">
+    <path stroke="#303A4E" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.08 18.77 17.92 6.92m0 0H6.08m11.84 0v11.85"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 26 31" id="tiktok">
+    <path fill="#fff" d="M22.76 6.63a8.38 8.38 0 0 1-2.1-1.69 7.5 7.5 0 0 1-1.71-3.64 4.64 4.64 0 0 1-.07-1.3h-5.15v21.41l-.01.1v.05a4.62 4.62 0 0 1-2.2 3.6 4.2 4.2 0 0 1-2.14.57 4.43 4.43 0 0 1-4.35-4.52c0-2.5 1.95-4.52 4.35-4.52.45 0 .9.08 1.34.22V11.5a9.27 9.27 0 0 0-7.37 2.23A9.98 9.98 0 0 0 .01 21c-.07 1.44.35 2.92.55 3.54v.01c.12.36.6 1.6 1.4 2.64.63.83 1.39 1.56 2.23 2.17v-.01l.01.01C6.7 31.11 9.46 31 9.46 31c.48-.02 2.08 0 3.9-.9 2.02-.98 3.17-2.46 3.17-2.46a10.3 10.3 0 0 0 1.73-2.96c.47-1.27.62-2.79.62-3.4V10.37l.9.61s1.2.8 3.07 1.31c1.34.37 3.15.45 3.15.45V7.44a6.5 6.5 0 0 1-3.24-.81Z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 26 18" id="youtube">
+    <path fill="#fff" d="M24.99 1.55C24.05.45 22.32 0 19 0H6.99C3.61 0 1.85.48.91 1.65 0 2.77 0 4.46 0 6.79v4.42C0 15.71 1.08 18 7 18h12c2.88 0 4.47-.4 5.5-1.36 1.05-1 1.5-2.62 1.5-5.43V6.8c0-2.45-.07-4.14-1.01-5.24Zm-8.3 8.06-5.45 2.8a.85.85 0 0 1-.83-.02.82.82 0 0 1-.4-.7v-5.6c0-.28.15-.55.4-.7a.85.85 0 0 1 .83-.03l5.45 2.79c.28.14.45.42.45.73 0 .3-.17.59-.45.73Z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 81" id="journey-arrow">
+    <path fill="#CDE2F5" d="M9 1a1 1 0 0 0-2 0h2ZM7.3 80.7a1 1 0 0 0 1.4 0l6.37-6.36a1 1 0 0 0-1.41-1.41L8 78.59l-5.66-5.66a1 1 0 0 0-1.41 1.41l6.36 6.37ZM7 1v79h2V1H7Z"/>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 29" id="journey-arrow-middle"><path fill="#CDE2F5" d="M9 1a1 1 0 0 0-2 0h2ZM7.3 28.7a1 1 0 0 0 1.4 0l6.37-6.36a1 1 0 0 0-1.41-1.41L8 26.59l-5.66-5.66a1 1 0 0 0-1.41 1.41l6.36 6.37ZM7 1v27h2V1H7Z"/></symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18" id="journey-arrow-small">
+    <path fill="#CDE2F5" d="M9 1a1 1 0 0 0-2 0h2ZM7.3 28.7a1 1 0 0 0 1.4 0l6.37-6.36a1 1 0 0 0-1.41-1.41L8 26.59l-5.66-5.66a1 1 0 0 0-1.41 1.41l6.36 6.37ZM7 1v27h2V1H7Z"/>
+    <path d="M9 1a1 1 0 0 0-2 0h2ZM7.293 17.707a1 1 0 0 0 1.414 0l6.364-6.364a1 1 0 0 0-1.414-1.414L8 15.586 2.343 9.929A1 1 0 0 0 .93 11.343l6.364 6.364ZM7 1v16h2V1H7Z" fill="#C3D6F3"/>
+  </symbol>
+
+  <symbol xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="accordion-arrow"><path fill="#303A4E" fill-rule="evenodd" d="M5.3 8.3a1 1 0 0 1 1.4 0l5.3 5.29 5.3-5.3a1 1 0 1 1 1.4 1.42l-6 6a1 1 0 0 1-1.4 0l-6-6a1 1 0 0 1 0-1.42Z" clip-rule="evenodd"/></symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" id="tick"><path d="M16.67 5 7.5 14.17 3.33 10" stroke="#046DCB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>

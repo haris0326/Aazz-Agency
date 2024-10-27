@@ -1,0 +1,68 @@
+/*===========================
+  Section Title One CSS
+===========================*/
+.section-title-one {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    position: relative;
+    background-color: var(--light-2);
+    padding: 50px 0; /* Adjusted padding for a more compact look */
+    text-align: center; /* Center text for a professional appearance */
+}
+
+@media (min-width: 992px) {
+    .section-title-one {
+        width: 100%; /* Full width on larger screens */
+        margin-left: 0; /* Remove left margin */
+        padding: 100px 0; /* Restore larger padding on desktops */
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .section-title-one {
+        margin-bottom: 45px;
+    }
+}
+
+@media (max-width: 767px) {
+    .section-title-one {
+        margin-bottom: 35px;
+    }
+}
+
+.section-title-one h2 {
+    margin-bottom: 15px;
+    font-size: 2.5rem; /* Default font size */
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .section-title-one h2 {
+        font-size: 2rem; /* Adjust font size for medium screens */
+        line-height: 2.8rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .section-title-one h2 {
+        font-size: 1.5rem; /* Smaller font size for mobile */
+        line-height: 1.9rem;
+    }
+}
+
+.tags {
+    margin-top: 20px;
+    margin-left: 0; /* Center tags on all screens */
+    display: flex; /* Use flexbox for better alignment */
+    flex-wrap: wrap; /* Allow tags to wrap to next line */
+    justify-content: center; /* Center tags horizontally */
+}
+
+.badge {
+    margin: 5px;
+    padding: 5px 10px; /* Add some padding for better appearance */
+    background-color: var(--badge-color, #f0f0f0); /* Default badge color */
+    border-radius: 5px; /* Rounded corners for badges */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/*# sourceMappingURL=section-title-01.css.map */
