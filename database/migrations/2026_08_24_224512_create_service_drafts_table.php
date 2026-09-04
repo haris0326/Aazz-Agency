@@ -14,27 +14,36 @@ return new class extends Migration
 
         Schema::create('service_drafts', function (Blueprint $table) {
             $table->id();
+
             $table->uuid('draft_uuid')->unique();
 
-            // main_service.id = SIGNED int(11) — plain integer() use karo,
-            // unsignedInteger() nahi (FK type mismatch errno 150 dega).
-            $table->integer('service_id')->nullable()->index();
+            // main_service.id = UNSIGNED INT
+            $table->unsignedInteger('service_id')
+                ->nullable()
+                ->index();
 
-            $table->enum('form_type', ['create', 'edit'])->default('create');
+            $table->enum('form_type', ['create', 'edit'])
+                ->default('create');
 
-            // users.id = SIGNED int(11) bhi
-            $table->integer('created_by')->nullable()->index();
+            // users.id = SIGNED INT
+            $table->integer('created_by')
+                ->nullable()
+                ->index();
 
             $table->json('payload')->nullable();
+
             $table->timestamp('last_saved_at')->nullable();
+
             $table->timestamps();
 
             $table->foreign('service_id')
-                ->references('id')->on('main_service')
+                ->references('id')
+                ->on('main_service')
                 ->onDelete('cascade');
 
             $table->foreign('created_by')
-                ->references('id')->on('users')
+                ->references('id')
+                ->on('users')
                 ->onDelete('set null');
         });
     }
