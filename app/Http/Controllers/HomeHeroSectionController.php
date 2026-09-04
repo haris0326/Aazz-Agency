@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\HomeHeroSection;
+use App\Models\HomeModel\HomeHeroSection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 

@@ -1,0 +1,115 @@
+/* Top header bar styling */
+.top-header {
+    background-color: var(--primary-blue);
+    color: #fff;
+}
+
+/* Main navigation bar styling */
+.navbar-custom {
+    background-color: #fff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Custom link styling with hover effect */
+.nav-link-custom {
+    position: relative;
+    font-weight: 500;
+    color: var(--dark-text);
+    transition: color 0.3s ease;
+}
+.nav-link-custom:hover {
+    color: var(--mid-blue);
+}
+.nav-link-custom::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background-color: var(--vibrant-teal);
+    transition: width 0.3s ease;
+}
+.nav-link-custom:hover::after {
+    width: 100%;
+}
+
+/* Gradient button styling */
+.btn-quote {
+    background-image: linear-gradient(90deg, var(--mid-blue), var(--vibrant-teal));
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 9999px;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.btn-quote:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(75, 192, 196, 0.4);
+}
+
+/* Mobile sidebar menu styling */
+.sidebar-menu {
+    position: fixed;
+    top: 0;
+    right: -320px; /* Initially hidden */
+    width: 320px;
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.4s ease-in-out;
+    z-index: 50;
+}
+.sidebar-menu.open {
+    right: 0;
+}
+
+/* Backdrop for the mobile menu */
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out, visibility 0.4s;
+}
+.backdrop.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Desktop dropdown/mega menu styling */
+.dropdown-menu-custom, .mega-menu-custom {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+.dropdown-menu-custom.show, .mega-menu-custom.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.mega-menu-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+
+/* Mobile-specific styles for the desktop menu */
+@media (max-width: 1023px) {
+    .navbar-desktop-menu {
+        display: none;
+    }
+}
+
+
+#mobile-services-dropdown,
+#mobile-resources-mega {
+  transition: max-height 0.4s ease;
+}

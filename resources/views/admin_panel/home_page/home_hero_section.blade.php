@@ -1,8 +1,7 @@
-@extends('layouts.panel_layout')
-
+@extends(config('layout.admin_panel_layout'))
 @section('title', 'Home Hero Section')
 
-@section('content')
+@section(config('layout.admin_pages_content'))
 
 <div class="container mt-5">
     <h2 class="text-center">Hero Sections</h2>
@@ -37,10 +36,10 @@
                 <tbody>
                     @forelse($heroSections as $heroSection)
                         <tr>
-                            
+
 
                             <td>{{ $heroSection->title }}</td>
-                            <td>{{ Str::limit($heroSection->description, 50) }}</td>
+                            <td>{{ Str::limit($heroSection->description, 20) }}</td>
                             <td><a href="{{ $heroSection->button1_link }}" target="_blank">{{ $heroSection->button1_title }}</a></td>
                             <td><a href="{{ $heroSection->button2_link }}" target="_blank">{{ $heroSection->button2_title }}</a></td>
                             <td>

@@ -1,0 +1,43 @@
+.case-container {
+    height: 360px; /* Desktop Height */
+  }
+  .case-card {
+    flex: 1;
+    min-width: 80px;
+    height: 100%;
+    cursor: pointer;
+    position: relative;
+    transition: flex-grow 0.5s ease;
+    display: flex;
+    align-items: flex-end;
+  }
+  .case-card:hover {
+    flex-grow: 7; /* Expand hovered card */
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    .case-container {
+      height: 300px;
+    }
+  }
+
+  /* Mobile: Stack cards, no hover expand */
+  @media (max-width: 768px) {
+    .case-container {
+      flex-direction: column;
+      height: auto;
+    }
+    .case-card {
+      min-width: 100%;
+      height: 240px;
+      flex: unset; /* remove flex-grow effect */
+    }
+    .case-card:hover {
+      flex-grow: unset; /* disable expand */
+    }
+    .case-content {
+      opacity: 1 !important; /* always show text on mobile */
+      transform: translateY(0) !important;
+    }
+  }

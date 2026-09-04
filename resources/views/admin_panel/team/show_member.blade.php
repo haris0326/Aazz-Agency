@@ -1,8 +1,7 @@
-@extends('layouts.panel_layout')
-
+@extends(config('layout.admin_panel_layout'))
 @section('title', 'Team Member Details')
 
-@section('content')
+@section(config('layout.admin_pages_content'))
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">

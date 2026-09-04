@@ -1,0 +1,15 @@
+/* Define custom CSS variables for the color scheme */
+:root {
+    --primary-blue: #2C5282;
+    --mid-blue: #4A90E2;
+    --vibrant-teal: #4BC0C4;
+    --light-bg: #f7fafc;
+    --dark-text: #1a202c;
+}
+
+/* Base body and typography styling */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+}

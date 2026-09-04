@@ -15,6 +15,9 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    // 'providers' => [
+    //     app\Providers\GlobalVariableServiceProvider::class,
+    //     ],
     /*
     |--------------------------------------------------------------------------
     | Application Environment

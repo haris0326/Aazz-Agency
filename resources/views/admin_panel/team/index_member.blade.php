@@ -1,8 +1,7 @@
-@extends('layouts.panel_layout')
-
+@extends(config('layout.admin_panel_layout'))
 @section('title', 'Team Members')
 
-@section('content')
+@section(config('layout.admin_pages_content'))
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-12">
@@ -30,9 +29,9 @@
                         <tbody>
                             @foreach ($members as $member)
                             <tr>
-                                <td>{{ $member->id }}</td>
-                                <td>{{ $member->name }}</td>
-                                <td>{{ $member->position }}</td>
+                                <td>{{ $member->id ?? 'N/A'}}</td>
+                                <td>{{ $member->name ?? 'N/A' }}</td>
+                                <td>{{ $member->position ?? 'N/A'}}</td>
                                 <td>
                                     <a href="{{ route('team.show', $member->id) }}" class="btn btn-info btn-sm">View</a>
                                     <a href="{{ route('team.edit', $member->id) }}" class="btn btn-warning btn-sm">Edit</a>

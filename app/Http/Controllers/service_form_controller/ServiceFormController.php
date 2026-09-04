@@ -2,75 +2,135 @@
 
 namespace App\Http\Controllers\service_form_controller;
 
-
-use App\Models\Company;
-use App\Models\MyClient;
-use App\Models\WebPages;
-use App\Models\MainService;
-use Illuminate\Http\Request;
-use App\Models\ServiceReview;
-use App\Models\HomeHeroSection;
-use App\Models\ServiceCategory;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Proposals;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ServiceInquiryNotification;
 
 class ServiceFormController extends Controller
 {
     public function showForm()
     {
-        $servicesList = MainService::with('serviceCategory', 'serviceSEO')->get();
-        $services = MainService::all();
-        $categoriesList = ServiceCategory::all();
-        $webPages = WebPages::all();
-        $heroSections = HomeHeroSection::all();
-        $reviews = ServiceReview::all();
-
-        return view("service_form.form", compact('services','reviews', 'heroSections', 'servicesList', 'categoriesList', 'webPages'));
+        return view('service_form.main_quote_form');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:clients,email',
-            'phone_number' => 'required|string',
-            'company_name' => 'required|string',
-            'website' => 'nullable|url',
-            'budget' => 'required|string',
-            'custom_budget' => 'nullable|numeric|min:1',
-            'main_service_id' => 'required|exists:main_service,id',
-        ]);
-
-        DB::beginTransaction();
-
         try {
-            // Create User
-            $client = MyClient::create($request->only('name', 'email', 'phone_number'));
 
-            // Handle Custom Budget
-            $budget = $request->budget === 'custom' ? $request->custom_budget : $request->budget;
-
-            // Create Company
-            Company::create([
-                'client_id' => $client->id,
-                'company_name' => $request->company_name,
-                'website' => $request->website,
-                'budget' => $budget,
-                'main_service_id' => $request->main_service_id,
-                'comment' => $request->comment,
+            /* =========================
+            | 1️⃣ VALIDATION
+            ==========================*/
+            $validator = Validator::make($request->all(), [
+                'fullName'      => 'required|string|max:255',
+                'company'       => 'required|string|max:255',
+                'website'       => 'nullable|url|max:255',
+                'email'         => 'required|email|max:255',
+                'country_code'  => 'required|string|max:10',
+                'phone'         => 'required|string|max:20',
+                'budget'        => 'required|string',
+                'services'      => 'required|array|min:1',
+                'other_service' => 'nullable|string|max:50',
+                'comments'      => 'nullable|string|max:1000',
+                'agreement'     => 'required|boolean',
             ]);
 
-            DB::commit();
-            return redirect()->back()->with('success', 'User and company registered successfully.');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Registration error: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'An error occurred while creating the user and company. Please try again.');
+            if ($validator->fails()) {
+                Log::warning('Proposal Validation Failed', [
+                    'errors'  => $validator->errors()->toArray(),
+                    'payload' => $request->except(['agreement'])
+                ]);
+
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => $validator->errors()->first()
+                ], 422);
+            }
+
+            /* =========================
+            | 2️⃣ DATABASE SAVE
+            ==========================*/
+            try {
+                $proposal = Proposals::create([
+                    'full_name'     => $request->fullName,
+                    'company'       => $request->company,
+                    'website'       => $request->website,
+                    'email'         => $request->email,
+                    'country_code'  => $request->country_code,
+                    'phone'         => $request->phone,
+                    'budget'        => $request->budget,
+                    'services'      => $request->services,
+                    'other_service' => $request->other_service,
+                    'comments'      => $request->comments,
+                    'agreement'     => true,
+                ]);
+            } catch (\Throwable $dbError) {
+                Log::error('Proposal DB Save Failed', [
+                    'message' => $dbError->getMessage(),
+                    'line'    => $dbError->getLine(),
+                    'file'    => $dbError->getFile(),
+                    'trace'   => $dbError->getTraceAsString(),
+                    'payload' => $request->all(),
+                ]);
+
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Database error occurred.'
+                ], 500);
+            }
+
+            /* =========================
+            | 3️⃣ MAIL SEND
+            ==========================*/
+            $proposal->page_url = url()->previous();
+            $recipientEmail = env('SERVICE_NOTIFICATION_EMAIL', 'fallback@example.com');
+
+            try {
+                Mail::to($recipientEmail)->send(new ServiceInquiryNotification($proposal));
+                Log::info('Service Inquiry Mail sent successfully to: ' . $recipientEmail);
+            } catch (\Throwable $mailError) {
+                Log::error('Proposal Mail Sending Failed', [
+                    'proposal_id' => $proposal->id ?? null,
+                    'message'     => $mailError->getMessage(),
+                    'line'        => $mailError->getLine(),
+                    'file'        => $mailError->getFile(),
+                    'trace'       => $mailError->getTraceAsString(),
+                ]);
+
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Proposal saved but email failed: ' . $mailError->getMessage()
+                ], 500);
+            }
+
+            /* =========================
+            | 4️⃣ SUCCESS RESPONSE
+            ==========================*/
+            Log::info('Proposal Submitted Successfully', [
+                'proposal_id' => $proposal->id,
+                'email'       => $proposal->email
+            ]);
+
+            return response()->json([
+                'status'  => 'success',
+                'message' => 'Your proposal has been submitted successfully!'
+            ]);
+
+        } catch (\Throwable $e) {
+            Log::critical('Unexpected Proposal Submission Error', [
+                'message' => $e->getMessage(),
+                'line'    => $e->getLine(),
+                'file'    => $e->getFile(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Unexpected system error occurred.'
+            ], 500);
         }
     }
-
-
-
-
 }

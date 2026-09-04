@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\WebPages;
-use App\Models\MainService;
+use App\Models\ProjectImage;
 use Illuminate\Http\Request;
-use App\Models\HomeHeroSection;
-use App\Models\ServiceCategory;
+use App\Models\WebHeaderLink;
+use App\Models\WebsiteSetting;
+use App\Models\ServiceModel\MainService;
+use App\Models\HomeModel\HomeHeroSection;
+use App\Models\ServiceModel\ServiceCategory;
 
 class WebPagesController extends Controller
 {
@@ -42,23 +45,13 @@ class WebPagesController extends Controller
     // Display the specified resource
         public function show($slug)
     {
-        // Fetch all services for the dropdown
-        $servicesList = MainService::all();
-
-        // Fetch all web pages
-        $webPages = WebPages::all();
 
         // Fetch the specific web page based on slug
         $webPage = WebPages::where('slug', $slug)->firstOrFail();
 
-        // Fetch all service categories
-        $categoriesList = ServiceCategory::all();
-
         $heroSections = HomeHeroSection::all();
 
-        $services = MainService::with('serviceCategory')->get();
-        // Pass services list, web pages, and categories list to the view
-        return view('web_page', compact('services','heroSections','servicesList', 'webPages', 'categoriesList', 'webPage'));
+        return view('web_page', compact('heroSections', 'webPage'));
     }
 
 

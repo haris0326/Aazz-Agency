@@ -1,8 +1,7 @@
-@extends('layouts.panel_layout')
-
+@extends(config('layout.admin_panel_layout'))
 @section('title', 'Edit Home Hero Section')
 
-@section('content')
+@section(config('layout.admin_pages_content'))
 
 <div class="container mt-5">
     <h2 class="text-center">Edit Hero Section</h2>
@@ -11,7 +10,7 @@
             <form action="{{ route('home_hero_section.update', $heroSection->id) }}" method="POST">
                 @csrf
                 @method('PUT')
-                
+
                 <div class="form-group mb-3">
                     <label for="title">Title</label>
                     <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title', $heroSection->title) }}" placeholder="Enter title" required>

@@ -1,8 +1,7 @@
-@extends('layouts.panel_layout')
-
+@extends(config('layout.admin_panel_layout'))
 @section('title', 'Add Home Hero Section')
 
-@section('content')
+@section(config('layout.admin_pages_content'))
 
 <div class="container mt-5">
     <h2 class="text-center">Add Hero Section</h2>

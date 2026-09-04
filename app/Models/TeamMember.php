@@ -10,5 +10,18 @@ class TeamMember extends Model
     use HasFactory;
 
     protected $table = "team_members";
-    protected $fillable = ['name', 'bio', 'skills', 'image', 'position'];
+
+    // Updated $fillable array to include new fields
+    protected $fillable = [
+        'name',
+        'bio',
+        'skills',
+        'image',
+        'position',
+        'facebook',
+        'twitter',
+        'linkedin',
+        'instagram',
+        'role'
+    ];
 }

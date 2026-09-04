@@ -1,0 +1,396 @@
+/* Optional Custom Styles */
+.faq-item {
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.faq-item .remove-faq {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.faq-item .remove-faq i {
+    margin-right: 5px;
+}
+
+.carousel-item img {
+    margin: 0 5px; /* Add space between images */
+    width: 100%; /* Ensures images take up 100% of the parent container */
+    max-width: 350px; /* Fixed width but responsive */
+    height: 300px; /* Fixed height */
+    object-fit: cover; /* Cover the area without distortion */
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    .carousel-item img {
+        max-width: 150px; /* Smaller size on medium screens */
+        height: 150px; /* Fixed height for smaller screens */
+        object-fit: cover; /* Maintain aspect ratio */
+    }
+}
+
+@media (max-width: 576px) {
+    .carousel-item img {
+        max-width: 100px; /* Smaller size on small screens */
+        height: 100px; /* Fixed height for small screens */
+        object-fit: cover; /* Maintain aspect ratio */
+    }
+}
+
+
+/* Services Section */
+.services-area {
+    padding: 60px 0;
+}
+
+.section-title-six .content {
+    margin-bottom: 40px;
+}
+
+.single-service {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.single-service:hover {
+    transform: translateY(-5px);
+}
+
+.service-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.service-title i {
+    font-size: 2rem;
+    margin-right: 8px;
+}
+
+.service-description {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+    .col-md-6 {
+        padding: 0 15px;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-lg-4 {
+        padding: 0 15px;
+    }
+}
+
+/* No extra spinner, just styling for background */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+
+
+/* Custom CSS for the Team Carousel */
+.team-area .carousel-inner .carousel-item {
+    padding: 20px 0;
+}
+
+.team-area .carousel-inner .carousel-item .single-team {
+    margin-bottom: 30px;
+}
+
+.team-area .team-image img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.team-area .team-image img:hover {
+    transform: scale(1.1);
+}
+
+.team-area .team-content .name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.team-area .team-content .sub-title {
+    font-size: 16px;
+    color: #888;
+}
+
+.team-area .social {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.team-area .social li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.team-area .social li a {
+    color: #333;
+    font-size: 18px;
+}
+
+/* Ensure only one team member is shown at a time on small screens */
+@media (max-width: 767px) {
+    /* Adjust the carousel to show only one profile at a time */
+    .team-area .carousel-inner {
+        display: flex;
+        flex-direction: column; /* Each item takes full width */
+        overflow: hidden; /* Hide extra profiles */
+        height: 320px; /* Set a fixed height for carousel */
+    }
+
+
+    .team-area .carousel-inner .carousel-item .row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .team-area .carousel-inner .carousel-item .col-lg-4 {
+        flex: 0 0 100%; /* Ensure each profile takes full width */
+        max-width: 100%;
+    }
+
+    /* Center the team content for mobile */
+    .team-area .team-content {
+        padding: 10px;
+    }
+
+    /* Resize text for better readability on small screens */
+    .team-area .team-content .name {
+        font-size: 16px;
+    }
+
+    .team-area .team-content .sub-title {
+        font-size: 14px;
+    }
+
+    /* Carousel Controls for mobile */
+    .carousel-control-prev, .carousel-control-next {
+        display: block;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        color: #fff;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+    }
+
+    /* Adjust the carousel indicators if any */
+    .carousel-indicators li {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .carousel-indicators .active {
+        background-color: #fff;
+    }
+
+    /* Position carousel arrows */
+    .carousel-control-prev {
+        left: 15px;
+    }
+
+    .carousel-control-next {
+        right: 15px;
+    }
+}
+
+/* Optional: Adjust text and layout for very small devices (max-width: 480px) */
+@media (max-width: 480px) {
+    .team-area .team-content .name {
+        font-size: 14px;
+    }
+
+    .team-area .team-content .sub-title {
+        font-size: 12px;
+    }
+}
+
+ /* Title styles for the technology section */
+ .tech-title {
+    font-size: 2rem; /* Larger title for better prominence on desktop */
+    font-weight: 600; /* Semi-bold for a more refined look */
+    color: #000000;
+    text-transform: uppercase; /* Adds emphasis */
+    margin-bottom: 40px; /* Increased spacing from elements below */
+    text-align: center;
+}
+
+/* Navigation tab styles */
+.nav-tabs {
+    border-bottom: 3px solid #266CCB; /* Thicker border for a more refined look */
+    flex-wrap: wrap; /* Allow tabs to wrap in smaller screens */
+    justify-content: center; /* Center the tabs horizontally */
+}
+
+/* Individual nav item and links */
+.nav-item .nav-link {
+    font-size: 1.25rem;
+    font-weight: 500; /* Slightly lighter for the links */
+    color: #000000;
+    padding: 10px 20px; /* More padding for a larger clickable area */
+    text-transform: capitalize; /* Title case for better readability */
+    transition: color 0.3s ease, border-color 0.3s ease; /* Smooth hover effects */
+}
+
+/* Active state for the nav-link */
+.nav-item .nav-link.active {
+    background-color: #fff;
+    color: #266CCB;
+    border: 2px solid #266CCB;
+    border-radius: 0.25rem;
+    font-weight: 600; /* Bold active state */
+}
+
+/* Hover effect for links */
+.nav-item .nav-link:hover {
+    color: #0056b3;
+    border-color: #0056b3; /* Adds a border color change on hover */
+}
+
+.our-categories-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.our-categories-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+.our-categories-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.our-categories-icon {
+    font-size: 3rem;
+
+    margin-bottom: 10px;
+}
+
+.our-categories-card-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.our-categories-description {
+    color: #555;
+}
+
+
+/* Tab content section with margin */
+.tab-content {
+    margin-top: 1rem; /* Larger margin to give more space below tabs */
+}
+
+/* Tech item display settings */
+.tech-item {
+    width: 130px; /* Larger icons and text space for better visuals */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px; /* Space between items */
+}
+
+/* Icon style for technology */
+.tech-icon {
+    font-size: 3.5rem; /* Larger icon size for visibility */
+    color: #266CCB;
+    margin-bottom: 10px;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease; /* Smooth hover scaling */
+}
+
+/* Icon hover effect */
+.tech-icon:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+/* Placeholder for missing icons */
+.tech-icon-placeholder {
+    background-color: #f0f0f0;
+    border: 1px dashed #ccc;
+    color: #999;
+    font-size: 1rem;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+/* Placeholder hover effect */
+.tech-icon-placeholder:hover {
+    background-color: #e0e0e0; /* Change background color on hover */
+}
+
+/* Media Query for Tablets (max-width 767px) */
+@media (max-width: 767px) {
+    .nav-tabs {
+        flex-direction: column; /* Stack tabs vertically on smaller screens */
+    }
+
+    .nav-item .nav-link {
+        font-size: 1.125rem; /* Slightly smaller font size for mobile */
+        padding: 12px 18px; /* Slightly larger padding for easier clicking */
+    }
+
+    .tech-item {
+        width: 100px; /* Reduce size for small screens */
+        margin-bottom: 15px; /* Reduced space between items */
+    }
+
+    .tech-icon {
+        font-size: 3rem; /* Slightly smaller icon for mobile */
+        width: 70px;
+        height: 70px;
+    }
+}
+
+/* Media Query for Mobile Devices (max-width 575px) */
+@media (max-width: 575px) {
+    .tech-title {
+        font-size: 2.5rem; /* Slightly smaller title for very small screens */
+    }
+
+    .tech-item {
+        width: 90px; /* Even smaller for small screens */
+    }
+
+    .tech-icon {
+        font-size: 2.5rem; /* Adjust icon size for small screens */
+        width: 60px;
+        height: 60px;
+    }
+}

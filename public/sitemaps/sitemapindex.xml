@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Sitemap for Categories -->
+    
+
+    <!-- Sitemap for Services -->
+    <sitemap>
+        <loc>http://127.0.0.1:8000/sitemaps/services-sitemap.xml</loc>
+        <lastmod>2025-03-16T01:30:10+00:00</lastmod>
+    </sitemap>
+
+    <!-- Sitemap for Web Pages -->
+    <sitemap>
+        <loc>http://127.0.0.1:8000/sitemaps/webpages-sitemap.xml</loc>
+        <lastmod>2025-03-16T01:30:10+00:00</lastmod>
+    </sitemap>
+
+    <!-- Sitemap for Packages -->
+    <sitemap>
+        <loc>http://127.0.0.1:8000/sitemaps/packages-sitemap.xml</loc>
+        <lastmod>2025-03-16T01:30:10+00:00</lastmod>
+    </sitemap>
+</sitemapindex>

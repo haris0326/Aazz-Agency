@@ -1,763 +1,777 @@
-@extends('layouts.web_layout')
+@extends(config('web_assets.layouts.main'))
 
-@section('title', $service->title)
-@section('description', $service->description)
+@section('title', $service->ServiceSeo->meta_title)
+@section('description', $service->ServiceSeo->meta_desc)
+@section('canonical_url', route('header_service.show', ['category_slug' => $category_slug, 'service_slug' => $service->serviceSEO->meta_slug]))
 
 @section('content')
 
- <!--====== TEAM STYLE TWO START ======-->
 
- <section class="team-area">
-    <div class="section-title">
 
-        <h2 class="fw-bold" style="text-align: center;">Team</h2>
+{{-- Service Page Hero Section --}}
+<section class="relative bg-gradient-to-br from-indigo-50 via-white to-slate-50 border-b overflow-hidden">
+    <div class="container mx-auto px-6 md:px-12 py-12 md:py-16">
 
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 col-md-6">
-          <div class="single-team text-center team-style-two">
-            <div class="team-image">
-              <img
-                src="{{ asset("team_images/haris.png") }}"
-                alt="Team"
-              />
-            </div>
-            <div class="team-content">
-              <h4 class="name">Haris Ahmed</h4>
-              <span class="sub-title">Web Developer</span>
-              <ul class="social">
+        {{-- Breadcrumb --}}
+        <nav aria-label="breadcrumb" class="text-sm mb-6" data-aos="fade-down">
+            <ol class="flex items-center gap-2 text-gray-500">
+                <li><a href="{{ url('/') }}" class="hover:underline">Home</a></li>
+                <li>/</li>
                 <li>
-                  <a href="javascript:void(0)">
-                    <i class="lni lni-facebook-filled"></i>
-                  </a>
+                    @if(!empty($service->serviceCategory))
+                        <a href="{{ route('cat_show_services.show', $service->serviceCategory->cat_slug) }}" class="hover:underline">
+                            {{ $service->serviceCategory->cat_title }}
+                        </a>
+                    @else
+                        <span class="text-gray-400">Category</span>
+                    @endif
                 </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="lni lni-twitter-original"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="lni lni-linkedin-original"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="lni lni-instagram-filled"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!-- single team -->
-        </div>
+                <li>/</li>
+                <li><span class="text-gray-700 font-medium">{{ $service->title ?? 'Service' }}</span></li>
+            </ol>
+        </nav>
 
-        <div class="col-lg-4 col-md-6">
-          <div class="single-team text-center team-style-two">
-            <div class="team-image">
-              <img
-                src="{{ asset("team_images/amad.png") }}"
-                alt="Team"
-              />
-            </div>
-            <div class="team-content">
-              <h4 class="name">Amad Ashraf</h4>
-              <span class="sub-title">Digital Marketer</span>
-              <ul class="social">
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="lni lni-facebook-filled"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="lni lni-twitter-original"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="lni lni-linkedin-original"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="lni lni-instagram-filled"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!-- single team -->
-        </div>
+        {{-- Hero Grid --}}
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start lg:items-stretch min-h-[580px] lg:min-h-[620px]">
 
-        <div class="col-lg-4 col-md-6">
-          <div class="single-team text-center team-style-two">
-            <div class="team-image">
-              <img
-                src="{{ asset("team_images/hamza.png") }}"
-                alt="Team"
-              />
-            </div>
-            <div class="team-content">
-              <h4 class="name">Hamza Ashraf</h4>
-              <span class="sub-title">Wordpress Developer</span>
-              <ul class="social">
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="lni lni-facebook-filled"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="lni lni-twitter-original"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="lni lni-linkedin-original"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="lni lni-instagram-filled"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!-- single team -->
-        </div>
-      </div>
-      <!-- row -->
-    </div>
-    <!-- container -->
-  </section>
-
-  <!--====== TEAM STYLE TWO ENDS ======-->
+            {{-- Left Content --}}
+            <div class="mt-4 lg:mt-6 lg:col-span-6 flex flex-col justify-start h-auto" data-aos="fade-right">
 
 
- <!--====== TESTIMONIAL TWO PART START ======-->
+                <div>
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
+                        {{ $heroSection->main_title ?? $service->title ?? 'Professional Service Solutions' }}
+                    </h1>
 
-<section class="testimonial-two">
-    <!--====== Start Section Title Seven ======-->
-    <div class="section-title-seven">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title align-center">
-                        <span> Testimonial </span>
-                        <h2 class="fw-bold">What People Says</h2>
-                        <p>
-                            There are many variations of passages of Lorem Ipsum available,
-                            but the majority have suffered alteration in some form.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- container -->
-    </div>
-    <!--====== End Section Title Seven ======-->
-
-    <div class="container">
-        <div class="testimonial-two-wrapper">
-            <div class="row justify-content-center">
-                <div class="col-md-10 col-lg-12">
-                    <div class="row testimonial-two-active" id="testimonial-slider">
-                        @forelse($service->reviews as $review)
-                            <div class="col-lg-6">
-                                <div class="single-testimonial">
-                                    <div class="testimonial-author d-sm-flex align-items-center">
-                                        <div class="author-image">
-                                            <img src="{{ !empty($review->user_image) ? $review->user_image : asset('assets/images/testimonial/author-2.jpg') }}" alt="Author" />
-                                        </div>
-                                        <div class="author-name media-body">
-                                            <h6 class="name">{{ $review->user_name }}</h6>
-                                            <span class="sub-title">Customer</span>
-                                            <ul class="ratings">
-                                                @for($i = 1; $i <= 5; $i++)
-                                                    <li><i class="lni lni-star{{ $i <= $review->rating ? '-filled' : '' }}"></i></li>
-                                                @endfor
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="testimonial-text">
-                                        <p class="text">
-                                            {{ $review->review_text }}
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- single testimonial -->
-                            </div>
-                        @empty
-                            <div class="col-12">
-                                <p>No reviews yet for this service.</p>
-                            </div>
-                        @endforelse
-                    </div>
-                    <!-- row -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- container -->
-</section>
-
-
-  <!--====== TESTIMONIAL TWO PART ENDS ======-->
-
-  <!--====== CLIENT LOGO PART START ======-->
-
-
-  <section class="client-logo-area client-logo-one">
-    <!--======  Start Section Title Two ======-->
-    <div class="section-title-two">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="content">
-              <span> Our Partners </span>
-              <h2 class="fw-bold">Our Awesome Clients</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do
-                eiusmod tempor incididunt ut labore aliqua.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- container -->
-    </div>
-    <!--====== End Section Title Two ======-->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 col-6">
-          <div class="single-client text-center">
-            <img src="{{ asset("assets/images/client-logo/graygrids.svg") }}" alt="Logo" />
-          </div>
-          <!-- single client -->
-        </div>
-        <div class="col-md-3 col-6">
-          <div class="single-client text-center">
-            <img src="{{ asset("assets/images/client-logo/uideck.svg")}}" alt="Logo" />
-          </div>
-          <!-- single client -->
-        </div>
-        <div class="col-md-3 col-6">
-          <div class="single-client text-center">
-            <img src="{{ asset("assets/images/client-logo/ayroui.svg") }}" alt="Logo" />
-          </div>
-          <!-- single client -->
-        </div>
-        <div class="col-md-3 col-6">
-          <div class="single-client text-center">
-            <img src="{{ asset("assets/images/client-logo/lineicons.svg")}}" alt="Logo" />
-          </div>
-          <!-- single client -->
-        </div>
-      </div>
-      <!-- row -->
-    </div>
-    <!-- container -->
-  </section>
-
-  <!--====== CLIENT LOGO PART ENDS ======-->
-
-  <!--====== SERVICES TWO PART START ======-->
-
-  <section class="services-area services-two">
-    <!--======  Start Section Title Six ======-->
-    <div class="section-title-six">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="content">
-                        <h3>What we offer?</h3>
-                        <h2 class="fw-bold">What services we provide</h2>
-                        <p>There are many variations of passages of Lorem
-                            Ipsum available, but the majority have suffered alteration in some form.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- row -->
-        </div>
-        <!-- container -->
-    </div>
-    <!--======  End Section Title Six ======-->
-    <div class="container">
-        <div class="row">
-            @foreach($services as $index => $service)
-            <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay=".2s">
-                <!-- Start Single Service -->
-                <div class="single-service">
-                    <svg class="shape" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.5 79.6"
-                        style="enable-background:new 0 0 21.5 79.6;" xml:space="preserve">
-                        <style type="text/css">
-                            .st0 {
-                                fill: #155BD5;
-                            }
-                        </style>
-                        <path class="st0" d="M18.7,4.6c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,3.9,19.5,4.6,18.7,4.6z M18.7,12.8
-c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,12.1,19.5,12.8,18.7,12.8L18.7,12.8z M18.7,21.1
-c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,20.4,19.5,21,18.7,21.1z M18.7,29.3c-0.9,0-1.5-0.7-1.6-1.5
-s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,28.6,19.5,29.3,18.7,29.3L18.7,29.3z M18.7,37.5c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6
-s1.5,0.7,1.6,1.5l0,0C20.2,36.8,19.5,37.5,18.7,37.5z M10.7,4.6c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0
-C12.2,3.9,11.6,4.6,10.7,4.6L10.7,4.6L10.7,4.6z M10.7,12.8c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0
-C12.2,12.1,11.6,12.8,10.7,12.8L10.7,12.8z M10.7,21c-0.9,0-1.5-0.7-1.5-1.5S9.8,18,10.7,18s1.5,0.7,1.5,1.5l0,0
-C12.2,20.4,11.6,21,10.7,21C10.7,21.1,10.7,21.1,10.7,21L10.7,21z M10.7,29.3c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5
-c0.9,0,1.5,0.7,1.5,1.5l0,0C12.2,28.6,11.6,29.3,10.7,29.3L10.7,29.3L10.7,29.3z M10.7,37.5c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5
-c0.9,0,1.5,0.7,1.5,1.5l0,0C12.2,36.8,11.6,37.5,10.7,37.5L10.7,37.5L10.7,37.5z M2.7,4.6c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5
-c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,3.9,3.6,4.6,2.7,4.6L2.7,4.6L2.7,4.6z M2.7,12.8c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5
-c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,12.1,3.6,12.8,2.7,12.8L2.7,12.8L2.7,12.8z M2.7,21c-0.9,0-1.5-0.7-1.5-1.5S1.9,18,2.7,18
-c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,20.4,3.6,21,2.7,21C2.7,21.1,2.7,21.1,2.7,21L2.7,21z M2.7,29.3c-0.9,0-1.5-0.7-1.5-1.5
-s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,28.6,3.6,29.3,2.7,29.3L2.7,29.3L2.7,29.3z M2.7,37.5c-0.9,0-1.5-0.7-1.5-1.5
-s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,36.8,3.6,37.5,2.7,37.5L2.7,37.5L2.7,37.5z M18.7,45.6c-0.9,0-1.5-0.7-1.6-1.5
-s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,44.9,19.5,45.6,18.7,45.6L18.7,45.6L18.7,45.6z M18.7,53.8c-0.9,0-1.5-0.7-1.6-1.5
-s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,53.2,19.5,53.8,18.7,53.8C18.7,53.9,18.7,53.9,18.7,53.8L18.7,53.8z M18.7,62.1
-c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,61.4,19.5,62.1,18.7,62.1L18.7,62.1z M18.7,70.3
-c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,69.6,19.5,70.3,18.7,70.3L18.7,70.3L18.7,70.3z M18.7,78.5
-c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,77.8,19.5,78.5,18.7,78.5L18.7,78.5L18.7,78.5z M10.7,45.6
-c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C12.2,44.9,11.6,45.6,10.7,45.6L10.7,45.6z M10.7,53.8
-c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C12.2,53.2,11.6,53.8,10.7,53.8C10.7,53.9,10.7,53.9,10.7,53.8
-L10.7,53.8z M10.7,62.1c-0.9,0-1.5-0.7-1.5-1.5S9.8,59,10.7,59s1.5,0.7,1.5,1.5l0,0C12.2,61.4,11.6,62.1,10.7,62.1L10.7,62.1
-L10.7,62.1z M10.7,70.3c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C12.2,69.6,11.6,70.3,10.7,70.3L10.7,70.3
-L10.7,70.3z M10.7,78.5c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C12.2,77.8,11.6,78.5,10.7,78.5L10.7,78.5
-L10.7,78.5z M2.7,45.6c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,44.9,3.6,45.6,2.7,45.6L2.7,45.6
-L2.7,45.6z M2.7,53.8c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,53.2,3.6,53.8,2.7,53.8
-C2.7,53.9,2.7,53.9,2.7,53.8L2.7,53.8z M2.7,62.1c-0.9,0-1.5-0.7-1.5-1.5S1.9,59,2.7,59c0.9,0,1.5,0.7,1.5,1.5l0,0
-C4.3,61.4,3.6,62.1,2.7,62.1L2.7,62.1L2.7,62.1z M2.7,70.3c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0
-C4.3,69.6,3.6,70.3,2.7,70.3L2.7,70.3L2.7,70.3z M2.7,78.5c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0
-C4.3,77.8,3.6,78.5,2.7,78.5L2.7,78.5L2.7,78.5z" />
-                    </svg>
-                    <svg class="shape2" class="shape" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.5 79.6"
-                        style="enable-background:new 0 0 21.5 79.6;" xml:space="preserve">
-                        <style type="text/css">
-                            .st0 {
-                                fill: #155BD5;
-                            }
-                        </style>
-                        <path class="st0" d="M18.7,4.6c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,3.9,19.5,4.6,18.7,4.6z M18.7,12.8
-c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,12.1,19.5,12.8,18.7,12.8L18.7,12.8z M18.7,21.1
-c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,20.4,19.5,21,18.7,21.1z M18.7,29.3c-0.9,0-1.5-0.7-1.6-1.5
-s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,28.6,19.5,29.3,18.7,29.3L18.7,29.3z M18.7,37.5c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6
-s1.5,0.7,1.6,1.5l0,0C20.2,36.8,19.5,37.5,18.7,37.5z M10.7,4.6c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0
-C12.2,3.9,11.6,4.6,10.7,4.6L10.7,4.6L10.7,4.6z M10.7,12.8c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0
-C12.2,12.1,11.6,12.8,10.7,12.8L10.7,12.8z M10.7,21c-0.9,0-1.5-0.7-1.5-1.5S9.8,18,10.7,18s1.5,0.7,1.5,1.5l0,0
-C12.2,20.4,11.6,21,10.7,21C10.7,21.1,10.7,21.1,10.7,21L10.7,21z M10.7,29.3c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5
-c0.9,0,1.5,0.7,1.5,1.5l0,0C12.2,28.6,11.6,29.3,10.7,29.3L10.7,29.3L10.7,29.3z M10.7,37.5c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5
-c0.9,0,1.5,0.7,1.5,1.5l0,0C12.2,36.8,11.6,37.5,10.7,37.5L10.7,37.5L10.7,37.5z M2.7,4.6c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5
-c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,3.9,3.6,4.6,2.7,4.6L2.7,4.6L2.7,4.6z M2.7,12.8c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5
-c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,12.1,3.6,12.8,2.7,12.8L2.7,12.8L2.7,12.8z M2.7,21c-0.9,0-1.5-0.7-1.5-1.5S1.9,18,2.7,18
-c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,20.4,3.6,21,2.7,21C2.7,21.1,2.7,21.1,2.7,21L2.7,21z M2.7,29.3c-0.9,0-1.5-0.7-1.5-1.5
-s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,28.6,3.6,29.3,2.7,29.3L2.7,29.3L2.7,29.3z M2.7,37.5c-0.9,0-1.5-0.7-1.5-1.5
-s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,36.8,3.6,37.5,2.7,37.5L2.7,37.5L2.7,37.5z M18.7,45.6c-0.9,0-1.5-0.7-1.6-1.5
-s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,44.9,19.5,45.6,18.7,45.6L18.7,45.6L18.7,45.6z M18.7,53.8c-0.9,0-1.5-0.7-1.6-1.5
-s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,53.2,19.5,53.8,18.7,53.8C18.7,53.9,18.7,53.9,18.7,53.8L18.7,53.8z M18.7,62.1
-c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,61.4,19.5,62.1,18.7,62.1L18.7,62.1z M18.7,70.3
-c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,69.6,19.5,70.3,18.7,70.3L18.7,70.3L18.7,70.3z M18.7,78.5
-c-0.9,0-1.5-0.7-1.6-1.5s0.7-1.5,1.5-1.6s1.5,0.7,1.6,1.5l0,0C20.2,77.8,19.5,78.5,18.7,78.5L18.7,78.5L18.7,78.5z M10.7,45.6
-c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C12.2,44.9,11.6,45.6,10.7,45.6L10.7,45.6z M10.7,53.8
-c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C12.2,53.2,11.6,53.8,10.7,53.8C10.7,53.9,10.7,53.9,10.7,53.8
-L10.7,53.8z M10.7,62.1c-0.9,0-1.5-0.7-1.5-1.5S9.8,59,10.7,59s1.5,0.7,1.5,1.5l0,0C12.2,61.4,11.6,62.1,10.7,62.1L10.7,62.1
-L10.7,62.1z M10.7,70.3c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C12.2,69.6,11.6,70.3,10.7,70.3L10.7,70.3
-L10.7,70.3z M10.7,78.5c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C12.2,77.8,11.6,78.5,10.7,78.5L10.7,78.5
-L10.7,78.5z M2.7,45.6c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,44.9,3.6,45.6,2.7,45.6L2.7,45.6
-L2.7,45.6z M2.7,53.8c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0C4.3,53.2,3.6,53.8,2.7,53.8
-C2.7,53.9,2.7,53.9,2.7,53.8L2.7,53.8z M2.7,62.1c-0.9,0-1.5-0.7-1.5-1.5S1.9,59,2.7,59c0.9,0,1.5,0.7,1.5,1.5l0,0
-C4.3,61.4,3.6,62.1,2.7,62.1L2.7,62.1L2.7,62.1z M2.7,70.3c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0
-C4.3,69.6,3.6,70.3,2.7,70.3L2.7,70.3L2.7,70.3z M2.7,78.5c-0.9,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5c0.9,0,1.5,0.7,1.5,1.5l0,0
-C4.3,77.8,3.6,78.5,2.7,78.5L2.7,78.5L2.7,78.5z" />
-                    </svg>
-                    <span class="serial">{{ sprintf('%02d', $index + 1) }}</span>
-                    <div class="service-icon">
-                        <i class="lni lni-laptop"></i>
-                    </div>
-                    <h3>
-                        <span style="font-size: inherit;">
-                            <a href="{{ route('header_service.show', ['category_slug' => $service->serviceCategory->cat_slug, 'service_slug' => $service->serviceSEO->meta_slug, 'id' => $service->id]) }}">
-                                {{ $service->title }}
-                            </a>
-                        </span>
-                    </h3>
-
-                    <p>{{ $service->description }}</p>
-                    <p class="service-category mt-2">
-                        <strong>Category:</strong> {{ $service->serviceCategory->cat_title ?? 'N/A' }}
+                    <p class="mt-4 text-base md:text-lg text-slate-600 max-w-2xl" data-aos="fade-up" data-aos-delay="200">
+                        {{ $heroSection->main_desc ?? $service->short_desc ?? 'We deliver tailored, high-impact solutions to help you grow, scale, and succeed in your digital goals.' }}
                     </p>
 
+                   {{-- CTA --}}
+                        <div class="mt-6 flex flex-col sm:flex-row gap-4" data-aos="zoom-in" data-aos-delay="400">
+                            <a href="#get-quote"
+                            class="inline-flex items-center justify-center px-5 sm:px-6 py-3 sm:py-3.5 text-sm sm:text-base rounded-full bg-indigo-600 text-white font-semibold shadow hover:bg-indigo-700 transition-all duration-200 w-full sm:w-auto text-center">
+                                <i class="fa-solid fa-paper-plane mr-2"></i> Get a Free Quote
+                            </a>
+                        </div>
+
+
+                 {{-- Quick Stats --}}
+                    <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-5 justify-items-center">
+                        <div class="w-full px-5 py-4 bg-white rounded-2xl shadow-sm border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="600">
+                            <div class="text-xs text-gray-500">Projects Delivered</div>
+                            <div class="text-xl font-bold text-slate-900 counter"
+                                data-target="{{ $service->projects_count ?? 120 }}"
+                                data-suffix="+">0</div>
+                        </div>
+
+                        <div class="w-full px-5 py-4 bg-white rounded-2xl shadow-sm border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="700">
+                            <div class="text-xs text-gray-500">Client Satisfaction</div>
+                            <div class="text-xl font-bold text-slate-900 counter"
+                                data-target="99"
+                                data-suffix="%">0</div>
+                        </div>
+
+                        <div class="w-full px-5 py-4 bg-white rounded-2xl shadow-sm border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="800">
+                            <div class="text-xs text-gray-500">Experience</div>
+                            <div class="text-xl font-bold text-slate-900 counter"
+                                data-target="10"
+                                data-suffix="+ Years">0</div>
+                        </div>
+
+                        <div class="w-full px-5 py-4 bg-white rounded-2xl shadow-sm border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="900">
+                            <div class="text-xs text-gray-500">Countries Served</div>
+                            <div class="text-xl font-bold text-slate-900 counter"
+                                data-target="18"
+                                data-suffix="+">0</div>
+                        </div>
+                    </div>
+
+
+
                 </div>
-                <!-- End Single Service -->
-                @endforeach
+
+                        {{-- 5-Star Rating --}}
+            <div class="mt-6 sm:mt-8 lg:mt-8 flex flex-row items-center gap-3 sm:gap-6 justify-center sm:justify-start" data-aos="fade-up" data-aos-delay="900">
+                <img
+                    src="{{ asset('web_assets/images/testimonial_star.png') }}"
+                    alt="5 Star Rating"
+                    class="w-36 sm:w-32 md:w-40 h-auto drop-shadow-lg"
+                    style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));"
+                >
+                <span class="text-indigo-800 font-semibold text-sm sm:text-base md:text-xl text-left tracking-wide leading-snug font-['Inter']">
+                    <span class="text-amber-600">Trusted</span> by Clients with a 5-Star Rating
+                </span>
             </div>
+
+
+            </div>
+
+
+
+                {{-- Right Image --}}
+            <div class="hidden lg:flex lg:col-span-6 items-end justify-center relative" data-aos="fade-left" data-aos-duration="1500">
+                <img
+                    src="{{ asset('web_assets/images/person_service_sehero_section.png') }}"
+                    alt="Professional Service"
+                    class="h-full w-auto object-cover"
+                    style="margin-top: 0;"
+                />
+            </div>
+
 
         </div>
     </div>
 </section>
 
-	<!--====== SERVICES TWO PART ENDS ======-->
 
-    <!--====== SLIDER TWO PART START ======-->
+  <!-- ==================================== -->
+        <!-- Review Badges Section -->
+        <!-- ==================================== -->
+        <section id="review-badges" class="bg-[#1A365D] py-12 px-4">
+        <div class="container mx-auto flex flex-wrap justify-center items-center text-center gap-8">
 
-    <section class="slider-area slider-two">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="slider-content text-center">
-                        <h2 class="slider-title">
-                            {{ $service->testOrders->first()->title ?? 'Default Test Order Title' }}
-                        </h2>
-                        <p class="text">
-                            {{ $service->testOrders->first()->description ?? 'Default Test Order Description' }}
-                        </p>
+            <!-- Google Review -->
+            <div class="review-badge flex flex-col items-center max-w-[150px]">
+            <img src="{{ asset('web_assets/images/google-reviews-stats-new.png') }}" alt="Google Reviews" class="h-12 mb-3 opacity-90">
+            <img src="{{ asset('web_assets/images/social-review-item-new.png') }}" alt="5 Stars" class="h-6 mb-3">
+            <p class="text-base text-gray-100 font-semibold">150+ Reviews</p>
+            </div>
 
-                        <ul class="steps-list">
-                            <li>
-                                <i class="lni lni-checkmark-circle"></i>
-                                <span>{{ $service->testOrders->first()->step_1 ?? 'Default Step 1' }}</span>
-                            </li>
-                            <li>
-                                <i class="lni lni-checkmark-circle"></i>
-                                <span>{{ $service->testOrders->first()->step_2 ?? 'Default Step 2' }}</span>
-                            </li>
-                            <li>
-                                <i class="lni lni-checkmark-circle"></i>
-                                <span>{{ $service->testOrders->first()->step_3 ?? 'Default Step 3' }}</span>
-                            </li>
-                            <li>
-                                <i class="lni lni-checkmark-circle"></i>
-                                <span>{{ $service->testOrders->first()->step_4 ?? 'Default Step 4' }}</span>
-                            </li>
-                        </ul>
+            <!-- Clutch Review -->
+            <div class="review-badge flex flex-col items-center max-w-[150px]">
+            <img src="{{ asset('web_assets/images/clutch-reviews-stats-new.png') }}" alt="Clutch Reviews" class="h-12 mb-3 opacity-90">
+            <img src="{{ asset('web_assets/images/social-review-item-new.png') }}" alt="5 Stars" class="h-6 mb-3">
+            <p class="text-base text-gray-100 font-semibold">100+ Reviews</p>
+            </div>
+
+            <!-- UpCity Review -->
+            <div class="review-badge flex flex-col items-center max-w-[150px]">
+            <img src="{{ asset('web_assets/images/upcity-reviews-logo-new.png') }}" alt="UpCity Reviews" class="h-12 mb-3 opacity-90">
+            <img src="{{ asset('web_assets/images/social-review-item-new.png') }}" alt="5 Stars" class="h-6 mb-3">
+            <p class="text-base text-gray-100 font-semibold">50+ Reviews</p>
+            </div>
+
+        </div>
+        </section>
+
+@php
+    // Define fallback icons based on keywords
+    function getDefaultIcon($title)
+    {
+        $title = strtolower($title);
+        return match (true) {
+            str_contains($title, 'cloud')       => 'https://img.icons8.com/color/48/cloud.png',
+            str_contains($title, 'ai'),
+            str_contains($title, 'automation')  => 'https://img.icons8.com/color/48/artificial-intelligence.png',
+            str_contains($title, 'cyber'),
+            str_contains($title, 'security')    => 'https://img.icons8.com/color/48/cyber-security.png',
+            str_contains($title, 'web') || str_contains($title, 'development')
+                                               => 'https://img.icons8.com/color/48/web.png',
+            default                             => 'https://img.icons8.com/color/48/settings.png',
+        };
+    }
+@endphp
+
+        <section class="py-24 bg-gradient-to-br from-[#f1f4ff] via-[#e5ebfb] to-[#f9fafe]">
+            <div class="container mx-auto px-6 lg:px-12">
+
+                <!-- Section Heading -->
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight mb-5">
+                        {{ $service->content->title ?? 'Explore Our Core Capabilities' }}
+                    </h2>
+                </div>
+
+                <!-- Tabs Wrapper -->
+                <div class="flex flex-col lg:flex-row gap-10">
+
+                    <!-- Sidebar Tabs -->
+                    <div class="flex-shrink-0 w-full lg:w-1/4 space-y-4" id="it-services-tabs">
+                        @foreach ($service->tabContents->take(4) as $index => $tab)
+                            @php
+                                $iconUrl = filter_var($tab->icon, FILTER_VALIDATE_URL) ? $tab->icon : getDefaultIcon($tab->title);
+                            @endphp
+                            <button
+                                class="tab-btn w-full flex items-center gap-4 p-4 rounded-lg bg-white shadow-sm hover:bg-gray-100 {{ $index === 0 ? 'active bg-gray-100' : '' }}"
+                                data-tab="tab{{ $index + 1 }}"
+                                type="button"
+                            >
+                                <img src="{{ $iconUrl }}" alt="{{ $tab->title }} icon" class="w-6 h-6" />
+                                <span class="font-medium text-gray-800">{{ $tab->title }}</span>
+                            </button>
+                        @endforeach
                     </div>
-                    <!-- slider-content -->
-                </div>
-            </div>
-            <!-- row -->
-        </div>
-        <!-- container -->
 
-        <div id="carouselTwo" class="carousel slide" data-bs-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-bs-target="#carouselTwo" data-bs-slide-to="0" class="active"></li>
-                <li data-bs-target="#carouselTwo" data-bs-slide-to="1"></li>
-                <li data-bs-target="#carouselTwo" data-bs-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item bg_cover active"
-                    style="background-image: url({{ asset('assets/images/slider/slider-two/1.jpg') }});">
-                </div>
-                <div class="carousel-item bg_cover"
-                    style="background-image: url({{ asset('assets/images/slider/slider-two/2.jpg') }});">
-                </div>
-                <div class="carousel-item bg_cover"
-                    style="background-image: url({{ asset('assets/images/slider/slider-two/3.jpg') }});">
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#carouselTwo" role="button" data-bs-slide="prev">
-                <i class="lni lni-arrow-up"></i>
-            </a>
-            <a class="carousel-control-next" href="#carouselTwo" role="button" data-bs-slide="next">
-                <i class="lni lni-arrow-down"></i>
-            </a>
-        </div>
-    </section>
+                    <!-- Tab Content Area -->
+                    <div class="flex-1 bg-white p-8 rounded-xl shadow-md" id="it-services-content">
+                        @foreach ($service->tabContents->take(4) as $index => $tab)
+                           <div id="tab{{ $index + 1 }}"
+                                class="tab-content {{ $index === 0 ? 'block' : 'hidden' }}
+                                        max-h-[400px] overflow-y-auto sm:max-h-full sm:overflow-visible
+                                        custom-scrollbar pr-2">
+                                <h3 class="text-2xl font-semibold text-gray-900 mb-4">{{ $tab->title }}</h3>
+                                <p class="text-gray-700 mb-4">{{ $tab->description }}</p>
 
-            <!--====== Start Section Title One ======-->
-
-                <div class="section-title-one">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="text-center">
-                                    <div class="content">
-                                        <h2 class="fw-bold">Our Key Features</h2>
-                                    </div>
-                                </div>
+                                @if(!empty($tab->features) && is_array($tab->features))
+                                    <ul class="list-disc list-inside text-gray-600">
+                                        @foreach ($tab->features as $feature)
+                                            <li>{{ $feature }}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
-                        </div>
-                        <!-- row -->
-                        <div class="tags">
-                            @if($service->orderFeatures && $service->orderFeatures->count() > 0)
-                                @foreach($service->orderFeatures as $feature)
-                                    <span class="badge bg-primary">{{ $feature->feature_title }}</span>
-                                @endforeach
-                            @else
-                                <span>No features available</span>
-                            @endif
-                        </div>
-                    </div>
-                    <!-- container -->
-                </div>
-
-                <!--====== ABOUT TWO PART ENDS ======-->
-
-
-                <!--====== ABOUT ONE PART START ======-->
-
-    <section class="about-area about-one">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="about-title text-center">
-                <h2 class="title fw-bold">Why Choose Us</h2>
-              </div>
-            </div>
-          </div>
-          <!-- row -->
-          <div class="row justify-content-center">
-            <div class="col-md-4 col-sm-8">
-              <div class="single-about-items">
-                <div class="items-icon">
-                  <i class="lni lni-bullhorn"></i>
-                </div>
-                <div class="items-content">
-                  <h4 class="items-title">Digital Marketing</h4>
-                  <p class="text">
-                    Short description for the ones who look for something new
-                  </p>
-                </div>
-              </div>
-              <!-- single about items -->
-            </div>
-            <div class="col-md-4 col-sm-8">
-              <div class="single-about-items">
-                <div class="items-icon">
-                  <i class="lni lni-investment"></i>
-                </div>
-                <div class="items-content">
-                  <h4 class="items-title">Consulting Services</h4>
-                  <p class="text">
-                    Short description for the ones who look for something new
-                  </p>
-                </div>
-              </div>
-              <!-- single about items -->
-            </div>
-            <div class="col-md-4 col-sm-8">
-              <div class="single-about-items">
-                <div class="items-icon">
-                  <i class="lni lni-handshake"></i>
-                </div>
-                <div class="items-content">
-                  <h4 class="items-title">Business Solutions</h4>
-                  <p class="text">
-                    Short description for the ones who look for something new
-                  </p>
-                </div>
-              </div>
-              <!-- single about items -->
-            </div>
-          </div>
-          <!-- row -->
-        </div>
-        <!-- container -->
-      </section>
-
-      <!--====== ABOUT ONE PART ENDS ======-->
-
-
-       <!-- Line above the agency section -->
-
-        <!-- Agency Section -->
-        <section class="agency-section">
-            <h1 class="text-center">{{ $service->content->first()->title }}</h1>
-        <p class="text-center">{{ $service->content->first()->description }}</p>
-            <div class="scrollable-section">
-
-                <div class="row">
-                    <div class="col-md-6 content-box left-content">
-                        <p>
-                            {{ $service->content->first()->content_2 }}
-                        </p>
-
-                    </div>
-
-                    <div class="separator"></div> <!-- Separator between columns -->
-
-                    <div class="col-md-6 content-box right-content">
-                        <p>
-                            {{ $service->content->first()->content_3 }}
-                        </p>
-
+                        @endforeach
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Line below the agency section -->
-        <hr style="border: 1px solid #dee2e6; margin: 20px 0;">
 
-            <!--====== PAGE BANNER PART ENDS ======-->
 
-                        <!--====== tabs PART START ======-->
-            <section class="tabs-area pb-5">
-                <div class="container">
-                    <div class="row">
-                        <div class="tabs mt-5">
-                            <h2 class="tabs-title mb-30 text-center fw-bold mt-5">About Services</h2>
-                            <div class="single-tabs tabs-three mt-5">
-                                <!-- Tab navigation -->
-                                <ul class="nav nav-justified mt-5" id="myTab" role="tablist">
-                                    @foreach ($service->tabContents as $index => $tabContent)
-                                        <li class="nav-item">
-                                            <a class="{{ $index == 0 ? 'active' : '' }}"
-                                            id="tab-{{ $index }}-tab"
-                                            data-bs-toggle="tab"
-                                            href="#tab-{{ $index }}"
-                                            role="tab"
-                                            aria-controls="tab-{{ $index }}"
-                                            aria-selected="{{ $index == 0 ? 'true' : 'false' }}">
-                                                <i class="lni lni-vector"></i>{{ $tabContent->title }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
 
-                                <!-- Tab content -->
-                                <div class="tab-content" id="myTabContent">
-                                    @foreach ($service->tabContents as $index => $tabContent)
-                                        <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}"
-                                            id="tab-{{ $index }}"
-                                            role="tabpanel"
-                                            aria-labelledby="tab-{{ $index }}-tab">
-                                            <div class="tab-text">
-                                                <p class="text">
-                                                    {{ $tabContent->description }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <!-- tabs one -->
+        @include('show_reviews.reviews')
+
+      {{-- ===== Key Features (Responsive Grid + Mobile Slider) ===== --}}
+<section class="py-16 bg-slate-50" id="key-features">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-12">
+
+        {{-- Heading --}}
+        <div class="text-center mb-10">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900">
+                Our <span class="text-indigo-600">Key Features</span>
+            </h2>
+        </div>
+
+        @php
+            $featureChunks = $service->orderFeatures->chunk(4);
+        @endphp
+
+        {{-- ================= DESKTOP GRID ================= --}}
+        <div class="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            @foreach($featureChunks as $group)
+                <div class="space-y-3">
+                    @foreach($group as $feature)
+                        <div
+                            class="
+                                px-4 py-3 rounded-xl
+                                bg-indigo-50 text-slate-800
+                                font-semibold text-center
+                                border border-indigo-100
+                                transition-all duration-300 ease-in-out
+                                hover:bg-indigo-600 hover:text-white
+                                hover:shadow-lg hover:-translate-y-0.5
+                            "
+                        >
+                            {{ ucfirst($feature->feature_title) }}
                         </div>
-                    </div>
-                    <!-- row -->
+                    @endforeach
                 </div>
-                <!-- container -->
-            </section>
-            <!--====== tabs PART END ======-->
+            @endforeach
+        </div>
 
+        {{-- ================= MOBILE SLIDER ================= --}}
+        <div class="md:hidden overflow-x-auto scrollbar-hide">
+            <div class="flex gap-4 snap-x snap-mandatory">
 
-
-  <!--====== PAGE BANNER PART ENDS ======-->
-
-  <!--====== ACCORDION PART START ======-->
-
-  <section class="accordion-area">
-    <div class="container">
-        <div class="row">
-
-                <div class="single-accordion mt-5">
-
-                    <div class="accordion-title text-center">
-                        <h2 class="title fw-bold">Frequently Asked Questions</h2>
-                    </div>
-
-
-                    <div class="accordion-style-two">
-                        <div class="accordion" id="accordionTwo">
-                            @foreach($service->faqs as $index => $faq)
-                                <div class="card">
-                                    <div class="card-header" id="heading{{ $index }}">
-                                        <a href="#collapse{{ $index }}"
-                                           data-bs-toggle="collapse"
-                                           role="button"
-                                           aria-expanded="{{ $index === 0 ? 'true' : 'false' }}">
-                                            {{ $faq->question }}
-                                        </a>
-                                    </div>
-
-                                    <div id="collapse{{ $index }}"
-                                         class="collapse {{ $index === 0 ? 'show' : '' }}"
-                                         data-bs-parent="#accordionTwo">
-                                        <div class="card-body">
-                                            <p class="text">
-                                                {{ $faq->answer }}
-                                            </p>
-                                        </div>
-                                    </div>
+                @foreach($featureChunks as $group)
+                    <div class="min-w-[85%] snap-start">
+                        <div class="space-y-3">
+                            @foreach($group as $feature)
+                                <div
+                                    class="
+                                        px-4 py-3 rounded-xl
+                                        bg-indigo-50 text-slate-800
+                                        font-semibold text-center
+                                        border border-indigo-100
+                                        transition-all duration-300 ease-in-out
+                                        hover:bg-indigo-600 hover:text-white
+                                        hover:shadow-lg
+                                    "
+                                >
+                                    {{ ucfirst($feature->feature_title) }}
                                 </div>
                             @endforeach
-                            <!-- card -->
                         </div>
                     </div>
-                    <!-- accordion-style-two -->
+                @endforeach
+
+            </div>
+        </div>
+
+    </div>
+</section>
+{{-- ===== Key Features End ===== --}}
+
+
+
+
+
+         <section id="why-choose-us" class="relative py-20 bg-gray-50 overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
+                        Why <span class="text-indigo-600">Choose Us?</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        We deliver professional, creative, and result-driven solutions to help your business grow faster.
+                    </p>
                 </div>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    @foreach($whyChooseUs as $index => $feature)
+                        @php
+                            // Calculate delay dynamically: 100ms + 100 * index
+                            $delay = 100 + ($index * 100);
+
+                            // Default colors if not defined in DB
+                            $bgColorClass = $feature->icon_bg_class ?? 'bg-blue-100';
+                            $textColorClass = $feature->icon_text_class ?? 'text-blue-600';
+                            $iconClass = $feature->icon ?? 'fas fa-lightbulb';
+
+                        @endphp
+
+                        <div class="p-8 bg-white rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition duration-500 ease-in-out"
+                            data-aos="fade-up" data-aos-delay="{{ $delay }}">
+
+                            <div class="w-16 h-16 {{ $bgColorClass }} {{ $textColorClass }} flex items-center justify-center rounded-xl mb-6 shadow-md">
+                                <i class="{{ $iconClass }} text-2xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-3">{{ $feature->title }}</h3>
+                            <p class="text-gray-600 text-base leading-relaxed">
+                                {{ $feature->description }}
+                            </p>
+                        </div>
+                    @endforeach
+                </div>
+
+            </div>
+        </section>
+
+     <section id="about-aazz-scroll" class="py-20 bg-white text-gray-800">
+        <div class="container mx-auto px-4 sm:px-6">
+
+            <!-- Heading -->
+            <div class="text-center mb-12 transform hover:scale-[1.02] transition duration-300" data-aos="fade-up">
+            <h2 class="text-4xl sm:text-3xl font-extrabold mb-4 text-gray-900">
+                {{ $service->content->title ?? 'Discover the Power Behind AAZZ Agency' }}
+            </h2>
+                <p class="text-lg sm:text-xl text-gray-600  mx-auto leading-relaxed">
+                    {{ $service->content->description ?? 'We’re not just service providers — we’re your digital growth partners. At AAZZ Agency, we combine technology, creativity, and strategy to deliver scalable IT solutions, impactful marketing, and measurable business results.' }}
+                </p>
+            </div>
+
+            <!-- Scrollable Columns -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Left Column -->
+            <div class="bg-gray-100 rounded-xl p-6 shadow-md overflow-y-auto custom-scrollbar transform hover:scale-[1.02] transition duration-300"
+                data-aos="fade-right"
+                style="max-height: 400px;">
+                <h3 class="text-2xl font-bold mb-4">
+                {{ $service->content->content_2_title ?? 'Your Trusted IT & Digital Solutions Partner' }}
+                </h3>
+                <div class="text-base leading-relaxed text-gray-700 mb-4">
+                {!! $service->content->content_2 ?? '
+                    <p>AAZZ Agency is a premier IT and digital services provider based in the UK. We help businesses navigate the ever-evolving digital landscape with tailored strategies that drive performance.</p>
+                    <p>Our team brings together a diverse set of skills — from cloud infrastructure and cybersecurity to UI/UX design and mobile development. We don\'t just build systems; we build scalable, sustainable ecosystems that evolve with your business needs.</p>
+                    <p>We work closely with startups, enterprises, and government institutions, offering round-the-clock support, in-depth consulting, and innovative problem-solving techniques. Our strategies are data-driven, people-focused, and results-oriented.</p>
+                    <p>Whether you need to overhaul outdated systems, improve user experience, or secure sensitive data, AAZZ Agency is your reliable partner. We specialize in building robust IT foundations that ensure long-term agility and security.</p>
+                    <p>Join hundreds of satisfied clients who trust us to future-proof their digital operations. Experience the power of intelligent technology delivered with a human touch — only at AAZZ Agency.</p>
+                ' !!}
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="bg-gray-100 rounded-xl p-6 shadow-md overflow-y-auto custom-scrollbar transform hover:scale-[1.02] transition duration-300"
+                data-aos="fade-left"
+                style="max-height: 400px;">
+                <h3 class="text-2xl font-bold mb-4">
+                {{ $service->content->content_3_title ?? 'Unlocking Your Digital Potential' }}
+                </h3>
+                <div class="text-base leading-relaxed text-gray-700">
+                {!! $service->content->content_3 ?? '
+                    <p>AAZZ Agency isn’t just about delivering services — we\'re about delivering outcomes. Every project we undertake is driven by clear KPIs, strategic benchmarks, and scalable frameworks designed for growth.</p>
+                    <p>Our digital marketing team ensures maximum visibility through tailored SEO, PPC, and content marketing strategies. We fine-tune everything — from metadata to ad creatives — to maximize engagement, conversions, and ROI.</p>
+                    <p>When it comes to branding, our creative experts align design with your brand identity, crafting intuitive user experiences that leave lasting impressions. Whether you\'re launching a new product or rebranding, we’ve got you covered.</p>
+                    <p>Our web development team builds responsive, high-performance websites that load fast, rank well, and convert visitors into loyal customers. We work with modern stacks and CMS platforms to deliver future-ready web experiences.</p>
+                    <p>By combining strategy, creativity, and technology — AAZZ Agency becomes your growth engine. Let’s unlock your full digital potential and turn your vision into reality.</p>
+                ' !!}
+                </div>
+            </div>
+
+            </div>
+
         </div>
-        <!-- row -->
+        </section>
+
+
+                    {{-- ====== Services We Provide Section Start ====== --}}
+            <section class="py-20 bg-white" id="services-we-provide">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-12">
+
+                    {{-- Section Heading --}}
+                    <div class="text-center mb-12" data-aos="fade-up">
+                      <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
+                        Services <span class="text-indigo-600">We Provide</span>
+                      </h2>
+
+                    </div>
+
+                    {{-- Services Grid --}}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        @foreach($service->aboutServices as $index => $aboutService)
+                            @php
+                                $delay = 100 + ($index * 100); // AOS delay for staggered animations
+                                $iconClass = $aboutService->icon_class ?? 'fas fa-cogs';
+                            @endphp
+
+                            <div class="bg-gray-50 p-6 rounded-2xl shadow hover:shadow-lg transition duration-300"
+                                data-aos="fade-up"
+                                data-aos-delay="{{ $delay }}">
+
+                                {{-- Icon --}}
+                                <div class="w-14 h-14 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 text-2xl mb-5 shadow-md">
+                                    <i class="{{ $iconClass }}"></i>
+                                </div>
+
+                                {{-- Title --}}
+                                <h4 class="text-xl font-semibold text-gray-800 mb-3">
+                                    {{ $aboutService->title }}
+                                </h4>
+
+                                {{-- Description --}}
+                                <p class="text-gray-600 leading-relaxed">
+                                    {{ $aboutService->description }}
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+            {{-- ====== Services We Provide Section End ====== --}}
+
+
+            {{-- ====== Client Logo Marquee Section Start ====== --}}
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-12">
+
+        {{-- Section Title --}}
+        <div class="text-center mb-12">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+                {{ $clients->first()?->title ?? 'Trusted by Leading Brands Worldwide' }}
+            </h2>
+            <p class="text-gray-600 mt-4 max-w-2xl mx-auto text-base sm:text-lg">
+                {{ $clients->first()?->description ?? 'Join a growing network of global enterprises who rely on our expertise to power their success.' }}
+            </p>
+        </div>
+
+        {{-- Marquee Wrapper --}}
+        <div class="space-y-10 overflow-hidden relative">
+
+            {{-- Row 1: Left to Right --}}
+            <div class="flex w-max space-x-8 animate-marquee-slow">
+                @foreach($clients->take(10) as $client)
+                    <img
+                        src="{{ asset('storage/' . $client->logo_image) }}"
+                        alt="{{ $client->name ?? 'Client Logo' }}"
+                        class="h-16 w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
+                    />
+                @endforeach
+
+                {{-- Loop again for seamless loop --}}
+                @foreach($clients->take(10) as $client)
+                    <img
+                        src="{{ asset('storage/' . $client->logo_image) }}"
+                        alt="{{ $client->name ?? 'Client Logo' }}"
+                        class="h-16 w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
+                    />
+                @endforeach
+            </div>
+
+            {{-- Row 2: Right to Left --}}
+            <div class="flex w-max space-x-8 animate-marquee-slow-reverse">
+                @foreach($clients->skip(10)->take(10) as $client)
+                    <img
+                        src="{{ asset('storage/' . $client->logo_image) }}"
+                        alt="{{ $client->name ?? 'Client Logo' }}"
+                        class="h-16 w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
+                    />
+                @endforeach
+
+                {{-- Repeat again for smooth scroll --}}
+                @foreach($clients->skip(10)->take(10) as $client)
+                    <img
+                        src="{{ asset('storage/' . $client->logo_image) }}"
+                        alt="{{ $client->name ?? 'Client Logo' }}"
+                        class="h-16 w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
+                    />
+                @endforeach
+            </div>
+        </div>
     </div>
-    <!-- container -->
 </section>
+{{-- ====== Client Logo Marquee Section End ====== --}}
 
-<section class="client-logo-area client-logo-one">
-    <!--======  Start Section Title Two ======-->
+        {{-- ====== PROFESSIONAL SLIDER SECTION (Tailwind + JS + AOS) START ====== --}}
+<section class="relative bg-white bg-gradient-to-br from-white py-24 overflow-hidden">
+    <div class="container mx-auto px-6 lg:px-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-    <!--====== End Section Title Two ======-->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 col-6">
-          <div class="single-client text-center">
-            <img src="{{ asset("team_images/haris.png") }}" alt="Logo" />
-          </div>
-          <!-- single client -->
+            {{-- Left: Text & Steps --}}
+            <div data-aos="fade-up" data-aos-delay="100">
+                <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+                    {{ $service->testOrders->first()?->title ?? 'Explore Our Process' }}
+                </h2>
+                <p class="text-lg text-gray-700 mb-8">
+                    {{ $service->testOrders->first()?->description ?? 'We apply a refined process to deliver exceptional outcomes for our clients.' }}
+                </p>
+
+                <ul class="space-y-5">
+                    @php
+                        $steps = [
+                            $service->testOrders->first()?->step_1,
+                            $service->testOrders->first()?->step_2,
+                            $service->testOrders->first()?->step_3,
+                            $service->testOrders->first()?->step_4,
+                        ];
+                    @endphp
+
+                    @foreach($steps as $index => $step)
+                        @if (!empty($step))
+                            <li class="flex items-start" data-aos="fade-up" data-aos-delay="{{ 200 + $index * 100 }}">
+                                <div class="flex-shrink-0 bg-blue-600 rounded-full p-2 mr-4 shadow-md">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <span class="text-base text-gray-800">{{ $step }}</span>
+                            </li>
+                        @endif
+                    @endforeach
+                </ul>
+            </div>
+
+            {{-- Right: Custom Slider --}}
+            <div class="relative w-full" data-aos="fade-left" data-aos-delay="200">
+                @php $images = $service->testOrders->first()?->images ?? []; @endphp
+
+                @if (!empty($images) && count($images) > 0)
+                    <div id="customSlider" class="overflow-hidden rounded-xl shadow-2xl ring-1 ring-blue-200">
+                        <div class="slider-track flex transition-transform duration-700 ease-in-out">
+                            @foreach($images as $image)
+                                <div class="flex-shrink-0 w-full">
+                                    <img src="{{ asset($image) }}" alt="Slider Image"
+                                        class="w-full h-[250px] sm:h-[300px] md:h-[400px] object-cover object-center">
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    {{-- Navigation Controls --}}
+                    <button id="prevBtn"
+                        class="absolute top-1/2 left-2 md:left-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-blue-100 transition z-20">
+                        <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button id="nextBtn"
+                        class="absolute top-1/2 right-2 md:right-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-blue-100 transition z-20">
+                        <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                @else
+                    <div class="w-full h-[300px] sm:h-[400px] bg-gray-200 flex items-center justify-center text-gray-500">
+                        No images available for this slider.
+                    </div>
+                @endif
+            </div>
+
         </div>
-        <div class="col-md-3 col-6">
-          <div class="single-client text-center">
-            <img src="{{ asset("assets/images/client-logo/uideck.svg")}}" alt="Logo" />
-          </div>
-          <!-- single client -->
-        </div>
-        <div class="col-md-3 col-6">
-          <div class="single-client text-center">
-            <img src="{{ asset("assets/images/client-logo/ayroui.svg") }}" alt="Logo" />
-          </div>
-          <!-- single client -->
-        </div>
-        <div class="col-md-3 col-6">
-          <div class="single-client text-center">
-            <img src="{{ asset("assets/images/client-logo/lineicons.svg")}}" alt="Logo" />
-          </div>
-          <!-- single client -->
-        </div>
-      </div>
-      <!-- row -->
     </div>
-    <!-- container -->
-  </section>
-  <!--====== ACCORDION PART ENDS ======-->
+</section>
+{{-- ====== PROFESSIONAL SLIDER SECTION END ====== --}}
 
 
-  <!--====== Tiny Slider js ======-->
-  <script src="{{ asset("assets/js/tiny-slider.js")}}"></script>
 
-  <script>
-    //======== tiny slider for testimonial-two
-    tns({
-        autoplay: true,
-        autoplayButtonOutput: false,
-        mouseDrag: true,
-        gutter: 0,
-        container: "#testimonial-slider", // Dynamically apply the container ID
-        nav: true,
-        controls: false,
-        speed: 400,
-        controlsText: [
-            '<i class="lni lni-arrow-left-circle"></i>',
-            '<i class="lni lni-arrow-right-circle"></i>',
-        ],
-        responsive: {
-            0: {
-                items: 1,
-            },
-            992: {
-                items: 2,
-            },
-        },
+
+
+        <section id="faq-section" class="bg-gray-100 py-20 px-4 sm:px-6 lg:px-12">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-12">
+            Frequently Asked <span class="text-indigo-600">Questions</span>
+        </h2>
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Left Column -->
+            <div class="space-y-4">
+                @foreach($service->faqs->slice(0, ceil($service->faqs->count() / 2)) as $faq)
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full text-left px-6 py-4 flex justify-between items-center text-gray-800 font-medium focus:outline-none" type="button">
+                    <span>{{ $faq->question }}</span>
+                    <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden px-6 pb-0 transition-all duration-500 ease-in-out text-gray-600">
+                    <p class="py-4">{{ $faq->answer }}</p>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+
+            <!-- Right Column -->
+            <div class="space-y-4">
+                @foreach($service->faqs->slice(ceil($service->faqs->count() / 2)) as $faq)
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full text-left px-6 py-4 flex justify-between items-center text-gray-800 font-medium focus:outline-none" type="button">
+                    <span>{{ $faq->question }}</span>
+                    <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden px-6 pb-0 transition-all duration-500 ease-in-out text-gray-600">
+                    <p class="py-4">{{ $faq->answer }}</p>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            </div>
+        </div>
+        </section>
+
+
+
+          {{-- Include the service form --}}
+        @include('service_form.form')
+
+
+@endsection
+
+
+@push('custom_css')
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="{{ asset('web_assets/css/home_page/content_sec.css') }}">
+    <link rel="stylesheet" href="{{ asset('web_assets/css/home_page/animations.css') }}">
+    <link rel="stylesheet" href="{{ asset('web_assets/css/client_sec.css') }}">
+
+   <style>
+  .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #4A90E2; /* Modern vibrant blue */
+        border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    </style>
+
+@endpush
+
+
+
+@push('custom_js')
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{{ asset('web_assets/js/faq.js') }}"></script>
+
+    <script src="{{ asset('web_assets/js/home/animations.js') }}" defer></script>
+    <script src="{{ asset('web_assets/js/home/it-services-tabs.js') }}"></script>
+    <script src="{{ asset('web_assets/js/home/testimonial.js') }}" defer></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            AOS.init({
+                duration: 1500,
+                once: true,
+            });
+
+            // Counting Animation with suffix (+, %, Years)
+            const counters = document.querySelectorAll('.counter');
+            const speed = 80;
+
+            const runCounter = (counter) => {
+                const target = +counter.getAttribute('data-target');
+                const suffix = counter.getAttribute('data-suffix') || '';
+                let count = 0;
+                const increment = target / speed;
+
+                const updateCount = () => {
+                    if (count < target) {
+                        count += increment;
+                        counter.textContent = Math.ceil(count) + suffix;
+                        requestAnimationFrame(updateCount);
+                    } else {
+                        counter.textContent = target + suffix;
+                    }
+                };
+                updateCount();
+            };
+
+            // Only trigger counting when visible
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        runCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            counters.forEach(counter => observer.observe(counter));
+        });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.getElementById('customSlider');
+        if (!slider) return;
+
+        const track = slider.querySelector('.slider-track');
+        const slides = track.children;
+        const totalSlides = slides.length;
+
+        let currentIndex = 0;
+
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function updateSlider() {
+            const offset = -currentIndex * slider.clientWidth;
+            track.style.transform = `translateX(${offset}px)`;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateSlider();
+        });
+
+        // Optional: Auto-play
+        let autoPlay = setInterval(() => {
+            nextBtn.click();
+        }, 5000);
+
+        // Pause on hover
+        slider.addEventListener('mouseenter', () => clearInterval(autoPlay));
+        slider.addEventListener('mouseleave', () => {
+            autoPlay = setInterval(() => {
+                nextBtn.click();
+            }, 5000);
+        });
+
+        // On window resize, re-calc (so offset works)
+        window.addEventListener('resize', updateSlider);
     });
 </script>
-@endsection
+
+@endpush

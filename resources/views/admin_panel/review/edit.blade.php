@@ -1,132 +1,155 @@
-@extends('layouts.panel_layout')
+@extends(config('layout.admin_panel_layout'))
 
 @section('title', 'Edit Review')
+@section('topbar-title', 'Reviews')
 
-@section('content')
-<div class="container mt-5">
-    <h1 class="mb-4">Edit Service Review</h1>
+@section(config('layout.admin_pages_content'))
 
-    <form action="{{ route('reviews.update', $review->id) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')  <!-- Add this line to specify it's an update -->
+<x-admin.page-header
+title="Edit Service Review"
+subtitle="Update customer review details"
+:breadcrumbs="[
+['label' => 'Dashboard', 'url' => route('admin.panel')],
+['label' => 'Reviews', 'url' => route('reviews.index')],
+['label' => 'Edit']
+]"
+/>
 
-        <div class="row">
-            <!-- Review Title -->
-            <div class="col-md-6 mb-3">
-                <label for="title">Review Title</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-heading"></i></span>
-                    </div>
-                    <input type="text" name="title" id="title" class="form-control" value="{{ old('title', $review->title) }}" placeholder="Enter review title">
-                </div>
-                @error('title')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+@if ($errors->any())
 
-            <!-- Description -->
-            <div class="col-md-6 mb-3">
-                <label for="description">Description</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="bi bi-file-earmark-ppt"></i></span>
-                    </div>
-                    <input type="text" name="description" id="description" class="form-control" value="{{ old('description', $review->description) }}" placeholder="Enter review description">
-                </div>
-                @error('description')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <!-- User Name -->
-            <div class="col-md-6 mb-3">
-                <label for="user_name">User Name</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user"></i></span>
-                    </div>
-                    <input type="text" name="user_name" id="user_name" class="form-control" value="{{ old('user_name', $review->user_name) }}" placeholder="Enter user name" required>
-                </div>
-                @error('user_name')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+<div class="alert alert-danger d-flex gap-2 align-items-start mb-4"> <i class="bi bi-exclamation-triangle-fill mt-1"></i> <div> <strong>There were some errors with your submission:</strong> <ul class="mb-0 mt-1"> @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach </ul> </div> </div> @endif <form action="{{ route('reviews.update', $review->id) }}" method="POST" enctype="multipart/form-data"> @csrf @method('PUT')
+{{-- ================= Review Details ================= --}}
+<x-admin.form-section
+    icon="bi-chat-square-quote"
+    title="Review Details"
+    subtitle="Basic information about the customer review"
+>
+    <div class="row">
+        <div class="col-md-6">
+            <x-admin.field
+                type="text"
+                name="title"
+                label="Review Title"
+                icon="bi-type"
+                hint="Enter the review title"
+                :value="old('title', $review->title)"
+            />
         </div>
 
-        <div class="row">
-            <!-- User Image URL -->
-            <div class="col-md-6 mb-3">
-                <label for="user_image">User Image (URL)</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-image"></i></span>
-                    </div>
-                    <input type="text" name="user_image" id="user_image" class="form-control" value="{{ old('user_image', $review->user_image) }}" placeholder="Enter image URL">
-                </div>
-                @error('user_image')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+        <div class="col-md-6">
+            <x-admin.field
+                type="text"
+                name="description"
+                label="Description"
+                icon="bi-file-earmark-text"
+                hint="Short review description"
+                :value="old('description', $review->description)"
+            />
+        </div>
+    </div>
 
-            <!-- Rating -->
-            <div class="col-md-6 mb-3">
-                <label for="rating">Rating (1 to 5)</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-star"></i></span>
-                    </div>
-                    <input type="number" name="rating" id="rating" class="form-control" value="{{ old('rating', $review->rating) }}" min="1" max="5" placeholder="Enter rating" required>
-                </div>
-                @error('rating')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+    <x-admin.field
+        type="textarea"
+        name="review_text"
+        label="Review Text"
+        icon="bi-chat-left-quote"
+        hint="Customer's review"
+        :value="old('review_text', $review->review_text)"
+        rows="4"
+    />
+</x-admin.form-section>
+
+{{-- ================= Customer Information ================= --}}
+<x-admin.form-section
+    icon="bi-person"
+    title="Customer Information"
+    subtitle="Details displayed with the review"
+>
+    <div class="row">
+        <div class="col-md-6">
+            <x-admin.field
+                type="text"
+                name="user_name"
+                label="User Name"
+                icon="bi-person"
+                hint="Customer name"
+                :value="old('user_name', $review->user_name)"
+                required
+            />
         </div>
 
-        <div class="mb-3">
-            <!-- Review Text -->
-            <label for="review_text">Review Text</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comment"></i></span>
-                </div>
-                <textarea name="review_text" id="review_text" class="form-control" rows="4" placeholder="Enter your review">{{ old('review_text', $review->review_text) }}</textarea>
-            </div>
-            @error('review_text')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+        <div class="col-md-6">
+            <x-admin.field
+                type="text"
+                name="user_image"
+                label="User Image URL"
+                icon="bi-image"
+                hint="Enter image URL"
+                :value="old('user_image', $review->user_image)"
+            />
+        </div>
+    </div>
+</x-admin.form-section>
+
+{{-- ================= Rating & Category ================= --}}
+<x-admin.form-section
+    icon="bi-star"
+    title="Rating & Category"
+    subtitle="Set the review rating and related service category"
+>
+    <div class="row">
+        <div class="col-md-6">
+            <x-admin.field
+                type="number"
+                name="rating"
+                label="Rating"
+                icon="bi-star-fill"
+                hint="Rating from 1 to 5"
+                :value="old('rating', $review->rating)"
+                min="1"
+                max="5"
+                required
+            />
         </div>
 
-        <div class="mb-3">
-            <!-- Category -->
-            <label for="category_id">Category</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-list-alt"></i></span>
-                </div>
-                <select name="category_id" id="category_id" class="form-control" required>
-                    <option value="">Select Category</option>
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}" {{ old('category_id', $review->category_id) == $category->id ? 'selected' : '' }}>
-                            {{ $category->cat_title }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            @error('category_id')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
-        </div>
+        <div class="col-md-6">
+            <x-admin.field
+                type="select"
+                name="category_id"
+                label="Category"
+                icon="bi-tag"
+                required
+            >
+                <option value="" disabled @selected(!old('category_id', $review->category_id))>
+                    Select Category
+                </option>
 
-        <!-- Submit Button -->
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary btn-lg">
-                <i class="fas fa-paper-plane"></i> Update Review
-            </button>
+                @foreach($categories as $category)
+                    <option
+                        value="{{ $category->id }}"
+                        @selected(old('category_id', $review->category_id) == $category->id)
+                    >
+                        {{ $category->cat_title }}
+                    </option>
+                @endforeach
+            </x-admin.field>
         </div>
-    </form>
+    </div>
+</x-admin.form-section>
+
+{{-- ================= Submit ================= --}}
+<div
+    class="ap-form-actions"
+    style="position: static; margin: 0; border-radius: var(--ap-radius); border: 1px solid var(--ap-border);"
+>
+    <a href="{{ route('reviews.index') }}" class="btn btn-outline-secondary">
+        Cancel
+    </a>
+
+    <button type="submit" class="btn btn-primary px-4">
+        <i class="bi bi-check-lg"></i> Update Review
+    </button>
 </div>
 
-<!-- Ensure responsiveness using Bootstrap's grid system -->
+</form>
 @endsection
