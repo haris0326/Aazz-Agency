@@ -13,7 +13,10 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('blog_category_id')->nullable();
-            $table->integer('author_id')->nullable();
+            $table->foreignId('author_id')
+                    ->nullable()
+                    ->constrained('users')
+                    ->nullOnDelete();
             $table->string('title')->nullable();
             $table->string('slug')->nullable()->unique();
             $table->text('excerpt')->nullable();
