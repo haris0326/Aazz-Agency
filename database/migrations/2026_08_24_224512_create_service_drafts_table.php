@@ -25,8 +25,8 @@ return new class extends Migration
             $table->enum('form_type', ['create', 'edit'])
                 ->default('create');
 
-            // users.id = SIGNED INT
-            $table->integer('created_by')
+            // users.id = UNSIGNED BIGINT
+            $table->unsignedBigInteger('created_by')
                 ->nullable()
                 ->index();
 
