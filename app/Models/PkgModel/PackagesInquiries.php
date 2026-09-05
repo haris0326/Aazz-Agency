@@ -9,7 +9,7 @@ class PackagesInquiries extends Model
 {
     use HasFactory;
 
-    protected $table = 'package_inquiries'; // Define table name
+    protected $table = 'packages_inquiries'; // Define table name
 
     protected $fillable = [
         'pkg_category_id',
