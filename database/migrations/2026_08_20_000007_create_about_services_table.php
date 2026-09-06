@@ -14,15 +14,21 @@ return new class extends Migration
 
         Schema::create('about_services', function (Blueprint $table) {
             $table->increments('id');
+
             $table->unsignedInteger('main_service_id');
+
             $table->string('title');
             $table->text('description');
             $table->string('icon_class', 100);
+
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp('updated_at')
+                ->useCurrent()
+                ->useCurrentOnUpdate();
 
             $table->foreign('main_service_id')
-                ->references('id')->on('main_service')
+                ->references('id')
+                ->on('main_service')
                 ->onDelete('cascade');
         });
     }
