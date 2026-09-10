@@ -29,8 +29,9 @@
             
             <div class="space-y-6" data-aos="fade-up">
                 <img 
-                    src="{{ $setting->footer_logo ? asset('storage/'.$setting->footer_logo) : asset('web_assets/images/web_logo/navbar_logo_1.png') }}" 
-                    alt="{{ $setting->site_name ?? 'Aazz Agency' }}" 
+                    src="{{ !empty($setting?->footer_logo) ? asset('storage/'.$setting->footer_logo) : asset('web_assets/images/web_logo/navbar_logo_1.png') }}"
+
+                    alt="{{ $setting->site_name ?? 'Aazz Agency' }}"
                     class="h-12 w-auto brightness-0 invert opacity-90 hover:opacity-100 transition"
                 >
                 <p class="leading-relaxed text-sm md:text-base">
