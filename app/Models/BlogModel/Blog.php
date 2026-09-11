@@ -36,6 +36,19 @@ class Blog extends Model
         return $this->hasOne(BlogSEO::class, 'blog_id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(BlogComment::class, 'blog_id');
+    }
+
+    /** Approved comments only, newest first — safe to render publicly. */
+    public function approvedComments()
+    {
+        return $this->hasMany(BlogComment::class, 'blog_id')
+            ->where('status', 'approved')
+            ->latest();
+    }
+
     public function scopePublished($query)
     {
         return $query->where('status', 'published');

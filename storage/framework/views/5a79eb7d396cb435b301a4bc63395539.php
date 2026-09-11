@@ -1,7 +1,7 @@
 
-{{-- ==================================== --}}
-{{-- Top Header Section --}}
-{{-- ==================================== --}}
+
+
+
 <header class="top-header text-white text-sm py-2">
     <div class="container mx-auto px-4 flex justify-between items-center flex-wrap">
 
@@ -36,36 +36,36 @@
 </header>
 
 
-{{-- ==================================== --}}
-{{-- Main Navigation Bar --}}
-{{-- ==================================== --}}
+
+
+
 <nav class="navbar-custom sticky top-0 z-40 w-full">
 
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
 
-        {{-- Logo --}}
-        <a href="{{ route('home') }}">
-            <img src="{{ asset('web_assets/images/web_logo/navbar_logo_1.png') }}"
+        
+        <a href="<?php echo e(route('home')); ?>">
+            <img src="<?php echo e(asset('web_assets/images/web_logo/navbar_logo_1.png')); ?>"
                  alt="AazzAgency Logo"
                  class="h-12 w-auto">
         </a>
 
 
-        {{-- ==================================== --}}
-        {{-- Desktop Menu --}}
-        {{-- ==================================== --}}
+        
+        
+        
         <div class="hidden lg:flex items-center space-x-8 navbar-desktop-menu">
 
-            {{-- Home --}}
-            <a href="{{ route('home') }}"
+            
+            <a href="<?php echo e(route('home')); ?>"
                class="nav-link-custom">
                 Home
             </a>
 
 
-            {{-- ==================================== --}}
-            {{-- Desktop Services Dropdown --}}
-            {{-- ==================================== --}}
+            
+            
+            
             <div class="relative group">
 
                 <button class="nav-link-custom focus:outline-none">
@@ -82,36 +82,37 @@
                             p-4 rounded-lg shadow-lg
                             bg-white w-64 z-50">
 
-                    @forelse($servicesList->take(5) as $service)
+                    <?php $__empty_1 = true; $__currentLoopData = $servicesList->take(5); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
 
-                        <a href="{{ route('header_service.show', [
+                        <a href="<?php echo e(route('header_service.show', [
                                 $service->serviceCategory->cat_slug ?? '',
                                 $service->serviceSEO->meta_slug ?? ''
-                            ]) }}"
+                            ])); ?>"
                            class="block px-4 py-2 text-gray-700
                                   hover:bg-gray-100 rounded-md
                                   transition-colors">
 
-                            {{ $service->title }}
+                            <?php echo e($service->title); ?>
+
 
                         </a>
 
-                    @empty
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
 
                         <span class="block px-4 py-2 text-sm text-gray-400">
                             No services available
                         </span>
 
-                    @endforelse
+                    <?php endif; ?>
 
                 </div>
 
             </div>
 
 
-            {{-- ==================================== --}}
-            {{-- Desktop Blog Dropdown --}}
-            {{-- ==================================== --}}
+            
+            
+            
             <div class="relative group">
 
                 <button class="nav-link-custom focus:outline-none">
@@ -128,45 +129,47 @@
                             p-4 rounded-lg shadow-lg
                             bg-white w-72 z-50">
 
-                    @forelse(($headerBlogs ?? collect())->take(5) as $blogItem)
+                    <?php $__empty_1 = true; $__currentLoopData = ($headerBlogs ?? collect())->take(5); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $blogItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
 
-                        <a href="{{ route('blog.show', $blogItem->slug) }}"
+                        <a href="<?php echo e(route('blog.show', $blogItem->slug)); ?>"
                            class="block px-4 py-2 text-gray-700
                                   hover:bg-gray-100 rounded-md
                                   transition-colors">
 
                             <span class="block text-sm font-medium
                                          leading-snug line-clamp-2">
-                                {{ $blogItem->title }}
+                                <?php echo e($blogItem->title); ?>
+
                             </span>
 
-                            @if($blogItem->published_at)
+                            <?php if($blogItem->published_at): ?>
 
                                 <span class="block text-xs text-gray-400 mt-0.5">
-                                    {{ $blogItem->published_at->format('M j, Y') }}
+                                    <?php echo e($blogItem->published_at->format('M j, Y')); ?>
+
                                 </span>
 
-                            @endif
+                            <?php endif; ?>
 
                         </a>
 
-                    @empty
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
 
                         <span class="block px-4 py-2 text-sm text-gray-400">
                             No blog posts yet
                         </span>
 
-                    @endforelse
+                    <?php endif; ?>
 
                 </div>
 
             </div>
 
 
-            {{-- ==================================== --}}
-            {{-- Resources Data --}}
-            {{-- ==================================== --}}
-            @php
+            
+            
+            
+            <?php
 
                 $pages = collect($webPages);
 
@@ -221,12 +224,12 @@
                     'Other'     => $otherPages,
                 ];
 
-            @endphp
+            ?>
 
 
-            {{-- ==================================== --}}
-            {{-- Desktop Resources Mega Menu --}}
-            {{-- ==================================== --}}
+            
+            
+            
             <div class="hidden lg:block group">
 
                 <button class="flex items-center gap-1
@@ -254,47 +257,49 @@
 
                         <div class="grid grid-cols-4 gap-8">
 
-                            @foreach($menuColumns as $title => $columnPages)
+                            <?php $__currentLoopData = $menuColumns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $title => $columnPages): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                @if($columnPages->isNotEmpty())
+                                <?php if($columnPages->isNotEmpty()): ?>
 
                                     <div>
 
                                         <h3 class="text-xs font-bold
                                                    uppercase tracking-wider
                                                    text-gray-400 mb-4">
-                                            {{ $title }}
+                                            <?php echo e($title); ?>
+
                                         </h3>
 
                                         <ul class="space-y-3">
 
-                                            @foreach($columnPages as $page)
+                                            <?php $__currentLoopData = $columnPages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                                                 <li>
 
-                                                    <a href="{{ route(
+                                                    <a href="<?php echo e(route(
                                                         'header_web_page.show',
                                                         $page->slug
-                                                    ) }}"
+                                                    )); ?>"
                                                        class="text-gray-700
                                                               hover:text-blue-600
                                                               transition-colors">
 
-                                                        {{ $page->title }}
+                                                        <?php echo e($page->title); ?>
+
 
                                                     </a>
 
                                                 </li>
 
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                         </ul>
 
                                     </div>
 
-                                @endif
+                                <?php endif; ?>
 
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                         </div>
 
@@ -305,17 +310,17 @@
             </div>
 
 
-            {{-- Pricing --}}
-            <a href="{{ route('pricing.index') }}"
+            
+            <a href="<?php echo e(route('pricing.index')); ?>"
                class="nav-link-custom">
                 Pricing
             </a>
 
 
-            {{-- Contact Us --}}
-            <a href="{{ route('contact_us') }}"
+            
+            <a href="<?php echo e(route('contact_us')); ?>"
                class="nav-link-custom
-               {{ request()->routeIs('contact_us') ? 'active' : '' }}">
+               <?php echo e(request()->routeIs('contact_us') ? 'active' : ''); ?>">
 
                 Contact Us
 
@@ -324,10 +329,10 @@
         </div>
 
 
-        {{-- ==================================== --}}
-        {{-- Desktop Get Quote --}}
-        {{-- ==================================== --}}
-        <a href="{{ route('serviceform.show') }}"
+        
+        
+        
+        <a href="<?php echo e(route('serviceform.show')); ?>"
            class="btn-quote hidden lg:block">
 
             Get a Quote
@@ -335,9 +340,9 @@
         </a>
 
 
-        {{-- ==================================== --}}
-        {{-- Mobile Menu Toggle --}}
-        {{-- ==================================== --}}
+        
+        
+        
         <button id="mobile-menu-btn"
                 class="lg:hidden p-2 text-gray-700
                        hover:text-primary-blue
@@ -353,13 +358,13 @@
 </nav>
 
 
-{{-- ==================================== --}}
-{{-- Mobile Sidebar Menu --}}
-{{-- ==================================== --}}
+
+
+
 <div id="sidebar-menu" class="sidebar-menu">
 
 
-    {{-- Sidebar Header --}}
+    
     <div class="flex justify-between items-center
                 p-6 border-b border-gray-200">
 
@@ -379,18 +384,18 @@
     </div>
 
 
-    {{-- Sidebar Content --}}
+    
     <div class="p-6">
 
         <ul class="space-y-4 text-lg">
 
 
-            {{-- ==================================== --}}
-            {{-- Mobile Home --}}
-            {{-- ==================================== --}}
+            
+            
+            
             <li>
 
-                <a href="{{ route('home') }}"
+                <a href="<?php echo e(route('home')); ?>"
                    class="block text-gray-800
                           hover:text-primary-blue
                           transition-colors">
@@ -402,9 +407,9 @@
             </li>
 
 
-            {{-- ==================================== --}}
-            {{-- Mobile Services --}}
-            {{-- ==================================== --}}
+            
+            
+            
             <li class="relative lg:hidden">
 
                 <button id="mobile-services-btn"
@@ -418,7 +423,7 @@
 
                     <span>Services</span>
 
-                    {{-- Services Arrow --}}
+                    
                     <i id="mobile-services-icon"
                        class="fas fa-chevron-down
                               text-xs
@@ -454,27 +459,28 @@
                                        border-gray-100
                                        pl-4">
 
-                                @foreach($categoriesList as $cat)
+                                <?php $__currentLoopData = $categoriesList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                                     <li>
 
-                                        <a href="{{ route(
+                                        <a href="<?php echo e(route(
                                             'cat_show_services.show',
                                             $cat->cat_slug
-                                        ) }}"
+                                        )); ?>"
                                            class="block
                                                   text-gray-600
                                                   hover:text-primary-blue
                                                   text-sm
                                                   transition-colors">
 
-                                            {{ $cat->cat_title }}
+                                            <?php echo e($cat->cat_title); ?>
+
 
                                         </a>
 
                                     </li>
 
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             </ul>
 
@@ -487,9 +493,9 @@
             </li>
 
 
-            {{-- ==================================== --}}
-            {{-- Mobile Blog --}}
-            {{-- ==================================== --}}
+            
+            
+            
             <li class="relative lg:hidden">
 
                 <button id="mobile-blog-btn"
@@ -503,7 +509,7 @@
 
                     <span>Blog</span>
 
-                    {{-- Blog Arrow --}}
+                    
                     <i id="mobile-blog-icon"
                        class="fas fa-chevron-down
                               text-xs
@@ -540,17 +546,14 @@
                                        border-gray-100
                                        pl-4">
 
-                                @forelse(
-                                    ($headerBlogs ?? collect())->take(5)
-                                    as $blogItem
-                                )
+                                <?php $__empty_1 = true; $__currentLoopData = ($headerBlogs ?? collect())->take(5); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $blogItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
 
                                     <li>
 
-                                        <a href="{{ route(
+                                        <a href="<?php echo e(route(
                                             'blog.show',
                                             $blogItem->slug
-                                        ) }}"
+                                        )); ?>"
                                            class="block
                                                   text-gray-600
                                                   hover:text-primary-blue
@@ -558,13 +561,14 @@
                                                   transition-colors
                                                   line-clamp-2">
 
-                                            {{ $blogItem->title }}
+                                            <?php echo e($blogItem->title); ?>
+
 
                                         </a>
 
                                     </li>
 
-                                @empty
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
 
                                     <li class="text-gray-400 text-sm">
 
@@ -572,7 +576,7 @@
 
                                     </li>
 
-                                @endforelse
+                                <?php endif; ?>
 
                             </ul>
 
@@ -585,9 +589,9 @@
             </li>
 
 
-            {{-- ==================================== --}}
-            {{-- Mobile Resources --}}
-            {{-- ==================================== --}}
+            
+            
+            
             <li class="relative lg:hidden">
 
                 <button id="mobile-resources-btn"
@@ -601,7 +605,7 @@
 
                     <span>Resources</span>
 
-                    {{-- Resources Arrow --}}
+                    
                     <i id="mobile-resources-icon"
                        class="fas fa-chevron-down
                               text-xs
@@ -620,9 +624,9 @@
                     <div class="space-y-6 pb-4">
 
 
-                        @foreach($menuColumns as $title => $columnPages)
+                        <?php $__currentLoopData = $menuColumns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $title => $columnPages): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                            @if($columnPages->isNotEmpty())
+                            <?php if($columnPages->isNotEmpty()): ?>
 
                                 <div>
 
@@ -633,7 +637,8 @@
                                                tracking-widest
                                                mb-2">
 
-                                        {{ $title }}
+                                        <?php echo e($title); ?>
+
 
                                     </h3>
 
@@ -643,34 +648,35 @@
                                                border-gray-100
                                                pl-4">
 
-                                        @foreach($columnPages as $page)
+                                        <?php $__currentLoopData = $columnPages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                                             <li>
 
-                                                <a href="{{ route(
+                                                <a href="<?php echo e(route(
                                                     'header_web_page.show',
                                                     $page->slug
-                                                ) }}"
+                                                )); ?>"
                                                    class="block
                                                           text-gray-600
                                                           hover:text-primary-blue
                                                           text-sm">
 
-                                                    {{ $page->title }}
+                                                    <?php echo e($page->title); ?>
+
 
                                                 </a>
 
                                             </li>
 
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                     </ul>
 
                                 </div>
 
-                            @endif
+                            <?php endif; ?>
 
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                     </div>
 
@@ -679,12 +685,12 @@
             </li>
 
 
-            {{-- ==================================== --}}
-            {{-- Mobile Pricing --}}
-            {{-- ==================================== --}}
+            
+            
+            
             <li>
 
-                <a href="{{ route('pricing.index') }}"
+                <a href="<?php echo e(route('pricing.index')); ?>"
                    class="block text-gray-800
                           hover:text-primary-blue
                           transition-colors">
@@ -696,12 +702,12 @@
             </li>
 
 
-            {{-- ==================================== --}}
-            {{-- Mobile Contact --}}
-            {{-- ==================================== --}}
+            
+            
+            
             <li>
 
-                <a href="{{ route('contact_us') }}"
+                <a href="<?php echo e(route('contact_us')); ?>"
                    class="block text-gray-800
                           hover:text-primary-blue
                           transition-colors">
@@ -715,10 +721,10 @@
         </ul>
 
 
-        {{-- ==================================== --}}
-        {{-- Mobile Get Quote --}}
-        {{-- ==================================== --}}
-        <a href="{{ route('serviceform.show') }}"
+        
+        
+        
+        <a href="<?php echo e(route('serviceform.show')); ?>"
            class="btn-quote mt-8
                   w-full text-center block">
 
@@ -731,7 +737,8 @@
 </div>
 
 
-{{-- ==================================== --}}
-{{-- Mobile Backdrop --}}
-{{-- ==================================== --}}
+
+
+
 <div id="backdrop" class="backdrop"></div>
+<?php /**PATH D:\Laravel\Aazz-Agency\resources\views/partials/web_partial/header.blade.php ENDPATH**/ ?>

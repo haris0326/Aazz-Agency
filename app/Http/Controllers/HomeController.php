@@ -7,6 +7,7 @@ use App\Models\TechType;
 use App\Models\WebPages;
 use App\Models\ClientLogo;
 use App\Models\TeamMember;
+use App\Models\BlogModel\Blog;
 use App\Models\Technology;
 use App\Models\ProjectImage;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class HomeController extends Controller
 {
-    public function showContent()
+  public function showContent()
     {
 
         $homeSliderContents = HomeSliderContent::orderBy('sort_order')->get();
@@ -53,9 +54,17 @@ class HomeController extends Controller
         $technologies = Technology::with('type')->get();
         $tech_type = TechType::all();
 
-        return view('index', compact('tech_type','technologies','content','specializations','homeMeta', 'services', 'whyChooseUs','tabs', 'faqs', 'homeSliderContents')); // Changed $member to $members
-    }
+        // Latest Articles section — latest 6 published blogs (falls back to
+        // an empty collection if the blogs table is empty; the view already
+        // handles that with demo cards via @forelse/@empty).
+        $latestBlogs = Blog::published()
+            ->with('category')
+            ->latest('published_at')
+            ->take(6)
+            ->get(['id', 'blog_category_id', 'title', 'slug', 'excerpt', 'featured_image', 'published_at']);
 
+        return view('index', compact('tech_type', 'technologies', 'content', 'specializations', 'homeMeta', 'services', 'whyChooseUs', 'tabs', 'faqs', 'homeSliderContents', 'latestBlogs')); // Changed $member to $members
+    }
     public function create()
     {
         // Fetch the existing data

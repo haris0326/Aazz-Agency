@@ -291,11 +291,19 @@ class BlogController extends Controller
         return redirect()->route('blog.index')->with('success', 'Blog post deleted successfully.');
     }
 
-    /**
-     * Public single-post page. Frontend view isn't built yet (aap ke agle
-     * step ke liye) — is method ne data ready kar diya hai, sirf
-     * `return view('blog_show', ...)` ka view banana baqi hai.
+   /**
+     * Public single-post page.
+     * Fetches the post, related posts (same category first, then
+     * recent fallback), and a rough reading-time estimate.
      */
+    /**
+     * ============================================================
+     *  DROP-IN REPLACEMENT for BlogController::show()
+     *  Replaces the version from before — only change is the
+     *  addition of $comments (approved comments for this post).
+     * ============================================================
+ */
+
     public function show($slug)
     {
         $blog = Blog::published()
@@ -305,7 +313,34 @@ class BlogController extends Controller
 
         $blog->increment('views');
 
-        return view('blog_show', compact('blog'));
+        // Related posts — prefer same category, top up with recent posts
+        // if the category doesn't have enough published siblings.
+        $relatedBlogs = Blog::published()
+            ->where('id', '!=', $blog->id)
+            ->when($blog->blog_category_id, fn ($q) => $q->where('blog_category_id', $blog->blog_category_id))
+            ->latest('published_at')
+            ->take(4)
+            ->get();
+
+        if ($relatedBlogs->count() < 3) {
+            $fill = Blog::published()
+                ->where('id', '!=', $blog->id)
+                ->whereNotIn('id', $relatedBlogs->pluck('id'))
+                ->latest('published_at')
+                ->take(3 - $relatedBlogs->count())
+                ->get();
+
+            $relatedBlogs = $relatedBlogs->merge($fill);
+        }
+
+        // ~200 words per minute, minimum 1 minute
+        $wordCount = str_word_count(strip_tags((string) $blog->content));
+        $readTime  = max(1, (int) ceil($wordCount / 200));
+
+        // Only approved comments are ever shown publicly.
+        $comments = $blog->approvedComments()->get();
+
+        return view('blog_show', compact('blog', 'relatedBlogs', 'readTime', 'comments'));
     }
 
     /**
@@ -366,5 +401,6 @@ class BlogController extends Controller
 
         return $category->id;
     }
+
 
 }

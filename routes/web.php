@@ -34,6 +34,7 @@
     use App\Http\Controllers\service_form_controller\ServiceFormController;
     use App\Http\Controllers\ProposalController;
     use App\Http\Controllers\BlogController;
+    use App\Http\Controllers\BlogCommentController;
     use App\Http\Controllers\BlogCategoryController;
 
 
@@ -184,6 +185,13 @@
         Route::resource('blog-categories', BlogCategoryController::class)->except(['show']);
         Route::resource('blog', BlogController::class)->except(['show']);
 
+         Route::prefix('blog-comments')->name('admin.blog-comments.')->group(function () {
+            Route::get('/', [BlogCommentController::class, 'index'])->name('index');
+            Route::post('/{comment}/status', [BlogCommentController::class, 'updateStatus'])->name('updateStatus');
+            Route::delete('/{comment}', [BlogCommentController::class, 'destroy'])->name('destroy');
+        });
+        
+
 
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     });
@@ -261,3 +269,9 @@
     Route::get('/blog/{slug}', [BlogController::class, 'show'])
     ->where('slug', '[a-z0-9\-]+')
     ->name('blog.show');
+
+    // 3) PUBLIC route — add this near your other public blog routes
+    //    (next to Route::get('/blog/{slug}', ...)->name('blog.show')):
+ 
+Route::post('/blog-comments/{blog}', [BlogCommentController::class, 'store'])
+    ->name('blog.comments.store');

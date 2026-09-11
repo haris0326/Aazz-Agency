@@ -1,10 +1,8 @@
-@extends(config('web_assets.layouts.main'))
-
-@section('title', $homeMeta->meta_title ?? 'Default Title')
-@section('description', $homeMeta->meta_desc ?? 'Default Description')
+<?php $__env->startSection('title', $homeMeta->meta_title ?? 'Default Title'); ?>
+<?php $__env->startSection('description', $homeMeta->meta_desc ?? 'Default Description'); ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
 <!-- ==================================== -->
@@ -24,7 +22,7 @@
 
             <!-- CTA Buttons -->
             <div class="flex flex-wrap gap-4 max-w-xs justify-center sm:justify-start mx-auto sm:mx-0">
-                <a href="{{ route('serviceform.show') }}" class="px-6 py-3 bg-white text-blue-900 font-semibold rounded-full shadow-md hover:bg-gray-100 transition-all duration-300 text-center w-full sm:w-auto">Get a Quote</a>
+                <a href="<?php echo e(route('serviceform.show')); ?>" class="px-6 py-3 bg-white text-blue-900 font-semibold rounded-full shadow-md hover:bg-gray-100 transition-all duration-300 text-center w-full sm:w-auto">Get a Quote</a>
                 <a href="#proposal-form"
                   class="px-6 py-3 bg-yellow-400 text-blue-900 font-semibold rounded-full shadow-md hover:bg-yellow-300 transition-all duration-300 text-center w-full sm:w-auto">
                   Get Started
@@ -35,7 +33,7 @@
             <!-- Trust Strip -->
             <div class="mt-12 max-w-lg w-full">
                 <h3 class="text-white text-lg font-semibold mb-5">Trusted by leading clients & partners:</h3>
-                <img src="{{ asset('web_assets/images/logostriphome.png') }}" alt="Trusted Logos" class="w-full opacity-90 object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/logostriphome.png')); ?>" alt="Trusted Logos" class="w-full opacity-90 object-contain" />
             </div>
             </div>
 
@@ -43,27 +41,27 @@
             <div id="it-cta-right" class="w-full lg:w-1/2 flex justify-center lg:justify-end">
             <div class="grid grid-cols-3 sm:grid-cols-3 gap-10 sm:gap-14">
                 <div class="flex flex-col items-center text-center space-y-3">
-                <img src="{{ asset('web_assets/images/muse.png') }}" alt="Inc 5000" class="w-20 h-20 object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/muse.png')); ?>" alt="Inc 5000" class="w-20 h-20 object-contain" />
                 <p class="text-sm">Inc. 5000</p>
                 </div>
                 <div class="flex flex-col items-center text-center space-y-3">
-                <img src="{{ asset('web_assets/images/google.png') }}" alt="Google Premier Partner" class="w-20 h-20 object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/google.png')); ?>" alt="Google Premier Partner" class="w-20 h-20 object-contain" />
                 <p class="text-sm">Google Premier</p>
                 </div>
                 <div class="flex flex-col items-center text-center space-y-3">
-                <img src="{{ asset('web_assets/images/microsoft.png') }}" alt="Microsoft Partner" class="w-20 h-20 object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/microsoft.png')); ?>" alt="Microsoft Partner" class="w-20 h-20 object-contain" />
                 <p class="text-sm">MS Partner</p>
                 </div>
                 <div class="flex flex-col items-center text-center space-y-3">
-                <img src="{{ asset('web_assets/images/meta.png') }}" alt="Meta Partner" class="w-20 h-20 object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/meta.png')); ?>" alt="Meta Partner" class="w-20 h-20 object-contain" />
                 <p class="text-sm">Meta Partner</p>
                 </div>
                 <div class="flex flex-col items-center text-center space-y-3">
-                <img src="{{ asset('web_assets/images/ibm.png') }}" alt="IFA Member" class="w-20 h-20 object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/ibm.png')); ?>" alt="IFA Member" class="w-20 h-20 object-contain" />
                 <p class="text-sm">IFA Member</p>
                 </div>
                 <div class="flex flex-col items-center text-center space-y-3">
-                <img src="{{ asset('web_assets/images/shopify.png') }}" alt="Shopify Partner" class="w-20 h-20 object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/shopify.png')); ?>" alt="Shopify Partner" class="w-20 h-20 object-contain" />
                 <p class="text-sm">Shopify Partner</p>
                 </div>
             </div>
@@ -79,22 +77,22 @@
 
             <!-- Google Review -->
             <div class="review-badge flex flex-col items-center max-w-[150px]">
-            <img src="{{ asset('web_assets/images/google-reviews-stats-new.png') }}" alt="Google Reviews" class="h-12 mb-3 opacity-90">
-            <img src="{{ asset('web_assets/images/social-review-item-new.png') }}" alt="5 Stars" class="h-6 mb-3">
+            <img src="<?php echo e(asset('web_assets/images/google-reviews-stats-new.png')); ?>" alt="Google Reviews" class="h-12 mb-3 opacity-90">
+            <img src="<?php echo e(asset('web_assets/images/social-review-item-new.png')); ?>" alt="5 Stars" class="h-6 mb-3">
             <p class="text-base text-gray-100 font-semibold">150+ Reviews</p>
             </div>
 
             <!-- Clutch Review -->
             <div class="review-badge flex flex-col items-center max-w-[150px]">
-            <img src="{{ asset('web_assets/images/clutch-reviews-stats-new.png') }}" alt="Clutch Reviews" class="h-12 mb-3 opacity-90">
-            <img src="{{ asset('web_assets/images/social-review-item-new.png') }}" alt="5 Stars" class="h-6 mb-3">
+            <img src="<?php echo e(asset('web_assets/images/clutch-reviews-stats-new.png')); ?>" alt="Clutch Reviews" class="h-12 mb-3 opacity-90">
+            <img src="<?php echo e(asset('web_assets/images/social-review-item-new.png')); ?>" alt="5 Stars" class="h-6 mb-3">
             <p class="text-base text-gray-100 font-semibold">100+ Reviews</p>
             </div>
 
             <!-- UpCity Review -->
             <div class="review-badge flex flex-col items-center max-w-[150px]">
-            <img src="{{ asset('web_assets/images/upcity-reviews-logo-new.png') }}" alt="UpCity Reviews" class="h-12 mb-3 opacity-90">
-            <img src="{{ asset('web_assets/images/social-review-item-new.png') }}" alt="5 Stars" class="h-6 mb-3">
+            <img src="<?php echo e(asset('web_assets/images/upcity-reviews-logo-new.png')); ?>" alt="UpCity Reviews" class="h-12 mb-3 opacity-90">
+            <img src="<?php echo e(asset('web_assets/images/social-review-item-new.png')); ?>" alt="5 Stars" class="h-6 mb-3">
             <p class="text-base text-gray-100 font-semibold">50+ Reviews</p>
             </div>
 
@@ -118,7 +116,7 @@
     <div id="case-cards" class="case-container flex gap-4 overflow-hidden justify-center">
 
       <div id="case-card-1" class="case-card group relative rounded-3xl overflow-hidden bg-gray-900 opacity-0 translate-y-8">
-        <img src="{{ asset('web_assets/images/cause_study/cause_1.webp') }}" alt="Case Study 1" loading="lazy"
+        <img src="<?php echo e(asset('web_assets/images/cause_study/cause_1.webp')); ?>" alt="Case Study 1" loading="lazy"
         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
         <div class="case-content absolute bottom-6 left-6 right-6 opacity-0 translate-y-6 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
         <h3 class="text-xl font-bold text-white mb-2">AI-Driven Solutions</h3>
@@ -128,7 +126,7 @@
       </div>
 
       <div id="case-card-2" class="case-card group relative rounded-3xl overflow-hidden bg-gray-900 opacity-0 translate-y-8">
-        <img src="{{ asset('web_assets/images/cause_study/cause_2.webp') }}" alt="Case Study 2" loading="lazy"
+        <img src="<?php echo e(asset('web_assets/images/cause_study/cause_2.webp')); ?>" alt="Case Study 2" loading="lazy"
         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
         <div class="case-content absolute bottom-6 left-6 right-6 opacity-0 translate-y-6 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
         <h3 class="text-xl font-bold text-white mb-2">eCommerce Growth</h3>
@@ -138,7 +136,7 @@
       </div>
 
       <div id="case-card-3" class="case-card group relative rounded-3xl overflow-hidden bg-gray-900 opacity-0 translate-y-8">
-        <img src="{{ asset('web_assets/images/cause_study/cause_3.webp') }}"
+        <img src="<?php echo e(asset('web_assets/images/cause_study/cause_3.webp')); ?>"
  alt="Case Study 3" loading="lazy"
         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
         <div class="case-content absolute bottom-6 left-6 right-6 opacity-0 translate-y-6 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
@@ -149,7 +147,7 @@
       </div>
 
       <div id="case-card-4" class="case-card group relative rounded-3xl overflow-hidden bg-gray-900 opacity-0 translate-y-8">
-        <img src="{{ asset('web_assets/images/cause_study/cause_4.webp') }}" alt="Case Study 4" loading="lazy"
+        <img src="<?php echo e(asset('web_assets/images/cause_study/cause_4.webp')); ?>" alt="Case Study 4" loading="lazy"
         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
         <div class="case-content absolute bottom-6 left-6 right-6 opacity-0 translate-y-6 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
         <h3 class="text-xl font-bold text-white mb-2">Secure Cloud Migration</h3>
@@ -159,7 +157,7 @@
       </div>
 
       <div id="case-card-5" class="case-card group relative rounded-3xl overflow-hidden bg-gray-900 opacity-0 translate-y-8">
-        <img src="{{ asset('web_assets/images/cause_study/cause_5.webp') }}" alt="Case Study 5" loading="lazy"
+        <img src="<?php echo e(asset('web_assets/images/cause_study/cause_5.webp')); ?>" alt="Case Study 5" loading="lazy"
         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
         <div class="case-content absolute bottom-6 left-6 right-6 opacity-0 translate-y-6 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
         <h3 class="text-xl font-bold text-white mb-2">Mobile Experience</h3>
@@ -191,14 +189,14 @@
 
             <!-- Sidebar Tabs -->
             <div class="flex-shrink-0 w-full lg:w-1/4 space-y-4" id="it-services-tabs">
-                @foreach($tabs as $index => $tab)
+                <?php $__currentLoopData = $tabs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $tab): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <button 
-                        class="tab-btn w-full flex items-center gap-4 p-4 rounded-lg bg-white shadow-sm hover:bg-gray-100 {{ $index == 0 ? 'active' : '' }}" 
-                        data-tab="tab{{ $tab->id }}">
+                        class="tab-btn w-full flex items-center gap-4 p-4 rounded-lg bg-white shadow-sm hover:bg-gray-100 <?php echo e($index == 0 ? 'active' : ''); ?>" 
+                        data-tab="tab<?php echo e($tab->id); ?>">
 
-                        @if($tab->icon)
-                            <img src="{{ $tab->icon }}" class="w-6 h-6" />
-                        @else
+                        <?php if($tab->icon): ?>
+                            <img src="<?php echo e($tab->icon); ?>" class="w-6 h-6" />
+                        <?php else: ?>
                             <!-- Default Heroicon -->
                             <svg xmlns="http://www.w3.org/2000/svg" 
                                 class="w-6 h-6 text-gray-500" 
@@ -208,28 +206,28 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                 d="M3 7h18M3 12h18M3 17h18" />
                             </svg>
-                        @endif
+                        <?php endif; ?>
 
-                        <span class="font-medium text-gray-800">{{ $tab->title }}</span>
+                        <span class="font-medium text-gray-800"><?php echo e($tab->title); ?></span>
                     </button>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
             <!-- Tab Content Area -->
             <div class="flex-1 bg-white p-8 rounded-xl shadow-md" id="it-services-content">
-                @foreach($tabs as $index => $tab)
-                    <div id="tab{{ $tab->id }}" class="tab-content {{ $index == 0 ? 'block' : 'hidden' }}">
-                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">{{ $tab->subtitle ?? $tab->title }}</h3>
-                        <p class="text-gray-700 mb-4">{{ $tab->description }}</p>
-                        @if(!empty($tab->features))
+                <?php $__currentLoopData = $tabs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $tab): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div id="tab<?php echo e($tab->id); ?>" class="tab-content <?php echo e($index == 0 ? 'block' : 'hidden'); ?>">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4"><?php echo e($tab->subtitle ?? $tab->title); ?></h3>
+                        <p class="text-gray-700 mb-4"><?php echo e($tab->description); ?></p>
+                        <?php if(!empty($tab->features)): ?>
                             <ul class="list-disc list-inside text-gray-600">
-                                @foreach($tab->features as $feature)
-                                    <li>{{ $feature }}</li>
-                                @endforeach
+                                <?php $__currentLoopData = $tab->features; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li><?php echo e($feature); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
-                        @endif
+                        <?php endif; ?>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
         </div>
@@ -237,7 +235,7 @@
 </section>
 
 
-        @include('show_reviews.reviews')
+        <?php echo $__env->make('show_reviews.reviews', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
 
 
@@ -254,29 +252,30 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              @php
+              <?php
                   $bgColors = ['bg-blue-100 text-blue-600', 'bg-green-100 text-green-600', 'bg-purple-100 text-purple-600'];
-              @endphp
+              ?>
 
-              @foreach($whyChooseUs as $index => $item)
-                  @php
+              <?php $__currentLoopData = $whyChooseUs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                  <?php
                       $colorClass = $bgColors[$index % 3];
-                  @endphp
+                  ?>
 
                   <div class="p-8 bg-white rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition duration-500 ease-in-out" 
                       data-aos="fade-up" 
-                      data-aos-delay="{{ ($index + 1) * 100 }}">
+                      data-aos-delay="<?php echo e(($index + 1) * 100); ?>">
                       
-                      <div class="w-16 h-16 {{ $colorClass }} flex items-center justify-center rounded-xl mb-6 shadow-md">
-                          <i class="{{ $item->icon }} text-2xl"></i>
+                      <div class="w-16 h-16 <?php echo e($colorClass); ?> flex items-center justify-center rounded-xl mb-6 shadow-md">
+                          <i class="<?php echo e($item->icon); ?> text-2xl"></i>
                       </div>
 
-                      <h3 class="text-2xl font-bold text-gray-800 mb-3">{{ $item->title }}</h3>
+                      <h3 class="text-2xl font-bold text-gray-800 mb-3"><?php echo e($item->title); ?></h3>
                       <p class="text-gray-600 text-base leading-relaxed">
-                          {{ $item->description }}
+                          <?php echo e($item->description); ?>
+
                       </p>
                   </div>
-              @endforeach
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </div>
 
       </div>
@@ -366,7 +365,7 @@
       </h2>
 
       <!-- Button -->
-      <a id="cta-button" href="{{ route('serviceform.show') }}"
+      <a id="cta-button" href="<?php echo e(route('serviceform.show')); ?>"
         class="inline-block px-8 py-4 bg-white text-black text-lg font-medium rounded-lg shadow-lg hover:bg-yellow-400 transition duration-300">
         REQUEST A PROPOSAL →
       </a>
@@ -401,7 +400,7 @@
 
           <!-- Cards Grid -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              @php
+              <?php
                   // Define repeating background & text colors
                   $bgColors = [
                       ['bg' => 'bg-blue-100', 'text' => 'text-blue-600', 'btn' => 'bg-blue-600 hover:bg-blue-500'],
@@ -411,33 +410,34 @@
                       ['bg' => 'bg-pink-100', 'text' => 'text-pink-600', 'btn' => 'bg-pink-600 hover:bg-pink-500'],
                       ['bg' => 'bg-red-100', 'text' => 'text-red-600', 'btn' => 'bg-red-600 hover:bg-red-500'],
                   ];
-              @endphp
+              ?>
 
-              @foreach($services as $index => $service)
-                  @php
+              <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                  <?php
                       $color = $bgColors[$index % count($bgColors)];
-                  @endphp
+                  ?>
 
                   <div class="offer-card bg-white shadow-lg rounded-2xl p-8 hover:shadow-2xl transition duration-300">
-                      <div class="w-14 h-14 flex items-center justify-center {{ $color['bg'] }} {{ $color['text'] }} rounded-lg mb-6">
-                          @if($service->icon)
-                              <img src="{{ $service->icon }}" alt="{{ $service->title }}" class="w-8 h-8">
-                          @else
+                      <div class="w-14 h-14 flex items-center justify-center <?php echo e($color['bg']); ?> <?php echo e($color['text']); ?> rounded-lg mb-6">
+                          <?php if($service->icon): ?>
+                              <img src="<?php echo e($service->icon); ?>" alt="<?php echo e($service->title); ?>" class="w-8 h-8">
+                          <?php else: ?>
                               <i class="fas fa-cogs text-xl"></i>
-                          @endif
+                          <?php endif; ?>
                       </div>
-                      <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ $service->title }}</h3>
+                      <h3 class="text-xl font-semibold text-gray-900 mb-3"><?php echo e($service->title); ?></h3>
                       <p class="text-gray-600 text-sm mb-5">
-                          {{ \Str::limit($service->description, 150) }}
+                          <?php echo e(\Str::limit($service->description, 150)); ?>
+
                       </p>
-                      @if($service->serviceCategory && $service->serviceSEO)
-                          <a href="{{ route('header_service.show', ['category_slug' => $service->serviceCategory->cat_slug, 'service_slug' => $service->serviceSEO->meta_slug]) }}" 
-                            class="inline-block px-5 py-2 {{ $color['btn'] }} text-white text-sm rounded-full transition">
+                      <?php if($service->serviceCategory && $service->serviceSEO): ?>
+                          <a href="<?php echo e(route('header_service.show', ['category_slug' => $service->serviceCategory->cat_slug, 'service_slug' => $service->serviceSEO->meta_slug])); ?>" 
+                            class="inline-block px-5 py-2 <?php echo e($color['btn']); ?> text-white text-sm rounded-full transition">
                               Learn More →
                           </a>
-                      @endif
+                      <?php endif; ?>
                   </div>
-              @endforeach
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </div>
 
       </div>
@@ -455,10 +455,12 @@
           <!-- Heading -->
           <div class="text-center mb-12 transform hover:scale-[1.02] transition duration-300" data-aos="fade-up">
               <h2 class="text-4xl sm:text-5xl font-extrabold mb-4 text-gray-900">
-                  {{ $content->first()->title ?? 'Discover the Power Behind AAZZ Agency' }}
+                  <?php echo e($content->first()->title ?? 'Discover the Power Behind AAZZ Agency'); ?>
+
               </h2>
               <p class="text-lg sm:text-xl text-gray-600 max-w-6xl mx-auto leading-relaxed">
-                  {{ $content->first()->description ?? 'We’re not just service providers — we’re your digital growth partners. At AAZZ Agency, we combine technology, creativity, and strategy to deliver scalable IT solutions, impactful marketing, and measurable business results.' }}
+                  <?php echo e($content->first()->description ?? 'We’re not just service providers — we’re your digital growth partners. At AAZZ Agency, we combine technology, creativity, and strategy to deliver scalable IT solutions, impactful marketing, and measurable business results.'); ?>
+
               </p>
           </div>
 
@@ -469,20 +471,22 @@
               <div class="bg-gray-100 rounded-xl p-6 shadow-md overflow-y-auto custom-scrollbar transform hover:scale-[1.02] transition duration-300"
                   data-aos="fade-right"
                   style="max-height: 400px;">
-                  {!! $content->first()->content_2 ?? '
+                  <?php echo $content->first()->content_2 ?? '
                   <h3 class="text-2xl font-bold mb-4">Your Trusted IT & Digital Solutions Partner</h3>
                   <p class="text-base leading-relaxed text-gray-700 mb-4">Default left column content goes here...</p>
-                  ' !!}
+                  '; ?>
+
               </div>
 
               <!-- Right Column -->
               <div class="bg-gray-100 rounded-xl p-6 shadow-md overflow-y-auto custom-scrollbar transform hover:scale-[1.02] transition duration-300"
                   data-aos="fade-left"
                   style="max-height: 400px;">
-                  {!! $content->first()->content_3 ?? '
+                  <?php echo $content->first()->content_3 ?? '
                   <h3 class="text-2xl font-bold mb-4">Unlocking Your Digital Potential</h3>
                   <p class="text-base leading-relaxed text-gray-700 mb-4">Default right column content goes here...</p>
-                  ' !!}
+                  '; ?>
+
               </div>
 
           </div>
@@ -509,34 +513,34 @@
 
         <!-- Features Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            @php
+            <?php
                 $colors = ['bg-blue-100 text-blue-600', 'bg-green-100 text-green-600', 'bg-yellow-100 text-yellow-600', 'bg-purple-100 text-purple-600', 'bg-pink-100 text-pink-600', 'bg-red-100 text-red-600'];
-            @endphp
+            ?>
 
-            @foreach($specializations as $index => $specialization)
-                @php
+            <?php $__currentLoopData = $specializations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $specialization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php
                     $color = $colors[$index % count($colors)];
-                @endphp
+                ?>
 
-                <div class="bg-white rounded-2xl shadow-xl p-8 text-center transform hover:scale-105 transition duration-500 ease-in-out" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
+                <div class="bg-white rounded-2xl shadow-xl p-8 text-center transform hover:scale-105 transition duration-500 ease-in-out" data-aos="fade-up" data-aos-delay="<?php echo e(($index + 1) * 100); ?>">
                     
                     <!-- Icon -->
-                    <div class="w-16 h-16 flex items-center justify-center rounded-xl mb-6 shadow-md mx-auto {{ $color }}">
-                        <i class="{{ $specialization->icon_class ?? 'lni lni-cog' }} text-2xl"></i>
+                    <div class="w-16 h-16 flex items-center justify-center rounded-xl mb-6 shadow-md mx-auto <?php echo e($color); ?>">
+                        <i class="<?php echo e($specialization->icon_class ?? 'lni lni-cog'); ?> text-2xl"></i>
                     </div>
 
                     <!-- Title -->
-                    <h4 class="text-2xl font-bold text-gray-800 mb-3">{{ $specialization->title ?? 'Default Title' }}</h4>
+                    <h4 class="text-2xl font-bold text-gray-800 mb-3"><?php echo e($specialization->title ?? 'Default Title'); ?></h4>
 
                     <!-- Description -->
-                    <p class="text-gray-600 mb-5">{{ $specialization->description ?? 'Short description for the ones who look for something new. Awesome!' }}</p>
+                    <p class="text-gray-600 mb-5"><?php echo e($specialization->description ?? 'Short description for the ones who look for something new. Awesome!'); ?></p>
 
                     <!-- Button -->
-                    <a href="{{ $specialization->button_link ?? 'javascript:void(0)' }}" class="inline-block px-6 py-2 bg-indigo-600 text-white text-sm rounded-full hover:bg-indigo-500 transition">
+                    <a href="<?php echo e($specialization->button_link ?? 'javascript:void(0)'); ?>" class="inline-block px-6 py-2 bg-indigo-600 text-white text-sm rounded-full hover:bg-indigo-500 transition">
                         Explore
                     </a>
                 </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
 
     </div>
@@ -560,40 +564,40 @@
          <!-- Row 1: Left to Right -->
             <div class="flex w-max space-x-8 animate-marquee-slow">
             <!-- First 7 Logos -->
-            <img src="{{ asset('web_assets/images/client_images/logo_1.png') }}" alt="Client 1" class="h-16 w-auto object-contain" />
-            <img src="{{ asset('web_assets/images/client_images/logo_2.png') }}" alt="Client 2" class="h-16 w-auto object-contain" />
-            <img src="{{ asset('web_assets/images/client_images/logo_3.png') }}" alt="Client 3" class="h-16 w-auto object-contain" />
-            <img src="{{ asset('web_assets/images/client_images/logo_4.png') }}" alt="Client 4" class="h-16 w-auto object-contain" />
-            <img src="{{ asset('web_assets/images/client_images/logo_5.png') }}" alt="Client 5" class="h-16 w-auto object-contain" />
-            <img src="{{ asset('web_assets/images/client_images/logo_6.png') }}" alt="Client 6" class="h-16 w-auto object-contain" />
-            <img src="{{ asset('web_assets/images/client_images/logo_7.png') }}" alt="Client 7" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_1.png')); ?>" alt="Client 1" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_2.png')); ?>" alt="Client 2" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_3.png')); ?>" alt="Client 3" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_4.png')); ?>" alt="Client 4" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_5.png')); ?>" alt="Client 5" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_6.png')); ?>" alt="Client 6" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_7.png')); ?>" alt="Client 7" class="h-16 w-auto object-contain" />
             <!-- Repeat once for smooth loop -->
-            <img src="{{ asset('web_assets/images/client_images/logo_1.png') }}" alt="Client 1" class="h-16 w-auto object-contain" />
-            <img src="{{ asset('web_assets/images/client_images/logo_2.png') }}" alt="Client 2" class="h-16 w-auto object-contain" />
-            <img src="{{ asset('web_assets/images/client_images/logo_3.png') }}" alt="Client 3" class="h-16 w-auto object-contain" />
-            <img src="{{ asset('web_assets/images/client_images/logo_4.png') }}" alt="Client 4" class="h-16 w-auto object-contain" />
-            <img src="{{ asset('web_assets/images/client_images/logo_5.png') }}" alt="Client 5" class="h-16 w-auto object-contain" />
-            <img src="{{ asset('web_assets/images/client_images/logo_6.png') }}" alt="Client 6" class="h-16 w-auto object-contain" />
-            <img src="{{ asset('web_assets/images/client_images/logo_7.png') }}" alt="Client 7" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_1.png')); ?>" alt="Client 1" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_2.png')); ?>" alt="Client 2" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_3.png')); ?>" alt="Client 3" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_4.png')); ?>" alt="Client 4" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_5.png')); ?>" alt="Client 5" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_6.png')); ?>" alt="Client 6" class="h-16 w-auto object-contain" />
+            <img src="<?php echo e(asset('web_assets/images/client_images/logo_7.png')); ?>" alt="Client 7" class="h-16 w-auto object-contain" />
             </div>
 
 
                         <!-- Row 2: Right to Left -->
                 <div class="flex w-max space-x-8 animate-marquee-slow-reverse">
                 <!-- Next 6 Logos -->
-                <img src="{{ asset('web_assets/images/client_images/logo_8.png') }}" alt="Client 8" class="h-16 w-auto object-contain" />
-                <img src="{{ asset('web_assets/images/client_images/logo_9.png') }}" alt="Client 9" class="h-16 w-auto object-contain" />
-                <img src="{{ asset('web_assets/images/client_images/logo_10.png') }}" alt="Client 10" class="h-16 w-auto object-contain" />
-                <img src="{{ asset('web_assets/images/client_images/logo_11.png') }}" alt="Client 11" class="h-16 w-auto object-contain" />
-                <img src="{{ asset('web_assets/images/client_images/logo_12.png') }}" alt="Client 12" class="h-16 w-auto object-contain" />
-                <img src="{{ asset('web_assets/images/client_images/logo_13.png') }}" alt="Client 13" class="h-16 w-auto object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/client_images/logo_8.png')); ?>" alt="Client 8" class="h-16 w-auto object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/client_images/logo_9.png')); ?>" alt="Client 9" class="h-16 w-auto object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/client_images/logo_10.png')); ?>" alt="Client 10" class="h-16 w-auto object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/client_images/logo_11.png')); ?>" alt="Client 11" class="h-16 w-auto object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/client_images/logo_12.png')); ?>" alt="Client 12" class="h-16 w-auto object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/client_images/logo_13.png')); ?>" alt="Client 13" class="h-16 w-auto object-contain" />
                 <!-- Repeat once for smooth loop -->
-                <img src="{{ asset('web_assets/images/client_images/logo_8.png') }}" alt="Client 8" class="h-16 w-auto object-contain" />
-                <img src="{{ asset('web_assets/images/client_images/logo_9.png') }}" alt="Client 9" class="h-16 w-auto object-contain" />
-                <img src="{{ asset('web_assets/images/client_images/logo_10.png') }}" alt="Client 10" class="h-16 w-auto object-contain" />
-                <img src="{{ asset('web_assets/images/client_images/logo_11.png') }}" alt="Client 11" class="h-16 w-auto object-contain" />
-                <img src="{{ asset('web_assets/images/client_images/logo_12.png') }}" alt="Client 12" class="h-16 w-auto object-contain" />
-                <img src="{{ asset('web_assets/images/client_images/logo_13.png') }}" alt="Client 13" class="h-16 w-auto object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/client_images/logo_8.png')); ?>" alt="Client 8" class="h-16 w-auto object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/client_images/logo_9.png')); ?>" alt="Client 9" class="h-16 w-auto object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/client_images/logo_10.png')); ?>" alt="Client 10" class="h-16 w-auto object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/client_images/logo_11.png')); ?>" alt="Client 11" class="h-16 w-auto object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/client_images/logo_12.png')); ?>" alt="Client 12" class="h-16 w-auto object-contain" />
+                <img src="<?php echo e(asset('web_assets/images/client_images/logo_13.png')); ?>" alt="Client 13" class="h-16 w-auto object-contain" />
                 </div>
 
 
@@ -613,36 +617,36 @@
 
             <!-- Left Column -->
             <div class="space-y-4">
-                @foreach($faqs->slice(0, ceil($faqs->count() / 2)) as $index => $faq)
+                <?php $__currentLoopData = $faqs->slice(0, ceil($faqs->count() / 2)); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $faq): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300">
                         <button class="faq-toggle w-full text-left px-6 py-4 flex justify-between items-center text-gray-800 font-medium focus:outline-none"
-                                data-faq-toggle="left{{ $index }}">
-                            <span>{{ $faq->question }}</span>
+                                data-faq-toggle="left<?php echo e($index); ?>">
+                            <span><?php echo e($faq->question); ?></span>
                             <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
                         </button>
                         <div class="faq-content max-h-0 overflow-hidden px-6 pb-0 transition-all duration-500 ease-in-out text-gray-600"
-                             id="faq-left{{ $index }}">
-                            <p class="py-4">{{ $faq->answer }}</p>
+                             id="faq-left<?php echo e($index); ?>">
+                            <p class="py-4"><?php echo e($faq->answer); ?></p>
                         </div>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
             <!-- Right Column -->
             <div class="space-y-4">
-                @foreach($faqs->slice(ceil($faqs->count() / 2)) as $index => $faq)
+                <?php $__currentLoopData = $faqs->slice(ceil($faqs->count() / 2)); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $faq): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300">
                         <button class="faq-toggle w-full text-left px-6 py-4 flex justify-between items-center text-gray-800 font-medium focus:outline-none"
-                                data-faq-toggle="right{{ $index }}">
-                            <span>{{ $faq->question }}</span>
+                                data-faq-toggle="right<?php echo e($index); ?>">
+                            <span><?php echo e($faq->question); ?></span>
                             <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
                         </button>
                         <div class="faq-content max-h-0 overflow-hidden px-6 pb-0 transition-all duration-500 ease-in-out text-gray-600"
-                             id="faq-right{{ $index }}">
-                            <p class="py-4">{{ $faq->answer }}</p>
+                             id="faq-right<?php echo e($index); ?>">
+                            <p class="py-4"><?php echo e($faq->answer); ?></p>
                         </div>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
         </div>
@@ -671,33 +675,34 @@
         <!-- Articles Grid -->
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
 
-        @forelse(($latestBlogs ?? collect())->take(6) as $index => $article)
+        <?php $__empty_1 = true; $__currentLoopData = ($latestBlogs ?? collect())->take(6); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $article): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
 
-            {{-- Real blog card --}}
-            <a href="{{ route('blog.show', $article->slug) }}"
+            
+            <a href="<?php echo e(route('blog.show', $article->slug)); ?>"
             class="group bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 block"
-            data-aos="fade-up" data-aos-delay="{{ ($index % 3 + 1) * 100 }}"
+            data-aos="fade-up" data-aos-delay="<?php echo e(($index % 3 + 1) * 100); ?>"
             >
             <div class="w-full h-60 overflow-hidden bg-gray-100">
-                @if($article->featured_image)
-                <img src="{{ asset($article->featured_image) }}" alt="{{ $article->title }}" loading="lazy"
+                <?php if($article->featured_image): ?>
+                <img src="<?php echo e(asset($article->featured_image)); ?>" alt="<?php echo e($article->title); ?>" loading="lazy"
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                @else
+                <?php else: ?>
                 <div class="w-full h-full flex items-center justify-center text-gray-300 text-3xl">
                     <i class="far fa-image"></i>
                 </div>
-                @endif
+                <?php endif; ?>
             </div>
             <div class="p-6">
                 <p class="text-xs text-gray-400 uppercase mb-2 flex items-center gap-2">
-                @if($article->category)
-                    <span class="text-blue-600 font-bold">{{ $article->category->name }}</span>
+                <?php if($article->category): ?>
+                    <span class="text-blue-600 font-bold"><?php echo e($article->category->name); ?></span>
                     <span class="opacity-40">&bull;</span>
-                @endif
-                <span>{{ ($article->published_at ?? $article->created_at)?->format('F j, Y') }}</span>
+                <?php endif; ?>
+                <span><?php echo e(($article->published_at ?? $article->created_at)?->format('F j, Y')); ?></span>
                 </p>
                 <h3 class="text-xl font-bold text-gray-800 mb-4 group-hover:text-blue-600 transition line-clamp-2">
-                {{ $article->title }}
+                <?php echo e($article->title); ?>
+
                 </h3>
                 <span
                 class="inline-flex items-center px-5 py-2 rounded-full bg-blue-600 text-white text-sm font-medium group-hover:bg-blue-700 transition">
@@ -711,14 +716,14 @@
             </div>
             </a>
 
-        @empty
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
 
-            {{-- Fallback demo cards — shown only until real blogs are published --}}
+            
             <div
             class="group bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition duration-500 transform hover:-translate-y-2"
             data-aos="fade-up" data-aos-delay="100"
             >
-            <img src="{{ asset('web_assets/images/blog/img_1.png') }}" alt="Article 1"
+            <img src="<?php echo e(asset('web_assets/images/blog/img_1.png')); ?>" alt="Article 1"
                 class="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-500">
             <div class="p-6">
                 <p class="text-xs text-gray-400 uppercase mb-2">January 10, 2023</p>
@@ -741,7 +746,7 @@
             class="group bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition duration-500 transform hover:-translate-y-2"
             data-aos="fade-up" data-aos-delay="200"
             >
-            <img src="{{ asset('web_assets/images/blog/img_2.png') }}" alt="Article 2"
+            <img src="<?php echo e(asset('web_assets/images/blog/img_2.png')); ?>" alt="Article 2"
                 class="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-500">
             <div class="p-6">
                 <p class="text-xs text-gray-400 uppercase mb-2">January 10, 2023</p>
@@ -764,7 +769,7 @@
             class="group bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition duration-500 transform hover:-translate-y-2"
             data-aos="fade-up" data-aos-delay="300"
             >
-            <img src="{{ asset('web_assets/images/blog/img_3.png') }}" alt="Article 3"
+            <img src="<?php echo e(asset('web_assets/images/blog/img_3.png')); ?>" alt="Article 3"
                 class="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-500">
             <div class="p-6">
                 <p class="text-xs text-gray-400 uppercase mb-2">January 10, 2023</p>
@@ -783,36 +788,36 @@
             </div>
             </div>
 
-        @endforelse
+        <?php endif; ?>
 
         </div>
 
     </div>
     </section>
 
-  {{-- Include the service form --}}
-  @include('service_form.form')
+  
+  <?php echo $__env->make('service_form.form', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('custom_css')
+<?php $__env->startPush('custom_css'); ?>
     <!-- Home page specific CSS -->
-    <link rel="stylesheet" href="{{ asset('web_assets/css/home_page/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('web_assets/css/home_page/cause_study.css') }}">
-    <link rel="stylesheet" href="{{ asset('web_assets/css/home_page/animations.css') }}">
-    <link rel="stylesheet" href="{{ asset('web_assets/css/home_page/content_sec.css') }}">
-    <link rel="stylesheet" href="{{ asset('web_assets/css/client_sec.css') }}">
-@endpush
+    <link rel="stylesheet" href="<?php echo e(asset('web_assets/css/home_page/style.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('web_assets/css/home_page/cause_study.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('web_assets/css/home_page/animations.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('web_assets/css/home_page/content_sec.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('web_assets/css/client_sec.css')); ?>">
+<?php $__env->stopPush(); ?>
 
-@push('custom_js')
+<?php $__env->startPush('custom_js'); ?>
     <!-- Home page specific JS -->
-    <script src="{{ asset('web_assets/js/home/animations.js') }}" defer></script>
-    <script src="{{ asset('web_assets/js/home/faq.js') }}" defer></script>
-    <script src="{{ asset('web_assets/js/home/case-studies.js') }}" defer></script>
-    <script src="{{ asset('web_assets/js/home/it-services-tabs.js') }}" defer></script>
-    <script src="{{ asset('web_assets/js/home/testimonial.js') }}" defer></script>
+    <script src="<?php echo e(asset('web_assets/js/home/animations.js')); ?>" defer></script>
+    <script src="<?php echo e(asset('web_assets/js/home/faq.js')); ?>" defer></script>
+    <script src="<?php echo e(asset('web_assets/js/home/case-studies.js')); ?>" defer></script>
+    <script src="<?php echo e(asset('web_assets/js/home/it-services-tabs.js')); ?>" defer></script>
+    <script src="<?php echo e(asset('web_assets/js/home/testimonial.js')); ?>" defer></script>
 
     <!-- AOS animation library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -824,10 +829,10 @@
             });
         });
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
 
-@push('custom_js')
+<?php $__env->startPush('custom_js'); ?>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
     let proposalCaptchaVerified = false;
@@ -921,4 +926,6 @@
         });
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make(config('web_assets.layouts.main'), array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Laravel\Aazz-Agency\resources\views/index.blade.php ENDPATH**/ ?>

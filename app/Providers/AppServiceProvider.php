@@ -9,6 +9,7 @@ use App\Models\TeamMember;
 use App\Models\ProjectImage;
 use App\Models\WebHeaderLink;
 use App\Models\WebsiteSetting;
+use App\Models\BlogModel\Blog;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use App\Models\ServiceModel\MainService;
@@ -107,6 +108,26 @@ class AppServiceProvider extends ServiceProvider
             ]);
 
             view()->share('webPages', collect());
+        }
+
+
+        try {
+
+            // Header "Blog" dropdown — latest 5 published posts only.
+            view()->share(
+                'headerBlogs',
+                Blog::published()
+                    ->latest('published_at')
+                    ->take(5)
+                    ->get(['id', 'title', 'slug', 'published_at'])
+            );
+        } catch (\Throwable $e) {
+
+            Log::error('Failed to load headerBlogs.', [
+                'message' => $e->getMessage(),
+            ]);
+
+            view()->share('headerBlogs', collect());
         }
 
 
