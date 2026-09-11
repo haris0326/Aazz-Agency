@@ -1,11 +1,9 @@
-@extends(config('web_assets.layouts.main'))
-
-@section('title', ucfirst($category->name) . ' Packages' . 
+<?php $__env->startSection('title', ucfirst($category->name) . ' Packages' . 
     (!empty($city?->name) ? ' in ' . ucfirst($city->name) . ' | Aazz Agency' : '')
-)
-@section('content')
+); ?>
+<?php $__env->startSection('content'); ?>
 
-@push('custom_css')
+<?php $__env->startPush('custom_css'); ?>
 <style>
     /* Custom Mouse Cursor */
     #custom-cursor { 
@@ -117,11 +115,11 @@
 }
 
 </style>
-@endpush
+<?php $__env->stopPush(); ?>
 
 <div id="custom-cursor" class="hidden lg:block"></div>
 
-{{-- Header Section --}}
+
 <header class="relative bg-[#020617] pt-32 pb-24 overflow-hidden">
     <div class="absolute inset-0">
         <div class="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px]"></div>
@@ -130,61 +128,63 @@
     
     <div class="container mx-auto px-6 relative z-10 text-center">
         <h1 class="text-4xl md:text-7xl font-black text-white mb-6 tracking-tighter leading-tight">
-            {{ ucwords($category->name) }} <span class="text-teal-400">Plans</span>
-           @if(!empty($city?->name))
+            <?php echo e(ucwords($category->name)); ?> <span class="text-teal-400">Plans</span>
+           <?php if(!empty($city?->name)): ?>
                 <div class="text-2xl md:text-4xl text-blue-500 mt-2 italic">
-                    in {{ ucfirst($city->name) }}
+                    in <?php echo e(ucfirst($city->name)); ?>
+
                 </div>
-            @endif
+            <?php endif; ?>
         </h1>
         <p class="max-w-2xl mx-auto text-slate-400 text-lg md:text-xl leading-relaxed opacity-90">
-            {{ $category->description }}
+            <?php echo e($category->description); ?>
+
         </p>
     </div>
 </header>
 
-{{-- Pricing Cards --}}
+
 <section class="bg-[#020617] pb-32">
     <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach($packages as $package)
+            <?php $__currentLoopData = $packages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $package): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="pricing-card-glow group relative p-8 lg:p-10 rounded-[2.5rem] bg-white/5 border border-white/10 flex flex-col justify-between">
-                @if($loop->iteration == 2)
+                <?php if($loop->iteration == 2): ?>
                     <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-teal-400 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase shadow-xl">Recommended</span>
-                @endif
+                <?php endif; ?>
 
                 <div>
                     <div class="mb-8">
-                        <h5 class="text-teal-400 font-black tracking-widest uppercase text-xs mb-2">{{ $package->level }}</h5>
+                        <h5 class="text-teal-400 font-black tracking-widest uppercase text-xs mb-2"><?php echo e($package->level); ?></h5>
                         <div class="flex items-baseline gap-1">
-                            <span class="text-5xl font-black text-white">${{ number_format($package->price, 0) }}</span>
+                            <span class="text-5xl font-black text-white">$<?php echo e(number_format($package->price, 0)); ?></span>
                             <span class="text-slate-500 text-sm">/total</span>
                         </div>
-                        <h3 class="text-slate-300 font-bold mt-2 text-xl">{{ $package->name ?? '' }}</h3>
+                        <h3 class="text-slate-300 font-bold mt-2 text-xl"><?php echo e($package->name ?? ''); ?></h3>
                     </div>
 
                     <ul class="space-y-4 mb-10">
-                        @foreach($package->benefits as $benefit)
+                        <?php $__currentLoopData = $package->benefits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $benefit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li class="flex items-start gap-3 text-slate-400 text-sm leading-tight">
                             <i class="fas fa-check-circle text-teal-500 mt-1"></i>
-                            <span>{{ $benefit->benefit_description ?? '' }}</span>
+                            <span><?php echo e($benefit->benefit_description ?? ''); ?></span>
                         </li>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
 
                <button
                     type="button"
                     class="get-started-btn w-full py-5 bg-white/10 group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-teal-400 text-white font-black rounded-2xl transition-all duration-300 border border-white/10 uppercase tracking-widest text-xs"
-                    data-category-id="{{ $category->id }}"
-                    data-package-id="{{ $package->id }}"
-                    data-package-name="{{ $package->level }}"
+                    data-category-id="<?php echo e($category->id); ?>"
+                    data-package-id="<?php echo e($package->id); ?>"
+                    data-package-name="<?php echo e($package->level); ?>"
                 >
                     Select This Plan
                 </button>
 
             </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 </section>
@@ -200,7 +200,8 @@
                         Information
                     </div>
                     <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight leading-tight">
-                        {{ isset($content) && isset($content->title) ? ucwords($content->title) : "Details" }}
+                        <?php echo e(isset($content) && isset($content->title) ? ucwords($content->title) : "Details"); ?>
+
                     </h2>
                     <p class="text-slate-500 text-sm mt-4 leading-relaxed">
                         Complete overview and professional guidelines regarding this package.
@@ -211,7 +212,8 @@
                     <div class="agency-content-container relative">
                         <div class="compact-scroll-area pr-4 overflow-y-auto max-h-[300px] hide-scrollbar" id="style-scroll">
                             <div class="prose prose-sm prose-invert max-w-none text-slate-400 custom-render">
-                                {!! isset($content) && isset($content->pkg_content) ? $content->pkg_content : "No content available." !!}
+                                <?php echo isset($content) && isset($content->pkg_content) ? $content->pkg_content : "No content available."; ?>
+
                             </div>
                         </div>
                         
@@ -223,58 +225,60 @@
         </div>
     </div>
 </section>
-{{-- Execution Strategy (Tabs) --}}
+
 <section class="py-24 bg-slate-50">
     <div class="container mx-auto px-6">
         <div class="max-w-5xl mx-auto bg-white rounded-[2.5rem] p-6 md:p-16 shadow-2xl border border-slate-100">
             <h2 class="text-3xl md:text-5xl font-black text-slate-900 mb-12 text-center tracking-tight">Execution Strategy</h2>
             
-            @if ($tabs->isNotEmpty())
+            <?php if($tabs->isNotEmpty()): ?>
             <div class="flex overflow-x-auto hide-scrollbar md:flex-wrap md:justify-center gap-3 mb-12 pb-4 md:pb-0">
-                @foreach ($tabs as $index => $tabContent)
-                <button onclick="openTab(event, 'tab-{{ $index }}')" 
-                        class="tab-link flex-shrink-0 {{ $index == 0 ? 'active-tab' : 'bg-slate-100 text-slate-600' }} px-8 py-3.5 rounded-2xl font-bold transition-all text-sm md:text-base">
-                    {{ ucwords($tabContent->tab_title ?? '') }}
+                <?php $__currentLoopData = $tabs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $tabContent): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <button onclick="openTab(event, 'tab-<?php echo e($index); ?>')" 
+                        class="tab-link flex-shrink-0 <?php echo e($index == 0 ? 'active-tab' : 'bg-slate-100 text-slate-600'); ?> px-8 py-3.5 rounded-2xl font-bold transition-all text-sm md:text-base">
+                    <?php echo e(ucwords($tabContent->tab_title ?? '')); ?>
+
                 </button>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
             <div class="tab-content-container">
-                @foreach ($tabs as $index => $tabContent)
-                <div id="tab-{{ $index }}" class="tab-pane {{ $index == 0 ? '' : 'hidden' }} animate-fade-in">
+                <?php $__currentLoopData = $tabs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $tabContent): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div id="tab-<?php echo e($index); ?>" class="tab-pane <?php echo e($index == 0 ? '' : 'hidden'); ?> animate-fade-in">
                     <div class="prose prose-lg prose-slate max-w-none text-slate-600 leading-relaxed">
-                        {!! $tabContent->tab_content !!}
+                        <?php echo $tabContent->tab_content; ?>
+
                     </div>
                 </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
-            @endif
+            <?php endif; ?>
         </div>
     </div>
 </section>
 
-{{-- FAQ Section --}}
+
 <section class="py-24 bg-white">
     <div class="container mx-auto px-6 max-w-4xl">
         <h2 class="text-4xl font-black text-center text-slate-900 mb-16">Frequently Asked Questions</h2>
         <div class="space-y-4">
-            @foreach($faqs as $index => $faq)
+            <?php $__currentLoopData = $faqs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $faq): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="group border border-slate-200 rounded-[2rem] overflow-hidden transition-all hover:border-blue-500/50">
-                <button onclick="toggleFaq({{$index}})" class="w-full flex items-center justify-between p-6 md:p-8 text-left bg-white">
-                    <span class="text-lg font-bold text-slate-800">{{ ucwords($faq->question) }}</span>
-                    <i id="icon-{{$index}}" class="fas fa-plus text-blue-600 transition-all duration-300"></i>
+                <button onclick="toggleFaq(<?php echo e($index); ?>)" class="w-full flex items-center justify-between p-6 md:p-8 text-left bg-white">
+                    <span class="text-lg font-bold text-slate-800"><?php echo e(ucwords($faq->question)); ?></span>
+                    <i id="icon-<?php echo e($index); ?>" class="fas fa-plus text-blue-600 transition-all duration-300"></i>
                 </button>
-                <div id="faq-{{$index}}" class="faq-answer px-6 md:px-8 bg-slate-50/50">
-                    <p class="text-slate-600 pb-8 leading-relaxed">{{ $faq->answer }}</p>
+                <div id="faq-<?php echo e($index); ?>" class="faq-answer px-6 md:px-8 bg-slate-50/50">
+                    <p class="text-slate-600 pb-8 leading-relaxed"><?php echo e($faq->answer); ?></p>
                 </div>
             </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 </section>
 
-{{-- Service Locations (City Slider) --}}
-    @if($cities->isNotEmpty())
+
+    <?php if($cities->isNotEmpty()): ?>
     <section class="py-24 bg-[#020617] overflow-hidden">
         <div class="container mx-auto px-6">
 
@@ -286,12 +290,12 @@
             <div id="city-slider"
                 class="city-slider-container flex overflow-x-auto hide-scrollbar gap-4 pb-10">
 
-                @foreach($cities as $cityItem)
+                <?php $__currentLoopData = $cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cityItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                    <a href="{{ route('show_pkg', [
+                    <a href="<?php echo e(route('show_pkg', [
                         'pkg_cat' => $category->slug,
                         'city' => $cityItem->slug
-                    ]) }}"
+                    ])); ?>"
                     class="whitespace-nowrap px-8 py-5
                             bg-white/5 border border-white/10
                             rounded-2xl text-slate-300
@@ -299,25 +303,26 @@
                             hover:border-teal-400
                             hover:bg-teal-400/10
                             transition-all text-sm font-bold shadow-lg
-                            {{ isset($city) && $city?->id === $cityItem->id
+                            <?php echo e(isset($city) && $city?->id === $cityItem->id
                                 ? 'border-teal-400 text-teal-400 bg-teal-400/10'
-                                : '' }}">
+                                : ''); ?>">
 
                         <i class="fas fa-map-marker-alt text-teal-400 mr-2"></i>
 
-                        {{ ucfirst($cityItem->name) }}
+                        <?php echo e(ucfirst($cityItem->name)); ?>
+
 
                     </a>
 
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             </div>
         </div>
     </section>
-    @endif
+    <?php endif; ?>
 
 
-{{-- Custom Modal --}}
+
 <div id="getStartedModal" class="fixed inset-0 z-[9999] hidden items-center justify-center modal-blur-bg px-4 py-6">
     <div class="relative w-full max-w-2xl bg-[#0f172a] border border-white/10 rounded-[1.5rem] shadow-2xl flex flex-col custom-modal-content">
         
@@ -339,8 +344,8 @@
             </div>
 
             <form id="getStartedForm" class="space-y-5">
-                @csrf
-                {{-- Match Backend: pkg_category_id and pkg_id --}}
+                <?php echo csrf_field(); ?>
+                
                 <input type="hidden" name="pkg_category_id" id="pkg_category_id">
                 <input type="hidden" name="pkg_id" id="pkg_id">
 
@@ -387,9 +392,9 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('custom_js')
+<?php $__env->startPush('custom_js'); ?>
 <script>
     // 1. Mouse Cursor
     const cursor = document.getElementById('custom-cursor');
@@ -538,7 +543,7 @@
         $("#submitLoader").removeClass("hidden");
 
         $.ajax({
-            url: "{{ route('pkg.form.submit') }}",
+            url: "<?php echo e(route('pkg.form.submit')); ?>",
             type: "POST",
             data: $(this).serialize(),
             success: function (response) {
@@ -568,4 +573,5 @@
 
 });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make(config('web_assets.layouts.main'), array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Laravel\Aazz-Agency\resources\views/show_pkg.blade.php ENDPATH**/ ?>

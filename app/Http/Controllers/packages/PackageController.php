@@ -329,16 +329,15 @@ class PackageController extends Controller
     public function showPkg($pkg_cat, $city = null)
     {
         try {
-            // Convert category to lowercase for case-insensitive matching
             $pkg_cat = strtolower($pkg_cat);
 
-            // Fetch all locations (cities)
-            // $cities = Location::all();
+            // Fetch all locations/cities
+            $cities = Location::orderBy('name')->get();
 
-            // Fetch all categories (ensuring variable is always available)
+            // Fetch all categories
             $pkg_category = PackagesCategory::all();
 
-            // Find the requested category by slug
+            // Find requested category by slug
             $category = PackagesCategory::where('slug', $pkg_cat)->firstOrFail();
 
             // Fetch packages belonging to this category
@@ -346,27 +345,53 @@ class PackageController extends Controller
                 ->where('pkg_category_id', $category->id)
                 ->get();
 
-            // If city is provided in URL, check if it exists in locations table
-            // $city = $city ? Location::where('slug', strtolower($city))->first() : null;
+            // Resolve city from URL if provided
+            $city = $city
+                ? Location::where('slug', strtolower($city))->first()
+                : null;
 
-            // Fetch content, FAQs, and tabs based on the category ID
+            // Fetch content, FAQs and tabs
             $content = PkgContent::where('pkg_category_id', $category->id)->first();
+
             $faqs = PkgCatFaq::where('pkg_category_id', $category->id)->get();
+
             $tabs = PkgTabContent::where('pkg_category_id', $category->id)->get();
 
-            // Pass all required variables to the view
-            return view('show_pkg', compact('category', 'packages', 'pkg_category', 'content', 'faqs', 'tabs'));
+            return view('show_pkg', compact(
+                'category',
+                'packages',
+                'pkg_category',
+                'content',
+                'faqs',
+                'tabs',
+                'cities',
+                'city'
+            ));
 
         } catch (ModelNotFoundException $e) {
-            return redirect()->back()->with('error', 'Category not found.');
+
+            return redirect()
+                ->back()
+                ->with('error', 'Category not found.');
+
         } catch (QueryException $e) {
+
             Log::error('Database error fetching packages: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Database error! Could not fetch packages.');
+
+            return redirect()
+                ->back()
+                ->with('error', 'Database error! Could not fetch packages.');
+
         } catch (Exception $e) {
+
             Log::error('General error fetching packages: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+
+            return redirect()
+                ->back()
+                ->with('error', 'Something went wrong. Please try again.');
         }
     }
+
 
 
     public function pricingIndex()
