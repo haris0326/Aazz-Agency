@@ -76,281 +76,89 @@
     /* Comment character counter */
     #commentCharCount.limit-near { color: #d97706; }
     #commentCharCount.limit-over { color: #dc2626; font-weight: 700; }
-
-
-    /* ==========================================
-       PREMIUM BLOG HERO IMAGE
-    ========================================== */
-
-    .blog-hero-image-wrap {
-        position: relative;
-        isolation: isolate;
-    }
-
-    .blog-hero-image-wrap::before {
-        content: "";
-        position: absolute;
-        inset: 8% -5% -8% 5%;
-        background: linear-gradient(
-            135deg,
-            rgba(37, 99, 235, 0.35),
-            rgba(45, 212, 191, 0.25)
-        );
-        filter: blur(45px);
-        border-radius: 3rem;
-        z-index: -2;
-    }
-
-    .blog-hero-image-wrap::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: 1.75rem;
-        padding: 1px;
-        background: linear-gradient(
-            135deg,
-            rgba(255,255,255,.18),
-            rgba(45,212,191,.22),
-            rgba(37,99,235,.18),
-            rgba(255,255,255,.06)
-        );
-        -webkit-mask:
-            linear-gradient(#fff 0 0) content-box,
-            linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        pointer-events: none;
-        z-index: 3;
-    }
-
-    .blog-hero-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        display: block;
-        transition: transform .7s cubic-bezier(.2,.8,.2,1);
-    }
-
-    .blog-hero-image-container {
-        overflow: hidden;
-        border-radius: 1.75rem;
-        background: #0f172a;
-        box-shadow:
-            0 30px 80px rgba(0,0,0,.35),
-            0 10px 30px rgba(15,23,42,.25);
-    }
-
-    .blog-hero-image-container:hover .blog-hero-image {
-        transform: scale(1.025);
-    }
-
-    @media (max-width: 1023px) {
-        .blog-hero-image-container {
-            border-radius: 1.5rem;
-        }
-
-        .blog-hero-image-wrap::before {
-            inset: 5% 0 -5% 0;
-            filter: blur(35px);
-        }
-    }
-
-    @media (max-width: 640px) {
-        .blog-hero-image-container {
-            border-radius: 1.25rem;
-        }
-
-        .blog-hero-image {
-            height: 260px !important;
-        }
-    }
-
 </style>
 @endpush
 
 <div id="reading-progress"></div>
 
 {{-- ============================== --}}
-{{-- PREMIUM BLOG HERO --}}
+{{-- HERO / HEADER --}}
 {{-- ============================== --}}
-<header class="relative bg-[#020617] pt-28 md:pt-32 pb-16 md:pb-20 overflow-hidden">
-
-    {{-- Background glow --}}
-    <div class="blog-glow-blob top-[-15%] left-[-8%]"></div>
-    <div class="blog-glow-blob bottom-[-20%] right-[-8%] !bg-teal-400/10"></div>
-
-    {{-- Extra subtle radial lighting --}}
-    <div class="absolute inset-0 pointer-events-none"
-         style="background:
-            radial-gradient(circle at 15% 30%, rgba(37,99,235,.10), transparent 35%),
-            radial-gradient(circle at 85% 70%, rgba(45,212,191,.08), transparent 35%);">
-    </div>
+<header class="relative bg-[#020617] pt-32 pb-28 overflow-hidden">
+    <div class="blog-glow-blob top-[-10%] left-[-5%]"></div>
+    <div class="blog-glow-blob bottom-[-15%] right-[-5%] !bg-teal-400/10"></div>
 
     <div class="container mx-auto px-6 relative z-10">
 
         {{-- Breadcrumb --}}
-        <nav class="flex items-center justify-center lg:justify-start gap-2
-                    text-xs text-slate-400 mb-6 font-medium"
-             aria-label="Breadcrumb">
-
-            <a href="{{ route('home') }}"
-               class="hover:text-teal-400 transition-colors">
-                Home
-            </a>
-
-            <span class="opacity-40">/</span>
-
+        <nav class="flex items-center justify-center gap-2 text-xs text-slate-400 mb-6 font-medium" aria-label="Breadcrumb">
+            <a href="{{ route('home') }}" class="hover:text-teal-400 transition-colors">Home</a>
+            <span class="opacity-50">/</span>
             <span class="text-slate-500">Blog</span>
-
             @if($blog->category)
-                <span class="opacity-40">/</span>
-                <span class="text-teal-400">
-                    {{ $blog->category->name }}
-                </span>
+                <span class="opacity-50">/</span>
+                <span class="text-teal-400">{{ $blog->category->name }}</span>
             @endif
         </nav>
 
-        {{-- HERO GRID --}}
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-
-            {{-- ========================== --}}
-            {{-- LEFT: BLOG INFORMATION --}}
-            {{-- ========================== --}}
-            <div class="lg:col-span-7 text-center lg:text-left">
-
-                {{-- Category --}}
-                @if($blog->category)
-                    <span class="inline-flex items-center px-4 py-1.5 mb-6
-                                 text-[10px] md:text-xs font-black
-                                 tracking-[0.22em] uppercase
-                                 text-teal-400 bg-teal-400/10
-                                 rounded-full border border-teal-400/20">
-
-                        <span class="w-1.5 h-1.5 rounded-full bg-teal-400 mr-2"></span>
-
-                        {{ $blog->category->name }}
-                    </span>
-                @endif
-
-                {{-- Title --}}
-                <h1 class="text-3xl sm:text-4xl md:text-5xl xl:text-[4.2rem]
-                           font-black text-white
-                           mb-6 tracking-tight leading-[1.05]">
-
-                    {{ $blog->title }}
-
-                </h1>
-
-                {{-- Excerpt --}}
-                @if($blog->excerpt)
-                    <p class="text-slate-400 text-base md:text-lg
-                              leading-relaxed max-w-2xl
-                              mx-auto lg:mx-0 mb-8">
-
-                        {{ $blog->excerpt }}
-
-                    </p>
-                @endif
-
-                {{-- Meta --}}
-                <div class="flex flex-wrap items-center
-                            justify-center lg:justify-start
-                            gap-x-6 gap-y-4
-                            text-slate-400 text-sm">
-
-                    {{-- Author --}}
-                    <div class="flex items-center gap-3">
-
-                        <div class="w-9 h-9 rounded-full
-                                    bg-gradient-to-br from-blue-600 to-teal-400
-                                    flex items-center justify-center
-                                    text-white font-bold text-xs uppercase
-                                    shrink-0">
-
-                            {{ \Illuminate\Support\Str::substr($blog->author->name ?? 'A', 0, 1) }}
-
-                        </div>
-
-                        <span class="text-slate-300 font-semibold">
-                            {{ $blog->author->name ?? 'Aazz Agency' }}
-                        </span>
-
-                    </div>
-
-                    {{-- Date --}}
-                    <div class="flex items-center gap-2">
-                        <i class="far fa-calendar text-teal-400"></i>
-                        <span>
-                            {{ ($blog->published_at ?? $blog->created_at)?->format('F j, Y') }}
-                        </span>
-                    </div>
-
-                    {{-- Reading time --}}
-                    <div class="flex items-center gap-2">
-                        <i class="far fa-clock text-teal-400"></i>
-                        <span>{{ $readTime }} min read</span>
-                    </div>
-
-                    {{-- Views --}}
-                    <div class="flex items-center gap-2">
-                        <i class="far fa-eye text-teal-400"></i>
-                        <span>{{ number_format($blog->views) }} views</span>
-                    </div>
-
-                </div>
-            </div>
-
-
-            {{-- ========================== --}}
-            {{-- RIGHT: FEATURED IMAGE --}}
-            {{-- ========================== --}}
-            @if($blog->featured_image)
-
-                <div class="lg:col-span-5 blog-hero-image-wrap">
-
-                    <div class="blog-hero-image-container
-                                relative aspect-[16/11]
-                                lg:aspect-[4/3]">
-
-                        <img
-                            src="{{ asset($blog->featured_image) }}"
-                            alt="{{ $blog->title }}"
-                            class="blog-hero-image"
-                            loading="eager"
-                            fetchpriority="high"
-                        >
-
-                        {{-- Image bottom gradient --}}
-                        <div class="absolute inset-x-0 bottom-0 h-1/3
-                                    bg-gradient-to-t from-black/35 to-transparent
-                                    pointer-events-none">
-                        </div>
-
-                        {{-- Small visual badge --}}
-                        <div class="absolute bottom-5 left-5
-                                    px-3 py-1.5
-                                    rounded-full
-                                    bg-black/40 backdrop-blur-md
-                                    border border-white/10
-                                    text-white/80
-                                    text-[10px] font-bold
-                                    uppercase tracking-widest">
-
-                            {{ $blog->category->name ?? 'Featured Article' }}
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+        <div class="max-w-4xl mx-auto text-center">
+            @if($blog->category)
+                <span class="inline-block px-4 py-1.5 mb-6 text-xs font-black tracking-[0.25em] uppercase text-teal-400 bg-teal-400/10 rounded-full border border-teal-400/20">
+                    {{ $blog->category->name }}
+                </span>
             @endif
 
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight leading-tight">
+                {{ $blog->title }}
+            </h1>
+
+            @if($blog->excerpt)
+                <p class="text-slate-400 text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-10">
+                    {{ $blog->excerpt }}
+                </p>
+            @endif
+
+            {{-- Meta row --}}
+            <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-slate-400 text-sm">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-teal-400 flex items-center justify-center text-white font-bold text-xs uppercase shrink-0">
+                        {{ \Illuminate\Support\Str::substr($blog->author->name ?? 'A', 0, 1) }}
+                    </div>
+                    <span class="text-slate-300 font-semibold">{{ $blog->author->name ?? 'Aazz Agency' }}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="far fa-calendar text-teal-400"></i>
+                    <span>{{ ($blog->published_at ?? $blog->created_at)?->format('F j, Y') }}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="far fa-clock text-teal-400"></i>
+                    <span>{{ $readTime }} min read</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="far fa-eye text-teal-400"></i>
+                    <span>{{ number_format($blog->views) }} views</span>
+                </div>
+            </div>
         </div>
     </div>
 </header>
 
+{{-- ============================== --}}
+{{-- FEATURED IMAGE (overlaps hero) --}}
+{{-- ============================== --}}
+@if($blog->featured_image)
+<div class="container mx-auto px-6 -mt-16 relative z-20">
+    <div class="max-w-5xl mx-auto rounded-[2rem] overflow-hidden shadow-2xl shadow-black/30 border border-white/10">
+        <img
+            src="{{ asset($blog->featured_image) }}"
+            alt="{{ $blog->title }}"
+            class="w-full h-[260px] md:h-[420px] object-cover"
+            loading="eager"
+            fetchpriority="high"
+        >
+    </div>
+</div>
+@endif
 
 {{-- ============================== --}}
 {{-- MAIN BODY: content + sidebar --}}
