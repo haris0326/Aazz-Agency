@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Location;
 use App\Models\MyClient;
 use App\Models\WebPages;
 use App\Models\ClientLogo;
@@ -12,6 +13,11 @@ use App\Models\WebsiteSetting;
 use App\Models\BlogModel\Blog;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+use App\Observers\BlogObserver;
+use App\Observers\LocationObserver;
+use App\Observers\WebPagesObserver;
+use App\Observers\MainServiceObserver;
+use App\Observers\PackagesCategoryObserver;
 use App\Models\ServiceModel\MainService;
 use App\Models\HomeModel\HomeHeroSection;
 use App\Models\PkgModel\PackagesCategory;
@@ -273,5 +279,21 @@ class AppServiceProvider extends ServiceProvider
 
             view()->share('heroSections', collect());
         }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Sitemap Observers
+        |--------------------------------------------------------------------------
+        |
+        | Keep sitemaps fresh automatically — no manual regeneration needed.
+        |
+        */
+
+        Blog::observe(BlogObserver::class);
+        WebPages::observe(WebPagesObserver::class);
+        MainService::observe(MainServiceObserver::class);
+        PackagesCategory::observe(PackagesCategoryObserver::class);
+        Location::observe(LocationObserver::class);
     }
 }

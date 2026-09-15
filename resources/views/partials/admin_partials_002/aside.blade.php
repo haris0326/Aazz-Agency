@@ -107,9 +107,22 @@ $technologiesActive = $isRouteActive([
 $headerLinksActive = $isRouteActive([
 'web-header-links.index',
 ]);
+
 $locationsActive = $isRouteActive([
-'locations.create',
+    'locations.countries.index',
+    'locations.countries.create',
+    'locations.countries.edit',
+
+    'locations.states.index',
+    'locations.states.create',
+    'locations.states.edit',
+
+    'locations.cities.index',
+    'locations.cities.create',
+    'locations.cities.edit',
+    'locations.cities.editContent',
 ]);
+
 $websiteSettingsActive = $isRouteActive([
 'website-settings.index',
 ]);
@@ -431,6 +444,18 @@ $websiteSettingsActive = $isRouteActive([
                             </a>
                         </li>
 
+                        {{-- Comments --}}
+                        <li>
+                            <a
+                                class="ap-nav-link {{ $isRouteActive(['admin.blog-comments.index']) ? 'active' : '' }}"
+                                href="{{ route('admin.blog-comments.index') }}"
+                                @if($isRouteActive(['admin.blog-comments.index']))
+                                aria-current="page"
+                                @endif>
+                                Comments
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </li>
@@ -713,18 +738,95 @@ $websiteSettingsActive = $isRouteActive([
                     <span>Header Links</span>
                 </a>
             </li>
-            {{-- Location --}}
-            <li class="ap-nav-item">
-                <a
-                    class="ap-nav-link {{ $locationsActive ? 'active' : '' }}"
-                    href="{{ route('locations.create') }}"
-                    @if($locationsActive)
-                    aria-current="page"
-                    @endif>
-                    <i class="ap-nav-icon bi bi-geo-alt"></i>
-                    <span>Location</span>
-                </a>
-            </li>
+
+            {{-- ------------------------------------------------------------------ --}}
+                {{-- Locations --}}
+                {{-- ------------------------------------------------------------------ --}}
+                <li class="ap-nav-item">
+                    <a
+                        class="ap-nav-link {{ $locationsActive ? 'active' : '' }}"
+                        href="#locationsSubMenu"
+                        data-bs-toggle="collapse"
+                        aria-expanded="{{ $locationsActive ? 'true' : 'false' }}"
+                        aria-controls="locationsSubMenu">
+
+                        <i class="ap-nav-icon bi bi-geo-alt"></i>
+                        <span>Locations</span>
+                        <i class="ap-nav-caret bi bi-chevron-down"></i>
+                    </a>
+
+                    <div
+                        id="locationsSubMenu"
+                        class="collapse {{ $locationsActive ? 'show' : '' }}">
+
+                        <ul class="ap-nav-submenu list-unstyled">
+
+                            {{-- Countries --}}
+                            <li>
+                                <a
+                                    class="ap-nav-link {{ $isRouteActive([
+                                        'locations.countries.index',
+                                        'locations.countries.create',
+                                        'locations.countries.edit',
+                                    ]) ? 'active' : '' }}"
+                                    href="{{ route('locations.countries.index') }}"
+                                    @if($isRouteActive([
+                                        'locations.countries.index',
+                                        'locations.countries.create',
+                                        'locations.countries.edit',
+                                    ]))
+                                    aria-current="page"
+                                    @endif>
+                                    Countries
+                                </a>
+                            </li>
+
+                            {{-- States --}}
+                            <li>
+                                <a
+                                    class="ap-nav-link {{ $isRouteActive([
+                                        'locations.states.index',
+                                        'locations.states.create',
+                                        'locations.states.edit',
+                                    ]) ? 'active' : '' }}"
+                                    href="{{ route('locations.states.index') }}"
+                                    @if($isRouteActive([
+                                        'locations.states.index',
+                                        'locations.states.create',
+                                        'locations.states.edit',
+                                    ]))
+                                    aria-current="page"
+                                    @endif>
+                                    States
+                                </a>
+                            </li>
+
+                            {{-- Cities --}}
+                            <li>
+                                <a
+                                    class="ap-nav-link {{ $isRouteActive([
+                                        'locations.cities.index',
+                                        'locations.cities.create',
+                                        'locations.cities.edit',
+                                        'locations.cities.editContent',
+                                    ]) ? 'active' : '' }}"
+                                    href="{{ route('locations.cities.index') }}"
+                                    @if($isRouteActive([
+                                        'locations.cities.index',
+                                        'locations.cities.create',
+                                        'locations.cities.edit',
+                                        'locations.cities.editContent',
+                                    ]))
+                                    aria-current="page"
+                                    @endif>
+                                    Cities
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+
             {{-- ================================================================== --}}
             {{-- System --}}
             {{-- ================================================================== --}}

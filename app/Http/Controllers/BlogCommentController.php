@@ -15,7 +15,7 @@ class BlogCommentController extends Controller
      * Every new comment starts as 'pending' and only becomes
      * visible once an admin approves it from the admin panel.
      */
-    public function store(Request $request, Blog $blog)
+   public function store(Request $request, Blog $blog)
     {
         $validated = $request->validate([
             'name'    => 'required|string|min:2|max:100',
@@ -44,7 +44,7 @@ class BlogCommentController extends Controller
                 'name'       => $validated['name'],
                 'email'      => $validated['email'],
                 'message'    => $validated['message'],
-                'status'     => 'pending',
+                'status'     => 'approved', // auto-approved — visible immediately, admin can still reject/hide it later
                 'ip_address' => $request->ip(),
             ]);
 
@@ -55,7 +55,7 @@ class BlogCommentController extends Controller
 
             return response()->json([
                 'status'  => 'success',
-                'message' => 'Thanks! Your comment has been submitted and is awaiting approval.',
+                'message' => 'Thanks! Your comment has been posted.',
             ]);
         } catch (\Throwable $e) {
             Log::error('Blog comment submission failed.', [

@@ -402,5 +402,36 @@ class BlogController extends Controller
         return $category->id;
     }
 
+    public function publicIndex(Request $request)
+    {
+        $search       = trim((string) $request->input('search'));
+        $categorySlug = $request->input('category');
+    
+        $query = Blog::published()->with(['category', 'author']);
+    
+        if ($categorySlug) {
+            $query->whereHas('category', fn ($q) => $q->where('slug', $categorySlug));
+        }
+    
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                ->orWhere('excerpt', 'like', "%{$search}%");
+            });
+        }
+    
+        $blogs = $query->latest('published_at')->paginate(9)->withQueryString();
+    
+        $categories = BlogCategory::withCount(['blogs' => fn ($q) => $q->where('status', 'published')])
+            ->orderBy('name')
+            ->get();
+    
+        $recentBlogs = Blog::published()
+            ->latest('published_at')
+            ->take(5)
+            ->get(['id', 'title', 'slug', 'featured_image', 'published_at']);
+    
+        return view('blog_index', compact('blogs', 'categories', 'recentBlogs', 'search', 'categorySlug'));
+    }
 
 }

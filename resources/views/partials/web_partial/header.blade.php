@@ -109,58 +109,10 @@
             </div>
 
 
-            {{-- ==================================== --}}
-            {{-- Desktop Blog Dropdown --}}
-            {{-- ==================================== --}}
-            <div class="relative group">
-
-                <button class="nav-link-custom focus:outline-none">
-                    Blog
-
-                    <i class="fas fa-chevron-down text-xs ml-1
-                              transition-transform duration-300
-                              group-hover:rotate-180"></i>
-                </button>
-
-                <div class="dropdown-menu-custom
-                            transition-all duration-300
-                            absolute top-full left-0 mt-4
-                            p-4 rounded-lg shadow-lg
-                            bg-white w-72 z-50">
-
-                    @forelse(($headerBlogs ?? collect())->take(5) as $blogItem)
-
-                        <a href="{{ route('blog.show', $blogItem->slug) }}"
-                           class="block px-4 py-2 text-gray-700
-                                  hover:bg-gray-100 rounded-md
-                                  transition-colors">
-
-                            <span class="block text-sm font-medium
-                                         leading-snug line-clamp-2">
-                                {{ $blogItem->title }}
-                            </span>
-
-                            @if($blogItem->published_at)
-
-                                <span class="block text-xs text-gray-400 mt-0.5">
-                                    {{ $blogItem->published_at->format('M j, Y') }}
-                                </span>
-
-                            @endif
-
-                        </a>
-
-                    @empty
-
-                        <span class="block px-4 py-2 text-sm text-gray-400">
-                            No blog posts yet
-                        </span>
-
-                    @endforelse
-
-                </div>
-
-            </div>
+           <a href="{{ route('blogs.index') }}"
+            class="nav-link-custom {{ request()->routeIs('blogs.index') || request()->routeIs('blog.show') ? 'active' : '' }}">
+                Blog
+            </a>
 
 
             {{-- ==================================== --}}
@@ -487,103 +439,20 @@
             </li>
 
 
-            {{-- ==================================== --}}
-            {{-- Mobile Blog --}}
-            {{-- ==================================== --}}
-            <li class="relative lg:hidden">
-
-                <button id="mobile-blog-btn"
-                        class="w-full text-left
-                               text-gray-800
-                               hover:text-primary-blue
-                               transition-colors
-                               flex justify-between
-                               items-center py-2
-                               font-medium">
-
-                    <span>Blog</span>
-
-                    {{-- Blog Arrow --}}
-                    <i id="mobile-blog-icon"
-                       class="fas fa-chevron-down
-                              text-xs
-                              transition-transform
-                              duration-300">
-                    </i>
-
-                </button>
-
-
-                <div id="mobile-blog-dropdown"
-                     class="pl-4 mt-2
-                            transition-all duration-300
-                            max-h-0 overflow-hidden">
-
-                    <div class="space-y-6 pb-4">
-
-                        <div>
-
-                            <h3 class="font-bold
-                                       text-gray-400
-                                       text-xs
-                                       uppercase
-                                       tracking-widest
-                                       mb-2">
-
-                                Latest Posts
-
-                            </h3>
-
-
-                            <ul class="space-y-2
-                                       border-l
-                                       border-gray-100
-                                       pl-4">
-
-                                @forelse(
-                                    ($headerBlogs ?? collect())->take(5)
-                                    as $blogItem
-                                )
-
-                                    <li>
-
-                                        <a href="{{ route(
-                                            'blog.show',
-                                            $blogItem->slug
-                                        ) }}"
-                                           class="block
-                                                  text-gray-600
-                                                  hover:text-primary-blue
-                                                  text-sm
-                                                  transition-colors
-                                                  line-clamp-2">
-
-                                            {{ $blogItem->title }}
-
-                                        </a>
-
-                                    </li>
-
-                                @empty
-
-                                    <li class="text-gray-400 text-sm">
-
-                                        No blog posts yet
-
-                                    </li>
-
-                                @endforelse
-
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+           {{--
+                ============================================================
+                2) MOBILE SIDEBAR — replace the entire mobile Blog <li>
+                accordion block (id="mobile-blog-btn" / "mobile-blog-dropdown")
+                with this single link, in the same spot in the <ul>.
+                ============================================================
+            --}}
+            <li>
+                <a href="{{ route('blogs.index') }}"
+                class="block text-gray-800 hover:text-primary-blue transition-colors {{ request()->routeIs('blogs.index') || request()->routeIs('blog.show') ? 'text-primary-blue font-semibold' : '' }}">
+                    Blog
+                </a>
             </li>
-
+ 
 
             {{-- ==================================== --}}
             {{-- Mobile Resources --}}

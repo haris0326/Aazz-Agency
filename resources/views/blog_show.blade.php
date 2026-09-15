@@ -76,6 +76,125 @@
     /* Comment character counter */
     #commentCharCount.limit-near { color: #d97706; }
     #commentCharCount.limit-over { color: #dc2626; font-weight: 700; }
+
+    /* =========================================================
+   Desktop TOC — fixed/natural size with internal scrolling
+   ========================================================= */
+#toc-card {
+    max-height: min(55vh, 520px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#toc-card h4 {
+    flex: 0 0 auto;
+}
+
+#toc-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 6px;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+
+/* Chrome / Edge / Safari */
+#toc-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+#toc-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#toc-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+}
+
+#toc-list::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Don't let very long headings destroy TOC width */
+#toc-list a {
+    display: block;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    line-height: 1.45;
+}
+
+/* Keep sticky sidebar inside viewport */
+@media (min-width: 1024px) {
+    .blog-sidebar-inner {
+        position: sticky;
+        top: 7rem;
+        max-height: calc(100vh - 8.5rem);
+    }
+}
+
+/* Tablet/mobile — no forced desktop TOC height */
+@media (max-width: 1023px) {
+    #toc-card {
+        max-height: none;
+        overflow: visible;
+    }
+
+    #toc-list {
+        max-height: none;
+        overflow: visible;
+    }
+}
+
+/* Smaller mobile TOC */
+@media (max-width: 640px) {
+    #toc-mobile-wrap details {
+        max-height: 60vh;
+    }
+
+    #toc-list-mobile {
+        max-height: 45vh;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding-right: 4px;
+        scrollbar-width: thin;
+    }
+
+    #toc-list-mobile::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    #toc-list-mobile::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 999px;
+    }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+    #toc-list a {
+        transition: none !important;
+    }
+}
+
+.blog-content h2,
+.blog-content h3 {
+    scroll-margin-top: 100px;
+}
+
+@media (max-width: 1023px) {
+    .blog-content h2,
+    .blog-content h3 {
+        scroll-margin-top: 80px;
+    }
+}
+
+
+
 </style>
 @endpush
 
@@ -271,7 +390,7 @@
 
                         <div id="commentSuccess" class="hidden mb-5 p-4 bg-teal-50 border border-teal-200 rounded-xl text-teal-700 text-sm">
                             <i class="fas fa-check-circle mr-2"></i>
-                            <span id="commentSuccessText">Thanks! Your comment has been submitted and is awaiting approval.</span>
+                            <span id="commentSuccessText">Thanks! Your comment has been posted.</span>
                         </div>
 
                         <div id="commentGeneralError" class="hidden mb-5 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
@@ -327,16 +446,33 @@
             </article>
 
             {{-- ---------- SIDEBAR ---------- --}}
-            <aside class="w-full lg:w-4/12">
-                <div class="lg:sticky lg:top-28 space-y-6">
+           <aside class="w-full lg:w-4/12">
+                    <div class="blog-sidebar-inner space-y-6">
 
+
+                     {{-- Newsletter / CTA --}}
+                    <div class="bg-gradient-to-br from-blue-600 to-teal-400 rounded-[1.75rem] p-6 text-center">
+                        <i class="fas fa-rocket text-white text-2xl mb-3"></i>
+                        <h4 class="text-white font-black text-lg mb-2">Have a project in mind?</h4>
+                        <p class="text-white/80 text-xs mb-5 leading-relaxed">Let's turn your idea into a scalable digital product.</p>
+                        <a href="{{ route('serviceform.show') }}"
+                           class="inline-block w-full px-5 py-3 bg-white text-blue-700 font-black rounded-xl text-xs uppercase tracking-widest hover:bg-slate-100 transition-colors">
+                            Get a Free Quote
+                        </a>
+                    </div>
+                    
                     {{-- Table of Contents --}}
-                    <div id="toc-card" class="hidden bg-slate-50 border border-slate-100 rounded-[1.75rem] p-6">
+                   <div id="toc-card"
+                        class="hidden bg-slate-50 border border-slate-100 rounded-[1.75rem] p-6">
+
                         <h4 class="text-sm font-black uppercase tracking-widest text-slate-900 mb-4 flex items-center gap-2">
-                            <i class="fas fa-list-ul text-teal-500"></i> On this page
+                            <i class="fas fa-list-ul text-teal-500"></i>
+                            On this page
                         </h4>
+
                         <ul id="toc-list" class="space-y-1 text-sm"></ul>
                     </div>
+
 
                     {{-- Related Posts (same category) --}}
                     @if($relatedBlogs->isNotEmpty())
@@ -372,17 +508,6 @@
                         </div>
                     </div>
                     @endif
-
-                    {{-- Newsletter / CTA --}}
-                    <div class="bg-gradient-to-br from-blue-600 to-teal-400 rounded-[1.75rem] p-6 text-center">
-                        <i class="fas fa-rocket text-white text-2xl mb-3"></i>
-                        <h4 class="text-white font-black text-lg mb-2">Have a project in mind?</h4>
-                        <p class="text-white/80 text-xs mb-5 leading-relaxed">Let's turn your idea into a scalable digital product.</p>
-                        <a href="{{ route('serviceform.show') }}"
-                           class="inline-block w-full px-5 py-3 bg-white text-blue-700 font-black rounded-xl text-xs uppercase tracking-widest hover:bg-slate-100 transition-colors">
-                            Get a Free Quote
-                        </a>
-                    </div>
                 </div>
             </aside>
 
@@ -532,11 +657,26 @@
         if ('IntersectionObserver' in window) {
             var observer = new IntersectionObserver(function (entries) {
                 entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        tocLinks.forEach(function (l) { l.classList.remove('toc-active'); });
-                        var active = tocList.querySelector('a[data-target="' + entry.target.id + '"]');
-                        if (active) active.classList.add('toc-active');
-                    }
+                   if (entry.isIntersecting) {
+                            tocLinks.forEach(function (l) {
+                                l.classList.remove('toc-active');
+                            });
+
+                            var active = tocList.querySelector(
+                                'a[data-target="' + entry.target.id + '"]'
+                            );
+
+                            if (active) {
+                                active.classList.add('toc-active');
+
+                                // Automatically bring active TOC item into the visible
+                                // portion of the internal TOC scrollbar.
+                                active.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'nearest'
+                                });
+                            }
+                        }
                 });
             }, { rootMargin: '-100px 0px -70% 0px' });
 
@@ -549,7 +689,10 @@
                 e.preventDefault();
                 var target = document.getElementById(this.dataset.target);
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
         });

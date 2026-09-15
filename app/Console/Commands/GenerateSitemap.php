@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Services\SitemapService;
 use Illuminate\Console\Command;
-use App\Http\Controllers\SitemapController;
 
 class GenerateSitemap extends Command
 {
@@ -19,18 +19,15 @@ class GenerateSitemap extends Command
      *
      * @var string
      */
-    protected $description = 'Generate the sitemap automatically';
+    protected $description = 'Regenerate all sitemap files (core pages, blog, services, web pages, packages) and the root sitemap index.';
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(SitemapService $sitemapService): void
     {
-        $sitemapController = new SitemapController();
-        $response = $sitemapController->generateSitemap();
+        $sitemapService->generateAll();
 
-        $this->info('Sitemap has been generated successfully.');
+        $this->info('Sitemaps have been generated successfully.');
     }
 }

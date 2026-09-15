@@ -20,7 +20,9 @@
     use App\Http\Controllers\HomeHeroSectionController;
     use App\Http\Controllers\ServiceCategoryController;
     use App\Http\Controllers\packages\PackageController;
-    use App\Http\Controllers\locations\LocationController;
+    use App\Http\Controllers\locations\CountryController;
+    use App\Http\Controllers\locations\StateController;
+    use App\Http\Controllers\locations\CityController;
     use App\Http\Controllers\packages\PackageFormController;
     use App\Http\Controllers\HomeControllers\HomeMetaController;
     use App\Http\Controllers\packages\PackageCategoryController;
@@ -149,19 +151,16 @@
             Route::get('/get-category-content/{id}', [PkgCategoryContentController::class, 'getCategoryContent'])->name('pkg.cat.content.delete');
         });
 
-       Route::get('/locations', [LocationController::class, 'index'])
-            ->name('locations.index');
+        Route::prefix('locations')->name('locations.')->group(function () {
+            Route::resource('countries', CountryController::class)->except(['show']);
 
-        Route::get('/locations/create', [LocationController::class, 'create'])
-            ->name('locations.create');
+            Route::resource('states', StateController::class)->except(['show']);
+            Route::get('states-by-country/{country}', [StateController::class, 'byCountry'])->name('states.byCountry');
 
-        Route::post('/locations', [LocationController::class, 'store'])
-            ->name('locations.store');
-
-        Route::delete('/locations/delete/{id}', [LocationController::class, 'destroy'])
-            ->name('locations.destroy');
-
-        Route::delete('locations/delete/{id}', [LocationController::class, 'destroy'])->name('locations.destroy');
+            Route::resource('cities', CityController::class)->except(['show']);
+            Route::get('cities/{city}/content', [CityController::class, 'editContent'])->name('cities.editContent');
+            Route::put('cities/{city}/content', [CityController::class, 'updateContent'])->name('cities.updateContent');
+        });
 
         Route::get('inquiries/{id}', [PackageFormController::class, 'showInquiryDetails'])->name('admin.inquiries.view');
         Route::get('inquiries/{id}/download-pdf', [PackageFormController::class, 'downloadPdf'])->name('inquiry.downloadPdf');
@@ -192,6 +191,9 @@
         });
         
 
+
+        Route::post('regenerate-sitemap', [SitemapController::class, 'regenerate'])
+            ->name('admin.sitemap.regenerate');
 
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     });
@@ -266,6 +268,8 @@
     Route::get('/pricing', [PackageController::class, 'pricingIndex'])
         ->name('pricing.index');
 
+    Route::get('/blog', [BlogController::class, 'publicIndex'])->name('blogs.index');
+
     Route::get('/blog/{slug}', [BlogController::class, 'show'])
     ->where('slug', '[a-z0-9\-]+')
     ->name('blog.show');
@@ -275,3 +279,13 @@
  
 Route::post('/blog-comments/{blog}', [BlogCommentController::class, 'store'])
     ->name('blog.comments.store');
+
+Route::get('/robots.txt', function () {
+    $content = "User-agent: *\n" .
+               "Disallow: /admin\n" .
+               "Disallow: /admin-panel/login\n" .
+               "Allow: /\n\n" .
+               "Sitemap: " . url('/sitemap.xml') . "\n";
+ 
+    return response($content, 200)->header('Content-Type', 'text/plain');
+});
