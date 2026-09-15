@@ -20,3 +20,6 @@ yarn-error.log
 /.vscode
 /.zed
 bootstrap/cache/*.php
+# Generated sitemap XML files
+/public/sitemap.xml
+/public/sitemaps/*.xml
