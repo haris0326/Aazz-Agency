@@ -40,9 +40,6 @@
     use App\Http\Controllers\BlogCategoryController;
 
 
-    // Admin routes
-    Route::get('/sitemap.xml', [SitemapController::class, 'generateSitemap'])->name('sitemap');
-
 
     Route::get('/storage-link', function () {
         Artisan::call('storage:link');
