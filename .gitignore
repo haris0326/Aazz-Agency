@@ -24,3 +24,7 @@ bootstrap/cache/*.php
 /public/sitemap.xml
 /public/sitemaps/*.xml
 /public/sitemaps/
+
+/storage/framework/views/
+/storage/framework/cache/
+/storage/framework/sessions/

@@ -1,5 +1,0 @@
-
-<footer class="text-center py-3 text-muted-ap" style="font-size: 12.5px; border-top: 1px solid var(--ap-border); background: #fff;">
-    &copy; <?php echo e(date('Y')); ?> Aazz Agency Admin &middot;
-    <a href="https://aazzagency.co.uk/" class="text-muted-ap" style="text-decoration: underline;">aazzagency.co.uk</a>
-</footer><?php /**PATH D:\Laravel\Aazz-Agency\resources\views/partials/admin_partials_002/admin_footer.blade.php ENDPATH**/ ?>
