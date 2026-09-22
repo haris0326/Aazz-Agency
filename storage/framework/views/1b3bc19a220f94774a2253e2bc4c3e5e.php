@@ -1,53 +1,54 @@
-@extends(config('web_assets.layouts.main'))
+<?php $__env->startSection('title', $service->ServiceSeo->meta_title); ?>
+<?php $__env->startSection('description', $service->ServiceSeo->meta_desc); ?>
+<?php $__env->startSection('canonical_url', route('header_service.show', ['category_slug' => $category_slug, 'service_slug' => $service->serviceSEO->meta_slug])); ?>
 
-@section('title', $service->ServiceSeo->meta_title)
-@section('description', $service->ServiceSeo->meta_desc)
-@section('canonical_url', route('header_service.show', ['category_slug' => $category_slug, 'service_slug' => $service->serviceSEO->meta_slug]))
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
 
-{{-- Service Page Hero Section --}}
+
 <section class="relative bg-gradient-to-br from-indigo-50 via-white to-slate-50 border-b overflow-hidden">
     <div class="container mx-auto px-6 md:px-12 py-12 md:py-16">
 
-        {{-- Breadcrumb --}}
+        
         <nav aria-label="breadcrumb" class="text-sm mb-6" data-aos="fade-down">
             <ol class="flex items-center gap-2 text-gray-500">
-                <li><a href="{{ url('/') }}" class="hover:underline">Home</a></li>
+                <li><a href="<?php echo e(url('/')); ?>" class="hover:underline">Home</a></li>
                 <li>/</li>
                 <li>
-                    @if(!empty($service->serviceCategory))
-                        <a href="{{ route('cat_show_services.show', $service->serviceCategory->cat_slug) }}" class="hover:underline">
-                            {{ $service->serviceCategory->cat_title }}
+                    <?php if(!empty($service->serviceCategory)): ?>
+                        <a href="<?php echo e(route('cat_show_services.show', $service->serviceCategory->cat_slug)); ?>" class="hover:underline">
+                            <?php echo e($service->serviceCategory->cat_title); ?>
+
                         </a>
-                    @else
+                    <?php else: ?>
                         <span class="text-gray-400">Category</span>
-                    @endif
+                    <?php endif; ?>
                 </li>
                 <li>/</li>
-                <li><span class="text-gray-700 font-medium">{{ $service->title ?? 'Service' }}</span></li>
+                <li><span class="text-gray-700 font-medium"><?php echo e($service->title ?? 'Service'); ?></span></li>
             </ol>
         </nav>
 
-        {{-- Hero Grid --}}
+        
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start lg:items-stretch min-h-[580px] lg:min-h-[620px]">
 
-            {{-- Left Content --}}
+            
             <div class="mt-4 lg:mt-6 lg:col-span-6 flex flex-col justify-start h-auto" data-aos="fade-right">
 
 
                 <div>
                     <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                        {{ $heroSection->main_title ?? $service->title ?? 'Professional Service Solutions' }}
+                        <?php echo e($heroSection->main_title ?? $service->title ?? 'Professional Service Solutions'); ?>
+
                     </h1>
 
                     <p class="mt-4 text-base md:text-lg text-slate-600 max-w-2xl" data-aos="fade-up" data-aos-delay="200">
-                        {{ $heroSection->main_desc ?? $service->short_desc ?? 'We deliver tailored, high-impact solutions to help you grow, scale, and succeed in your digital goals.' }}
+                        <?php echo e($heroSection->main_desc ?? $service->short_desc ?? 'We deliver tailored, high-impact solutions to help you grow, scale, and succeed in your digital goals.'); ?>
+
                     </p>
 
-                   {{-- CTA --}}
+                   
                         <div class="mt-6 flex flex-col sm:flex-row gap-4" data-aos="zoom-in" data-aos-delay="400">
                             <a href="#get-quote"
                             class="inline-flex items-center justify-center px-5 sm:px-6 py-3 sm:py-3.5 text-sm sm:text-base rounded-full bg-indigo-600 text-white font-semibold shadow hover:bg-indigo-700 transition-all duration-200 w-full sm:w-auto text-center">
@@ -56,12 +57,12 @@
                         </div>
 
 
-                 {{-- Quick Stats --}}
+                 
                     <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-5 justify-items-center">
                         <div class="w-full px-5 py-4 bg-white rounded-2xl shadow-sm border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="600">
                             <div class="text-xs text-gray-500">Projects Delivered</div>
                             <div class="text-xl font-bold text-slate-900 counter"
-                                data-target="{{ $service->projects_count ?? 120 }}"
+                                data-target="<?php echo e($service->projects_count ?? 120); ?>"
                                 data-suffix="+">0</div>
                         </div>
 
@@ -91,10 +92,10 @@
 
                 </div>
 
-                        {{-- 5-Star Rating --}}
+                        
             <div class="mt-6 sm:mt-8 lg:mt-8 flex flex-row items-center gap-3 sm:gap-6 justify-center sm:justify-start" data-aos="fade-up" data-aos-delay="900">
                 <img
-                    src="{{ asset('web_assets/images/testimonial_star.png') }}"
+                    src="<?php echo e(asset('web_assets/images/testimonial_star.png')); ?>"
                     alt="5 Star Rating"
                     class="w-36 sm:w-32 md:w-40 h-auto drop-shadow-lg"
                     style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));"
@@ -109,10 +110,10 @@
 
 
 
-                {{-- Right Image --}}
+                
             <div class="hidden lg:flex lg:col-span-6 items-end justify-center relative" data-aos="fade-left" data-aos-duration="1500">
                 <img
-                    src="{{ asset('web_assets/images/person_service_sehero_section.png') }}"
+                    src="<?php echo e(asset('web_assets/images/person_service_sehero_section.png')); ?>"
                     alt="Professional Service"
                     class="h-full w-auto object-cover"
                     style="margin-top: 0;"
@@ -133,29 +134,29 @@
 
             <!-- Google Review -->
             <div class="review-badge flex flex-col items-center max-w-[150px]">
-            <img src="{{ asset('web_assets/images/google-reviews-stats-new.png') }}" alt="Google Reviews" class="h-12 mb-3 opacity-90">
-            <img src="{{ asset('web_assets/images/social-review-item-new.png') }}" alt="5 Stars" class="h-6 mb-3">
+            <img src="<?php echo e(asset('web_assets/images/google-reviews-stats-new.png')); ?>" alt="Google Reviews" class="h-12 mb-3 opacity-90">
+            <img src="<?php echo e(asset('web_assets/images/social-review-item-new.png')); ?>" alt="5 Stars" class="h-6 mb-3">
             <p class="text-base text-gray-100 font-semibold">150+ Reviews</p>
             </div>
 
             <!-- Clutch Review -->
             <div class="review-badge flex flex-col items-center max-w-[150px]">
-            <img src="{{ asset('web_assets/images/clutch-reviews-stats-new.png') }}" alt="Clutch Reviews" class="h-12 mb-3 opacity-90">
-            <img src="{{ asset('web_assets/images/social-review-item-new.png') }}" alt="5 Stars" class="h-6 mb-3">
+            <img src="<?php echo e(asset('web_assets/images/clutch-reviews-stats-new.png')); ?>" alt="Clutch Reviews" class="h-12 mb-3 opacity-90">
+            <img src="<?php echo e(asset('web_assets/images/social-review-item-new.png')); ?>" alt="5 Stars" class="h-6 mb-3">
             <p class="text-base text-gray-100 font-semibold">100+ Reviews</p>
             </div>
 
             <!-- UpCity Review -->
             <div class="review-badge flex flex-col items-center max-w-[150px]">
-            <img src="{{ asset('web_assets/images/upcity-reviews-logo-new.png') }}" alt="UpCity Reviews" class="h-12 mb-3 opacity-90">
-            <img src="{{ asset('web_assets/images/social-review-item-new.png') }}" alt="5 Stars" class="h-6 mb-3">
+            <img src="<?php echo e(asset('web_assets/images/upcity-reviews-logo-new.png')); ?>" alt="UpCity Reviews" class="h-12 mb-3 opacity-90">
+            <img src="<?php echo e(asset('web_assets/images/social-review-item-new.png')); ?>" alt="5 Stars" class="h-6 mb-3">
             <p class="text-base text-gray-100 font-semibold">50+ Reviews</p>
             </div>
 
         </div>
         </section>
 
-@php
+<?php
     // Define fallback icons based on keywords
     function getDefaultIcon($title)
     {
@@ -171,7 +172,7 @@
             default                             => 'https://img.icons8.com/color/48/settings.png',
         };
     }
-@endphp
+?>
 
         <section class="py-24 bg-gradient-to-br from-[#f1f4ff] via-[#e5ebfb] to-[#f9fafe]">
             <div class="container mx-auto px-6 lg:px-12">
@@ -179,7 +180,8 @@
                 <!-- Section Heading -->
                 <div class="text-center mb-16">
                     <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight mb-5">
-                        {{ $service->content->title ?? 'Explore Our Core Capabilities' }}
+                        <?php echo e($service->content->title ?? 'Explore Our Core Capabilities'); ?>
+
                     </h2>
                 </div>
 
@@ -188,40 +190,41 @@
 
                     <!-- Sidebar Tabs -->
                     <div class="flex-shrink-0 w-full lg:w-1/4 space-y-4" id="it-services-tabs">
-                        @foreach ($service->tabContents->take(4) as $index => $tab)
-                            @php
+                        <?php $__currentLoopData = $service->tabContents->take(4); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $tab): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
                                 $iconUrl = filter_var($tab->icon, FILTER_VALIDATE_URL) ? $tab->icon : getDefaultIcon($tab->title);
-                            @endphp
+                            ?>
                             <button
-                                class="tab-btn w-full flex items-center gap-4 p-4 rounded-lg bg-white shadow-sm hover:bg-gray-100 {{ $index === 0 ? 'active bg-gray-100' : '' }}"
-                                data-tab="tab{{ $index + 1 }}"
+                                class="tab-btn w-full flex items-center gap-4 p-4 rounded-lg bg-white shadow-sm hover:bg-gray-100 <?php echo e($index === 0 ? 'active bg-gray-100' : ''); ?>"
+                                data-tab="tab<?php echo e($index + 1); ?>"
                                 type="button"
                             >
-                                <img src="{{ $iconUrl }}" alt="{{ $tab->title }} icon" class="w-6 h-6" />
-                                <span class="font-medium text-gray-800">{{ $tab->title }}</span>
+                                <img src="<?php echo e($iconUrl); ?>" alt="<?php echo e($tab->title); ?> icon" class="w-6 h-6" />
+                                <span class="font-medium text-gray-800"><?php echo e($tab->title); ?></span>
                             </button>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
 
                     <!-- Tab Content Area -->
                     <div class="flex-1 bg-white p-8 rounded-xl shadow-md" id="it-services-content">
-                        @foreach ($service->tabContents->take(4) as $index => $tab)
-                           <div id="tab{{ $index + 1 }}"
-                                class="tab-content {{ $index === 0 ? 'block' : 'hidden' }}
+                        <?php $__currentLoopData = $service->tabContents->take(4); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $tab): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                           <div id="tab<?php echo e($index + 1); ?>"
+                                class="tab-content <?php echo e($index === 0 ? 'block' : 'hidden'); ?>
+
                                         max-h-[400px] overflow-y-auto sm:max-h-full sm:overflow-visible
                                         custom-scrollbar pr-2">
-                                <h3 class="text-2xl font-semibold text-gray-900 mb-4">{{ $tab->title }}</h3>
-                                <p class="text-gray-700 mb-4">{{ $tab->description }}</p>
+                                <h3 class="text-2xl font-semibold text-gray-900 mb-4"><?php echo e($tab->title); ?></h3>
+                                <p class="text-gray-700 mb-4"><?php echo e($tab->description); ?></p>
 
-                                @if(!empty($tab->features) && is_array($tab->features))
+                                <?php if(!empty($tab->features) && is_array($tab->features)): ?>
                                     <ul class="list-disc list-inside text-gray-600">
-                                        @foreach ($tab->features as $feature)
-                                            <li>{{ $feature }}</li>
-                                        @endforeach
+                                        <?php $__currentLoopData = $tab->features; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <li><?php echo e($feature); ?></li>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </ul>
-                                @endif
+                                <?php endif; ?>
                             </div>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </div>
             </div>
@@ -230,28 +233,28 @@
 
 
 
-        @include('show_reviews.reviews')
+        <?php echo $__env->make('show_reviews.reviews', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
-      {{-- ===== Key Features (Responsive Grid + Mobile Slider) ===== --}}
+      
 <section class="py-16 bg-slate-50" id="key-features">
     <div class="container mx-auto px-4 sm:px-6 lg:px-12">
 
-        {{-- Heading --}}
+        
         <div class="text-center mb-10">
             <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900">
                 Our <span class="text-indigo-600">Key Features</span>
             </h2>
         </div>
 
-        @php
+        <?php
             $featureChunks = $service->orderFeatures->chunk(4);
-        @endphp
+        ?>
 
-        {{-- ================= DESKTOP GRID ================= --}}
+        
         <div class="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            @foreach($featureChunks as $group)
+            <?php $__currentLoopData = $featureChunks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="space-y-3">
-                    @foreach($group as $feature)
+                    <?php $__currentLoopData = $group; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div
                             class="
                                 px-4 py-3 rounded-xl
@@ -263,21 +266,22 @@
                                 hover:shadow-lg hover:-translate-y-0.5
                             "
                         >
-                            {{ ucfirst($feature->feature_title) }}
+                            <?php echo e(ucfirst($feature->feature_title)); ?>
+
                         </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
 
-        {{-- ================= MOBILE SLIDER ================= --}}
+        
         <div class="md:hidden overflow-x-auto scrollbar-hide">
             <div class="flex gap-4 snap-x snap-mandatory">
 
-                @foreach($featureChunks as $group)
+                <?php $__currentLoopData = $featureChunks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="min-w-[85%] snap-start">
                         <div class="space-y-3">
-                            @foreach($group as $feature)
+                            <?php $__currentLoopData = $group; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div
                                     class="
                                         px-4 py-3 rounded-xl
@@ -289,19 +293,20 @@
                                         hover:shadow-lg
                                     "
                                 >
-                                    {{ ucfirst($feature->feature_title) }}
+                                    <?php echo e(ucfirst($feature->feature_title)); ?>
+
                                 </div>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             </div>
         </div>
 
     </div>
 </section>
-{{-- ===== Key Features End ===== --}}
+
 
 
 
@@ -320,8 +325,8 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    @foreach($whyChooseUs as $index => $feature)
-                        @php
+                    <?php $__currentLoopData = $whyChooseUs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php
                             // Calculate delay dynamically: 100ms + 100 * index
                             $delay = 100 + ($index * 100);
 
@@ -330,20 +335,21 @@
                             $textColorClass = $feature->icon_text_class ?? 'text-blue-600';
                             $iconClass = $feature->icon ?? 'fas fa-lightbulb';
 
-                        @endphp
+                        ?>
 
                         <div class="p-8 bg-white rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition duration-500 ease-in-out"
-                            data-aos="fade-up" data-aos-delay="{{ $delay }}">
+                            data-aos="fade-up" data-aos-delay="<?php echo e($delay); ?>">
 
-                            <div class="w-16 h-16 {{ $bgColorClass }} {{ $textColorClass }} flex items-center justify-center rounded-xl mb-6 shadow-md">
-                                <i class="{{ $iconClass }} text-2xl"></i>
+                            <div class="w-16 h-16 <?php echo e($bgColorClass); ?> <?php echo e($textColorClass); ?> flex items-center justify-center rounded-xl mb-6 shadow-md">
+                                <i class="<?php echo e($iconClass); ?> text-2xl"></i>
                             </div>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-3">{{ $feature->title }}</h3>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-3"><?php echo e($feature->title); ?></h3>
                             <p class="text-gray-600 text-base leading-relaxed">
-                                {{ $feature->description }}
+                                <?php echo e($feature->description); ?>
+
                             </p>
                         </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
 
             </div>
@@ -355,41 +361,47 @@
             <!-- Heading -->
             <div class="text-center mb-12 transform hover:scale-[1.02] transition duration-300" data-aos="fade-up">
             <h2 class="text-4xl sm:text-3xl font-extrabold mb-4 text-gray-900">
-                {{ $service->content->title ?? 'Discover the Power Behind AAZZ Agency' }}
+                <?php echo e($service->content->title ?? 'Discover the Power Behind AAZZ Agency'); ?>
+
             </h2>
                 <p class="text-lg sm:text-xl text-gray-600  mx-auto leading-relaxed">
-                    {{ $service->content->description ?? 'We’re not just service providers — we’re your digital growth partners. At AAZZ Agency, we combine technology, creativity, and strategy to deliver scalable IT solutions, impactful marketing, and measurable business results.' }}
+                    <?php echo e($service->content->description ?? 'We’re not just service providers — we’re your digital growth partners. At AAZZ Agency, we combine technology, creativity, and strategy to deliver scalable IT solutions, impactful marketing, and measurable business results.'); ?>
+
                 </p>
             </div>
 
             <!-- Scrollable Columns -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-           {{-- Left Column --}}
+           
             <div class="bg-gray-100 rounded-xl p-6 shadow-md overflow-y-auto custom-scrollbar transform hover:scale-[1.02] transition duration-300"
                 data-aos="fade-right"
                 style="max-height: 400px;">
                 <h3 class="text-2xl font-bold mb-4">
-                    {{ $service->content->content_2_title ?? 'Your Trusted IT & Digital Solutions Partner' }}
+                    <?php echo e($service->content->content_2_title ?? 'Your Trusted IT & Digital Solutions Partner'); ?>
+
                 </h3>
                 <div class="prose prose-slate max-w-none prose-p:text-gray-700 prose-a:text-indigo-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900">
-                    {!! $service->content->content_2 ?? '
+                    <?php echo $service->content->content_2 ?? '
                         <p>AAZZ Agency is a premier IT and digital services provider based in the UK...</p>
-                    ' !!}
+                    '; ?>
+
                 </div>
             </div>
 
-            {{-- Right Column --}}
+            
             <div class="bg-gray-100 rounded-xl p-6 shadow-md overflow-y-auto custom-scrollbar transform hover:scale-[1.02] transition duration-300"
                 data-aos="fade-left"
                 style="max-height: 400px;">
                 <h3 class="text-2xl font-bold mb-4">
-                    {{ $service->content->content_3_title ?? 'Unlocking Your Digital Potential' }}
+                    <?php echo e($service->content->content_3_title ?? 'Unlocking Your Digital Potential'); ?>
+
                 </h3>
                 <div class="prose prose-slate max-w-none prose-p:text-gray-700 prose-a:text-indigo-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900">
-                    {!! $service->content->content_3 ?? '
+                    <?php echo $service->content->content_3 ?? '
                         <p>AAZZ Agency isn’t just about delivering services...</p>
-                    ' !!}
+                    '; ?>
+
                 </div>
             </div>
 
@@ -399,11 +411,11 @@
         </section>
 
 
-                    {{-- ====== Services We Provide Section Start ====== --}}
+                    
             <section class="py-20 bg-white" id="services-we-provide">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-12">
 
-                    {{-- Section Heading --}}
+                    
                     <div class="text-center mb-12" data-aos="fade-up">
                       <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
                         Services <span class="text-indigo-600">We Provide</span>
@@ -411,158 +423,164 @@
 
                     </div>
 
-                    {{-- Services Grid --}}
+                    
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        @foreach($service->aboutServices as $index => $aboutService)
-                            @php
+                        <?php $__currentLoopData = $service->aboutServices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $aboutService): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
                                 $delay = 100 + ($index * 100); // AOS delay for staggered animations
                                 $iconClass = $aboutService->icon_class ?? 'fas fa-cogs';
-                            @endphp
+                            ?>
 
                             <div class="bg-gray-50 p-6 rounded-2xl shadow hover:shadow-lg transition duration-300"
                                 data-aos="fade-up"
-                                data-aos-delay="{{ $delay }}">
+                                data-aos-delay="<?php echo e($delay); ?>">
 
-                                {{-- Icon --}}
+                                
                                 <div class="w-14 h-14 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 text-2xl mb-5 shadow-md">
-                                    <i class="{{ $iconClass }}"></i>
+                                    <i class="<?php echo e($iconClass); ?>"></i>
                                 </div>
 
-                                {{-- Title --}}
+                                
                                 <h4 class="text-xl font-semibold text-gray-800 mb-3">
-                                    {{ $aboutService->title }}
+                                    <?php echo e($aboutService->title); ?>
+
                                 </h4>
 
-                                {{-- Description --}}
+                                
                                 <p class="text-gray-600 leading-relaxed">
-                                    {{ $aboutService->description }}
+                                    <?php echo e($aboutService->description); ?>
+
                                 </p>
                             </div>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </div>
             </section>
-            {{-- ====== Services We Provide Section End ====== --}}
+            
 
 
-            {{-- ====== Client Logo Marquee Section Start ====== --}}
+            
 <section class="py-20 bg-gray-50">
     <div class="container mx-auto px-4 sm:px-6 lg:px-12">
 
-        {{-- Section Title --}}
+        
         <div class="text-center mb-12">
             <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
-                {{ $clients->first()?->title ?? 'Trusted by Leading Brands Worldwide' }}
+                <?php echo e($clients->first()?->title ?? 'Trusted by Leading Brands Worldwide'); ?>
+
             </h2>
             <p class="text-gray-600 mt-4 max-w-2xl mx-auto text-base sm:text-lg">
-                {{ $clients->first()?->description ?? 'Join a growing network of global enterprises who rely on our expertise to power their success.' }}
+                <?php echo e($clients->first()?->description ?? 'Join a growing network of global enterprises who rely on our expertise to power their success.'); ?>
+
             </p>
         </div>
 
-        {{-- Marquee Wrapper --}}
+        
         <div class="space-y-10 overflow-hidden relative">
 
-            {{-- Row 1: Left to Right --}}
+            
             <div class="flex w-max space-x-8 animate-marquee-slow">
-                @foreach($clients->take(10) as $client)
+                <?php $__currentLoopData = $clients->take(10); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $client): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <img
-                        src="{{ asset('storage/' . $client->logo_image) }}"
-                        alt="{{ $client->name ?? 'Client Logo' }}"
+                        src="<?php echo e(asset('storage/' . $client->logo_image)); ?>"
+                        alt="<?php echo e($client->name ?? 'Client Logo'); ?>"
                         class="h-16 w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
                     />
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                {{-- Loop again for seamless loop --}}
-                @foreach($clients->take(10) as $client)
+                
+                <?php $__currentLoopData = $clients->take(10); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $client): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <img
-                        src="{{ asset('storage/' . $client->logo_image) }}"
-                        alt="{{ $client->name ?? 'Client Logo' }}"
+                        src="<?php echo e(asset('storage/' . $client->logo_image)); ?>"
+                        alt="<?php echo e($client->name ?? 'Client Logo'); ?>"
                         class="h-16 w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
                     />
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
-            {{-- Row 2: Right to Left --}}
+            
             <div class="flex w-max space-x-8 animate-marquee-slow-reverse">
-                @foreach($clients->skip(10)->take(10) as $client)
+                <?php $__currentLoopData = $clients->skip(10)->take(10); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $client): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <img
-                        src="{{ asset('storage/' . $client->logo_image) }}"
-                        alt="{{ $client->name ?? 'Client Logo' }}"
+                        src="<?php echo e(asset('storage/' . $client->logo_image)); ?>"
+                        alt="<?php echo e($client->name ?? 'Client Logo'); ?>"
                         class="h-16 w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
                     />
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                {{-- Repeat again for smooth scroll --}}
-                @foreach($clients->skip(10)->take(10) as $client)
+                
+                <?php $__currentLoopData = $clients->skip(10)->take(10); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $client): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <img
-                        src="{{ asset('storage/' . $client->logo_image) }}"
-                        alt="{{ $client->name ?? 'Client Logo' }}"
+                        src="<?php echo e(asset('storage/' . $client->logo_image)); ?>"
+                        alt="<?php echo e($client->name ?? 'Client Logo'); ?>"
                         class="h-16 w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
                     />
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
         </div>
     </div>
 </section>
-{{-- ====== Client Logo Marquee Section End ====== --}}
 
-        {{-- ====== PROFESSIONAL SLIDER SECTION (Tailwind + JS + AOS) START ====== --}}
+
+        
 <section class="relative bg-white bg-gradient-to-br from-white py-24 overflow-hidden">
     <div class="container mx-auto px-6 lg:px-12">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-            {{-- Left: Text & Steps --}}
+            
             <div data-aos="fade-up" data-aos-delay="100">
                 <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
-                    {{ $service->testOrders->first()?->title ?? 'Explore Our Process' }}
+                    <?php echo e($service->testOrders->first()?->title ?? 'Explore Our Process'); ?>
+
                 </h2>
                 <p class="text-lg text-gray-700 mb-8">
-                    {{ $service->testOrders->first()?->description ?? 'We apply a refined process to deliver exceptional outcomes for our clients.' }}
+                    <?php echo e($service->testOrders->first()?->description ?? 'We apply a refined process to deliver exceptional outcomes for our clients.'); ?>
+
                 </p>
 
                 <ul class="space-y-5">
-                    @php
+                    <?php
                         $steps = [
                             $service->testOrders->first()?->step_1,
                             $service->testOrders->first()?->step_2,
                             $service->testOrders->first()?->step_3,
                             $service->testOrders->first()?->step_4,
                         ];
-                    @endphp
+                    ?>
 
-                    @foreach($steps as $index => $step)
-                        @if (!empty($step))
-                            <li class="flex items-start" data-aos="fade-up" data-aos-delay="{{ 200 + $index * 100 }}">
+                    <?php $__currentLoopData = $steps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $step): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if(!empty($step)): ?>
+                            <li class="flex items-start" data-aos="fade-up" data-aos-delay="<?php echo e(200 + $index * 100); ?>">
                                 <div class="flex-shrink-0 bg-blue-600 rounded-full p-2 mr-4 shadow-md">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                <span class="text-base text-gray-800">{{ $step }}</span>
+                                <span class="text-base text-gray-800"><?php echo e($step); ?></span>
                             </li>
-                        @endif
-                    @endforeach
+                        <?php endif; ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
             </div>
 
-            {{-- Right: Custom Slider --}}
+            
             <div class="relative w-full" data-aos="fade-left" data-aos-delay="200">
-                @php $images = $service->testOrders->first()?->images ?? []; @endphp
+                <?php $images = $service->testOrders->first()?->images ?? []; ?>
 
-                @if (!empty($images) && count($images) > 0)
+                <?php if(!empty($images) && count($images) > 0): ?>
                     <div id="customSlider" class="overflow-hidden rounded-xl shadow-2xl ring-1 ring-blue-200">
                         <div class="slider-track flex transition-transform duration-700 ease-in-out">
-                            @foreach($images as $image)
+                            <?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="flex-shrink-0 w-full">
-                                    <img src="{{ asset($image) }}" alt="Slider Image"
+                                    <img src="<?php echo e(asset($image)); ?>" alt="Slider Image"
                                         class="w-full h-[250px] sm:h-[300px] md:h-[400px] object-cover object-center">
                                 </div>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                     </div>
 
-                    {{-- Navigation Controls --}}
+                    
                     <button id="prevBtn"
                         class="absolute top-1/2 left-2 md:left-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-blue-100 transition z-20">
                         <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" stroke-width="2"
@@ -577,17 +595,17 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                         </svg>
                     </button>
-                @else
+                <?php else: ?>
                     <div class="w-full h-[300px] sm:h-[400px] bg-gray-200 flex items-center justify-center text-gray-500">
                         No images available for this slider.
                     </div>
-                @endif
+                <?php endif; ?>
             </div>
 
         </div>
     </div>
 </section>
-{{-- ====== PROFESSIONAL SLIDER SECTION END ====== --}}
+
 
 
 
@@ -603,32 +621,32 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Left Column -->
             <div class="space-y-4">
-                @foreach($service->faqs->slice(0, ceil($service->faqs->count() / 2)) as $faq)
+                <?php $__currentLoopData = $service->faqs->slice(0, ceil($service->faqs->count() / 2)); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $faq): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300">
                     <button class="faq-toggle w-full text-left px-6 py-4 flex justify-between items-center text-gray-800 font-medium focus:outline-none" type="button">
-                    <span>{{ $faq->question }}</span>
+                    <span><?php echo e($faq->question); ?></span>
                     <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
                     </button>
                     <div class="faq-content max-h-0 overflow-hidden px-6 pb-0 transition-all duration-500 ease-in-out text-gray-600">
-                    <p class="py-4">{{ $faq->answer }}</p>
+                    <p class="py-4"><?php echo e($faq->answer); ?></p>
                     </div>
                 </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
             <!-- Right Column -->
             <div class="space-y-4">
-                @foreach($service->faqs->slice(ceil($service->faqs->count() / 2)) as $faq)
+                <?php $__currentLoopData = $service->faqs->slice(ceil($service->faqs->count() / 2)); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $faq): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300">
                     <button class="faq-toggle w-full text-left px-6 py-4 flex justify-between items-center text-gray-800 font-medium focus:outline-none" type="button">
-                    <span>{{ $faq->question }}</span>
+                    <span><?php echo e($faq->question); ?></span>
                     <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
                     </button>
                     <div class="faq-content max-h-0 overflow-hidden px-6 pb-0 transition-all duration-500 ease-in-out text-gray-600">
-                    <p class="py-4">{{ $faq->answer }}</p>
+                    <p class="py-4"><?php echo e($faq->answer); ?></p>
                     </div>
                 </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
             </div>
         </div>
@@ -636,18 +654,18 @@
 
 
 
-          {{-- Include the service form --}}
-        @include('service_form.form')
+          
+        <?php echo $__env->make('service_form.form', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('custom_css')
+<?php $__env->startPush('custom_css'); ?>
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <link rel="stylesheet" href="{{ asset('web_assets/css/home_page/content_sec.css') }}">
-    <link rel="stylesheet" href="{{ asset('web_assets/css/home_page/animations.css') }}">
-    <link rel="stylesheet" href="{{ asset('web_assets/css/client_sec.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('web_assets/css/home_page/content_sec.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('web_assets/css/home_page/animations.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('web_assets/css/client_sec.css')); ?>">
 
    <style>
   .custom-scrollbar::-webkit-scrollbar {
@@ -664,17 +682,17 @@
     }
     </style>
 
-@endpush
+<?php $__env->stopPush(); ?>
 
 
 
-@push('custom_js')
+<?php $__env->startPush('custom_js'); ?>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="{{ asset('web_assets/js/faq.js') }}"></script>
+    <script src="<?php echo e(asset('web_assets/js/faq.js')); ?>"></script>
 
-    <script src="{{ asset('web_assets/js/home/animations.js') }}" defer></script>
-    <script src="{{ asset('web_assets/js/home/it-services-tabs.js') }}"></script>
-    <script src="{{ asset('web_assets/js/home/testimonial.js') }}" defer></script>
+    <script src="<?php echo e(asset('web_assets/js/home/animations.js')); ?>" defer></script>
+    <script src="<?php echo e(asset('web_assets/js/home/it-services-tabs.js')); ?>"></script>
+    <script src="<?php echo e(asset('web_assets/js/home/testimonial.js')); ?>" defer></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -766,4 +784,6 @@
     });
 </script>
 
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make(config('web_assets.layouts.main'), array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Laravel\Aazz-Agency\resources\views/view_service.blade.php ENDPATH**/ ?>

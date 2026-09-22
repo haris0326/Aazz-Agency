@@ -79,6 +79,7 @@
     ================================ -->
     <script src="{{ config('web_assets.vendor.tailwind') }}"></script>
     <link href="{{ config('web_assets.vendor.google_fonts') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ config('web_assets.vendor.bootstrap_icons') }}">
     <link rel="stylesheet" href="{{ config('web_assets.vendor.fontawesome') }}">
 
     <!-- ===============================
@@ -120,6 +121,12 @@
 
     {{-- Page Specific JS --}}
     @stack('custom_js')
+
+    <script>
+        tailwind.config = { plugins: [] } // typography CDN plugin add karni hogi
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/typography"></script>
 
 </body>
 </html>

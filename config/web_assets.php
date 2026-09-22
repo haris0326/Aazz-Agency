@@ -30,6 +30,7 @@ return [
         'tailwind'       => 'https://cdn.tailwindcss.com',
         'google_fonts'   => 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
         'fontawesome'    => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+        'bootstrap_icons' => 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css',
         
     ],
 

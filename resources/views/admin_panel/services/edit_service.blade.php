@@ -482,16 +482,40 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         document.getElementById('order_feature_titles').value = JSON.stringify(tags);
     }
-    const tagInput = document.getElementById('tag-input');
+   const tagInput = document.getElementById('tag-input');
+
+    function addTag(val) {
+        val = val.trim();
+        if (val && !tags.includes(val)) {
+            tags.push(val);
+            renderTags();
+        }
+    }
+
     tagInput.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ',') {
             e.preventDefault();
             const val = this.value.trim().replace(/,$/, '');
-            if (val && !tags.includes(val)) {
-                tags.push(val);
-                this.value = '';
-                renderTags();
-            }
+            addTag(val);
+            this.value = '';
+        }
+    });
+
+    // NEW: paste handler — comma-separated text ko auto tags bana do
+    tagInput.addEventListener('paste', function (e) {
+        e.preventDefault();
+        const pasted = (e.clipboardData || window.clipboardData).getData('text');
+        pasted.split(',').forEach(function (part) {
+            addTag(part);
+        });
+        this.value = '';
+    });
+
+    // NEW: agar user tag likh ke focus hata de (Tab/click away) bina Enter dabaye, wo bhi save ho
+    tagInput.addEventListener('blur', function () {
+        if (this.value.trim()) {
+            addTag(this.value);
+            this.value = '';
         }
     });
     document.getElementById('order-feature-tags').addEventListener('click', function (e) {
