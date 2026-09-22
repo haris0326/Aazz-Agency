@@ -349,55 +349,86 @@
             </div>
         </section>
 
-     <section id="about-aazz-scroll" class="py-20 bg-white text-gray-800">
-        <div class="container mx-auto px-4 sm:px-6">
+    <section id="about-aazz-scroll" class="py-20 bg-white text-gray-800">
+    <div class="container mx-auto px-4 sm:px-6">
 
-            <!-- Heading -->
-            <div class="text-center mb-12 transform hover:scale-[1.02] transition duration-300" data-aos="fade-up">
+        <!-- Heading -->
+        <div class="text-center mb-12 transform hover:scale-[1.02] transition duration-300"
+             data-aos="fade-up">
+
             <h2 class="text-4xl sm:text-3xl font-extrabold mb-4 text-gray-900">
                 {{ $service->content->title ?? 'Discover the Power Behind AAZZ Agency' }}
             </h2>
-                <p class="text-lg sm:text-xl text-gray-600  mx-auto leading-relaxed">
-                    {{ $service->content->description ?? 'We’re not just service providers — we’re your digital growth partners. At AAZZ Agency, we combine technology, creativity, and strategy to deliver scalable IT solutions, impactful marketing, and measurable business results.' }}
-                </p>
-            </div>
 
-           {{-- Left Column --}}
+            <p class="text-lg sm:text-xl text-gray-600 mx-auto leading-relaxed">
+                {{ $service->content->description ?? 'We’re not just service providers — we’re your digital growth partners. At AAZZ Agency, we combine technology, creativity, and strategy to deliver scalable IT solutions, impactful marketing, and measurable business results.' }}
+            </p>
+        </div>
+
+
+        <!-- Scrollable Columns -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            {{-- Left Column --}}
             <div class="bg-gray-100 rounded-xl p-6 shadow-md overflow-y-auto custom-scrollbar transform hover:scale-[1.02] transition duration-300"
-                data-aos="fade-right"
-                style="max-height: 400px;">
+                 data-aos="fade-right"
+                 style="max-height: 400px;">
 
                 <h3 class="text-2xl font-bold mb-4">
                     {{ $service->content->content_2_title ?? 'Your Trusted IT & Digital Solutions Partner' }}
                 </h3>
 
-                <div class="prose prose-slate max-w-none prose-p:text-gray-700 prose-a:text-indigo-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900">
-                    {!! preg_replace('/<h1(\s[^>]*)?>/i', '<h2$1>', preg_replace('/<\/h1>/i', '</h2>', $service->content->content_2 ?? '
-                        <p>AAZZ Agency is a premier IT and digital services provider based in the UK...</p>
-                    ')) !!}
+                <div class="prose prose-slate max-w-none
+                            prose-p:text-gray-700
+                            prose-a:text-indigo-600
+                            prose-a:no-underline
+                            hover:prose-a:underline
+                            prose-strong:text-gray-900">
+
+                    {!! preg_replace(
+                        ['/<h1(\s[^>]*)?>/i', '/<\/h1>/i'],
+                        ['<h2$1>', '</h2>'],
+                        $service->content->content_2 ?? '
+                            <p>AAZZ Agency is a premier IT and digital services provider based in the UK...</p>
+                        '
+                    ) !!}
+
                 </div>
             </div>
 
 
             {{-- Right Column --}}
             <div class="bg-gray-100 rounded-xl p-6 shadow-md overflow-y-auto custom-scrollbar transform hover:scale-[1.02] transition duration-300"
-                data-aos="fade-left"
-                style="max-height: 400px;">
+                 data-aos="fade-left"
+                 style="max-height: 400px;">
 
                 <h3 class="text-2xl font-bold mb-4">
                     {{ $service->content->content_3_title ?? 'Unlocking Your Digital Potential' }}
                 </h3>
 
-                <div class="prose prose-slate max-w-none prose-p:text-gray-700 prose-a:text-indigo-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900">
-                    {!! preg_replace('/<h1(\s[^>]*)?>/i', '<h2$1>', preg_replace('/<\/h1>/i', '</h2>', $service->content->content_3 ?? '
-                        <p>AAZZ Agency isn’t just about delivering services...</p>
-                    ')) !!}
+                <div class="prose prose-slate max-w-none
+                            prose-p:text-gray-700
+                            prose-a:text-indigo-600
+                            prose-a:no-underline
+                            hover:prose-a:underline
+                            prose-strong:text-gray-900">
+
+                    {!! preg_replace(
+                        ['/<h1(\s[^>]*)?>/i', '/<\/h1>/i'],
+                        ['<h2$1>', '</h2>'],
+                        $service->content->content_3 ?? '
+                            <p>AAZZ Agency isn’t just about delivering services...</p>
+                        '
+                    ) !!}
+
                 </div>
             </div>
 
-
         </div>
-        </section>
+
+    </div>
+</section>
+
 
 
                     {{-- ====== Services We Provide Section Start ====== --}}
