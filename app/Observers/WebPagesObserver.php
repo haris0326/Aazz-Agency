@@ -9,7 +9,9 @@ class WebPagesObserver
 {
     public function saved(WebPages $page): void
     {
-        RegenerateSitemapJob::dispatch();
+        if ($page->wasRecentlyCreated || $page->wasChanged('slug')) {
+            RegenerateSitemapJob::dispatch();
+        }
     }
 
     public function deleted(WebPages $page): void
