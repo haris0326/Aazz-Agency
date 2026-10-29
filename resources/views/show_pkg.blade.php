@@ -274,7 +274,7 @@
 </section>
 
 {{-- Service Locations (City Slider) --}}
-    @if($cities->isNotEmpty())
+    {{-- @if($cities->isNotEmpty())
     <section class="py-24 bg-[#020617] overflow-hidden">
         <div class="container mx-auto px-6">
 
@@ -315,7 +315,7 @@
         </div>
     </section>
     @endif
-
+ --}}
 
 {{-- Custom Modal --}}
 <div id="getStartedModal" class="fixed inset-0 z-[9999] hidden items-center justify-center modal-blur-bg px-4 py-6">

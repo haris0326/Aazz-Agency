@@ -21,4 +21,8 @@ Artisan::command('inspire', function () {
 | changes the database outside Eloquent events (seeders, raw queries,
 | manual DB edits) so the sitemaps never silently go stale.
 */
-Schedule::command('sitemap:generate')->daily()->at('03:00');
+Schedule::command('sitemap:generate')
+    ->dailyAt('00:00')
+    ->timezone('Europe/London')
+    ->withoutOverlapping()
+    ->appendOutputTo(storage_path('logs/sitemap-schedule.log'));

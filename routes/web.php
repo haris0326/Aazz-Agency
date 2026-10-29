@@ -163,30 +163,30 @@
         Route::get('inquiries/{id}/download-pdf', [PackageFormController::class, 'downloadPdf'])->name('inquiry.downloadPdf');
         Route::get('inquiries', [PackageFormController::class, 'showAllInquiries'])->name('admin.inquiries.index');
 
-    // User management routes (only accessible by super admin)
-            Route::middleware([\App\Http\Middleware\CheckSuperAdmin::class])->group(function () {
-                Route::get('users', [AdminController::class, 'index'])->name('index.users');
-                Route::get('add-user', [AdminController::class, 'create'])->name('admin.add-user-form');
-                Route::post('add-user', [AdminController::class, 'store'])->name('admin.add-user');
-                Route::get('edit-user/{id}', [AdminController::class, 'edit'])->name('admin.edit-user');
-                Route::put('admin/update-user/{id}', [AdminController::class, 'update'])->name('admin.update-user');
-                Route::delete('delete-user/{id}', [AdminController::class, 'destroy'])->name('admin.delete-user');
-            });
+        // User management routes (only accessible by super admin)
+        Route::middleware([\App\Http\Middleware\CheckSuperAdmin::class])->group(function () {
+            Route::get('users', [AdminController::class, 'index'])->name('index.users');
+            Route::get('add-user', [AdminController::class, 'create'])->name('admin.add-user-form');
+            Route::post('add-user', [AdminController::class, 'store'])->name('admin.add-user');
+            Route::get('edit-user/{id}', [AdminController::class, 'edit'])->name('admin.edit-user');
+            Route::put('admin/update-user/{id}', [AdminController::class, 'update'])->name('admin.update-user');
+            Route::delete('delete-user/{id}', [AdminController::class, 'destroy'])->name('admin.delete-user');
+        });
 
-            Route::resource('tech_types', TechTypeController::class);
-            Route::resource('technologies', TechnologyController::class);
+        Route::resource('tech_types', TechTypeController::class);
+        Route::resource('technologies', TechnologyController::class);
 
         Route::post('blog/autosave', [BlogController::class, 'autosaveDraft'])->name('blog.autosave');
         Route::post('blog/upload-image', [BlogController::class, 'uploadEditorImage'])->name('blog.upload-image');
         Route::resource('blog-categories', BlogCategoryController::class)->except(['show']);
         Route::resource('blog', BlogController::class)->except(['show']);
 
-         Route::prefix('blog-comments')->name('admin.blog-comments.')->group(function () {
+        Route::prefix('blog-comments')->name('admin.blog-comments.')->group(function () {
             Route::get('/', [BlogCommentController::class, 'index'])->name('index');
             Route::post('/{comment}/status', [BlogCommentController::class, 'updateStatus'])->name('updateStatus');
             Route::delete('/{comment}', [BlogCommentController::class, 'destroy'])->name('destroy');
         });
-        
+
 
 
         Route::post('regenerate-sitemap', [SitemapController::class, 'regenerate'])
@@ -248,7 +248,10 @@
     });
 
 
-    Route::post('/proposals/store', [ProposalController::class, 'store'])->name('proposals.store');
+    Route::post(
+        '/proposals/store',
+        [ProposalController::class, 'store']
+    )->name('proposals.store');
 
 
     Route::get('/reviews/testimonials', [ServiceReviewController::class, 'showReviews'])->name('show_reviews');
@@ -268,21 +271,21 @@
     Route::get('/blog', [BlogController::class, 'publicIndex'])->name('blogs.index');
 
     Route::get('/blog/{slug}', [BlogController::class, 'show'])
-    ->where('slug', '[a-z0-9\-]+')
-    ->name('blog.show');
+        ->where('slug', '[a-z0-9\-]+')
+        ->name('blog.show');
 
     // 3) PUBLIC route — add this near your other public blog routes
     //    (next to Route::get('/blog/{slug}', ...)->name('blog.show')):
- 
-Route::post('/blog-comments/{blog}', [BlogCommentController::class, 'store'])
-    ->name('blog.comments.store');
 
-Route::get('/robots.txt', function () {
-    $content = "User-agent: *\n" .
-               "Disallow: /admin\n" .
-               "Disallow: /admin-panel/login\n" .
-               "Allow: /\n\n" .
-               "Sitemap: " . url('/sitemap.xml') . "\n";
- 
-    return response($content, 200)->header('Content-Type', 'text/plain');
-});
+    Route::post('/blog-comments/{blog}', [BlogCommentController::class, 'store'])
+        ->name('blog.comments.store');
+
+    Route::get('/robots.txt', function () {
+        $content = "User-agent: *\n" .
+            "Disallow: /admin\n" .
+            "Disallow: /admin-panel/login\n" .
+            "Allow: /\n\n" .
+            "Sitemap: " . url('/sitemap.xml') . "\n";
+
+        return response($content, 200)->header('Content-Type', 'text/plain');
+    });

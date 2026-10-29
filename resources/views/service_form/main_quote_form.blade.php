@@ -3,607 +3,756 @@
 @section('title', 'Get Your Free Proposal')
 
 @push('custom_css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-    .bg-animate {
-        background: linear-gradient(-45deg, #0f172a, #1e293b, #0ea5e9, #2dd4bf);
-        background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
-    }
-    @keyframes gradientBG {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    .floating { animation: floating 3s ease-in-out infinite; }
-    @keyframes floating {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-    }
-    .glass-card {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .service-checkbox:checked + .service-card {
-        background: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
-        color: white;
-        transform: scale(1.05);
-        border-color: transparent;
-    }
-    .service-checkbox:checked + .service-card i { color: white; }
-    .service-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-    textarea::-webkit-scrollbar { width: 5px; }
-    textarea::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    <style>
+        .proposal-section {
+            background:
+                radial-gradient(circle at 10% 10%, rgba(45, 212, 191, .18), transparent 32%),
+                radial-gradient(circle at 90% 90%, rgba(59, 130, 246, .22), transparent 35%),
+                linear-gradient(135deg, #07111f 0%, #101d35 55%, #0f766e 130%);
+        }
 
-    /* Validation states */
-    .field-invalid { box-shadow: 0 0 0 2px #ef4444 !important; }
-    .field-error-msg {
-        display: none;
-        color: #ef4444;
-        font-size: 11px;
-        font-weight: 700;
-        margin-top: 6px;
-    }
-    .field-error-msg.show { display: block; }
+        .proposal-glow {
+            position: absolute;
+            border-radius: 9999px;
+            filter: blur(70px);
+            pointer-events: none;
+        }
 
-    /* Honeypot — hidden from humans, catnip for bots that auto-fill every field */
-    .hp-trap {
-        position: absolute !important;
-        left: -9999px !important;
-        top: -9999px !important;
-        height: 0 !important;
-        width: 0 !important;
-        overflow: hidden !important;
-        opacity: 0 !important;
-    }
+        .proposal-panel {
+            background: #0f172a;
+            border: 1px solid rgba(148, 163, 184, .18);
+            box-shadow: 0 30px 100px rgba(0, 0, 0, .35);
+        }
 
-    /* Submit button loading state */
-    #submitBtn:disabled { opacity: 0.7; cursor: not-allowed; }
-    .btn-spinner {
-        display: none;
-        width: 18px; height: 18px;
-        border: 2.5px solid rgba(255,255,255,0.35);
-        border-top-color: #fff;
-        border-radius: 50%;
-        animation: spin 0.7s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #submitBtn.is-loading .btn-spinner { display: inline-block; }
-    #submitBtn.is-loading .btn-label { display: none; }
-</style>
+        .proposal-input {
+            width: 100%;
+            min-width: 0;
+            padding: 15px 16px;
+            border-radius: 13px;
+            color: #f8fafc;
+            background: #182438;
+            border: 1px solid #334155;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s, background .2s;
+        }
+
+        .proposal-input::placeholder {
+            color: #8493a8;
+        }
+
+        .proposal-input:focus {
+            border-color: #2dd4bf;
+            background: #1b2a40;
+            box-shadow: 0 0 0 3px rgba(45, 212, 191, .12);
+        }
+
+        .proposal-input option {
+            color: #f8fafc;
+            background: #182438;
+        }
+
+        .proposal-label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: 9px;
+        }
+
+        .proposal-label .required {
+            color: #5eead4;
+        }
+
+        .proposal-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            pointer-events: none;
+            transition: color .2s;
+        }
+
+        .proposal-field:focus-within .proposal-icon {
+            color: #5eead4;
+        }
+
+        .proposal-field.has-icon .proposal-input {
+            padding-left: 43px;
+        }
+
+        .proposal-error {
+            display: none;
+            color: #fca5a5;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 7px;
+        }
+
+        .proposal-error.show {
+            display: block;
+        }
+
+        .proposal-input.field-invalid {
+            border-color: #f87171 !important;
+            box-shadow: 0 0 0 3px rgba(248, 113, 113, .12) !important;
+        }
+
+        .proposal-submit {
+            background: linear-gradient(100deg, #2563eb, #0d9488);
+            box-shadow: 0 12px 30px rgba(13, 148, 136, .23);
+            transition: transform .2s, box-shadow .2s, opacity .2s;
+        }
+
+        .proposal-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 36px rgba(13, 148, 136, .32);
+        }
+
+        .proposal-submit:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .proposal-spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, .4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: proposal-spin .7s linear infinite;
+        }
+
+        #submitBtn.is-loading .proposal-spinner {
+            display: inline-block;
+        }
+
+        #submitBtn.is-loading .proposal-btn-text {
+            display: none;
+        }
+
+        @keyframes proposal-spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .proposal-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .proposal-step-icon {
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            color: #5eead4;
+            background: rgba(45, 212, 191, .1);
+            border: 1px solid rgba(45, 212, 191, .2);
+        }
+
+        .proposal-honeypot {
+            position: absolute !important;
+            left: -9999px !important;
+            top: -9999px !important;
+            width: 1px !important;
+            height: 1px !important;
+            overflow: hidden !important;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .proposal-submit,
+            .proposal-input {
+                transition: none;
+            }
+
+            .proposal-spinner {
+                animation-duration: 1.5s;
+            }
+        }
+    </style>
 @endpush
 
 @section('content')
-<section id="proposal-form" class="py-24 bg-animate relative overflow-hidden min-h-screen flex items-center">
-    <div class="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl floating"></div>
-    <div class="absolute bottom-20 right-10 w-40 h-40 bg-teal-400/20 rounded-full blur-3xl floating" style="animation-delay: 1s;"></div>
+    <section id="proposal-form" class="proposal-section relative overflow-hidden py-16 sm:py-20 lg:py-24">
 
-    <div class="container mx-auto px-4 relative z-10">
+        <div class="proposal-glow w-64 h-64 bg-blue-500/20 top-0 left-0"></div>
+        <div class="proposal-glow w-72 h-72 bg-teal-400/20 bottom-0 right-0"></div>
 
-        <div class="text-center mb-16" data-aos="zoom-in">
-            <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-2 rounded-full mb-6 backdrop-blur-md">
-                <span class="relative flex h-3 w-3">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-teal-500"></span>
-                </span>
-                <span class="text-white text-xs font-bold uppercase tracking-widest">Available for New Projects</span>
-            </div>
-            <h2 class="text-5xl md:text-7xl font-black text-white mt-4 mb-6 tracking-tight">
-                Let's Build Something <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-blue-300">Extraordinary.</span>
-            </h2>
-            <p class="text-blue-100/80 max-w-2xl mx-auto text-xl font-light">
-                Ready to dominate your niche? Provide your details below and we'll craft a winning proposal for you.
-            </p>
-        </div>
+        <div class="container relative z-10 mx-auto px-4">
 
-        <div class="max-w-5xl mx-auto glass-card rounded-[2rem] shadow-2xl overflow-hidden md:flex" data-aos="fade-up">
+            {{-- Heading --}}
+            <header class="text-center max-w-3xl mx-auto mb-12 lg:mb-16" data-aos="fade-up">
 
-            <div class="hidden md:flex md:w-2/5 bg-slate-900 p-12 flex-col justify-between relative overflow-hidden text-white">
-                <div class="relative z-10">
-                    <h3 class="text-3xl font-bold mb-8">What happens <br>next?</h3>
-                    <div class="space-y-8">
-                        <div class="flex gap-5">
-                            <span class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600/20 border border-blue-500 flex items-center justify-center font-bold text-blue-400">1</span>
-                            <div>
-                                <h4 class="font-bold">Expert Review</h4>
-                                <p class="text-sm text-slate-400">Our analysts study your business model and requirements.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-5">
-                            <span class="flex-shrink-0 w-10 h-10 rounded-full bg-teal-600/20 border border-teal-500 flex items-center justify-center font-bold text-teal-400">2</span>
-                            <div>
-                                <h4 class="font-bold">Strategy Call</h4>
-                                <p class="text-sm text-slate-400">We schedule a brief call to align on goals and KPIs.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-5">
-                            <span class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-600/20 border border-purple-500 flex items-center justify-center font-bold text-purple-400">3</span>
-                            <div>
-                                <h4 class="font-bold">Custom Proposal</h4>
-                                <p class="text-sm text-slate-400">You receive a detailed technical and financial roadmap.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relative z-10 mt-12 pt-8 border-t border-slate-800">
-                    <div class="flex items-center gap-4">
-                        <img src="https://ui-avatars.com/api/?name=Team+Support&background=0ea5e9&color=fff" class="w-12 h-12 rounded-full border-2 border-blue-500" alt="Support">
-                        <div>
-                            <p class="text-sm font-bold">Dedicated Support</p>
-                            <p class="text-xs text-slate-400">Always here to help you.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-600 rounded-full mix-blend-screen filter blur-[80px] opacity-20"></div>
-            </div>
-
-            <form
-                id="proposalForm"
-                method="POST"
-                action="{{ route('proposals.store') }}"
-                novalidate
-                class="w-full md:w-3/5 p-8 md:p-14 space-y-8"
-            >
-                @csrf
-
-                {{-- Honeypot: real users never see or fill this. If it arrives filled, it's a bot. --}}
-                <div class="hp-trap" aria-hidden="true">
-                    <label for="hp_website">Leave this field empty</label>
-                    <input type="text" name="hp_website" id="hp_website" tabindex="-1" autocomplete="off">
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div class="group">
-                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block group-focus-within:text-blue-500 transition-colors">Your Identity</label>
-                        <div class="relative">
-                            <i class="fas fa-signature absolute left-4 top-4 text-slate-300 group-focus-within:text-blue-500"></i>
-                            <input type="text" name="fullName" id="fullName" placeholder="Full Name" required
-                                class="w-full pl-12 pr-4 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-500/20 outline-none transition-all placeholder:text-slate-400 font-medium">
-                        </div>
-                        <p class="field-error-msg">Please enter your full name.</p>
-                    </div>
-                    <div class="group">
-                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block group-focus-within:text-blue-500 transition-colors">Business Name</label>
-                        <div class="relative">
-                            <i class="fas fa-briefcase absolute left-4 top-4 text-slate-300 group-focus-within:text-blue-500"></i>
-                            <input type="text" name="company" id="company" placeholder="Company Name" required
-                                class="w-full pl-12 pr-4 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-500/20 outline-none transition-all placeholder:text-slate-400 font-medium">
-                        </div>
-                        <p class="field-error-msg">Please enter your company name.</p>
-                    </div>
-                </div>
-
-                <div class="group">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block group-focus-within:text-blue-500 transition-colors">
-                        Website (optional)
-                    </label>
-                    <div class="relative">
-                        <i class="fas fa-globe absolute left-4 top-4 text-slate-300 group-focus-within:text-blue-500"></i>
-                        <input
-                            type="url"
-                            name="website"
-                            id="website"
-                            placeholder="https://yourwebsite.com"
-                            class="w-full pl-12 pr-4 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-500/20 outline-none font-medium placeholder:text-slate-400"
-                        >
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div class="group">
-                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block group-focus-within:text-blue-500 transition-colors">Official Email</label>
-                        <div class="relative">
-                            <i class="fas fa-envelope absolute left-4 top-4 text-slate-300 group-focus-within:text-blue-500"></i>
-                            <input type="email" name="email" id="email" placeholder="email@company.com" required
-                                class="w-full pl-12 pr-4 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-500/20 outline-none transition-all placeholder:text-slate-400 font-medium">
-                        </div>
-                        <p class="field-error-msg">Please enter a valid email address.</p>
-                    </div>
-                    <div class="group">
-                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block group-focus-within:text-blue-500 transition-colors">Contact Number</label>
-                        <div class="flex bg-slate-50 rounded-2xl overflow-hidden focus-within:ring-2 focus-within:ring-blue-500/20 transition-all">
-                            <select name="countryCode" class="bg-slate-100 px-3 py-4 outline-none text-xs font-bold text-slate-600 border-r border-white">
-                                <option value="+1">US (+1)</option>
-                                <option value="+1">CA (+1)</option>
-                                <option value="+7">RU (+7)</option>
-                                <option value="+20">EG (+20)</option>
-                                <option value="+27">ZA (+27)</option>
-                                <option value="+30">GR (+30)</option>
-                                <option value="+31">NL (+31)</option>
-                                <option value="+32">BE (+32)</option>
-                                <option value="+33">FR (+33)</option>
-                                <option value="+34">ES (+34)</option>
-                                <option value="+36">HU (+36)</option>
-                                <option value="+39">IT (+39)</option>
-                                <option value="+40">RO (+40)</option>
-                                <option value="+41">CH (+41)</option>
-                                <option value="+43">AT (+43)</option>
-                                <option value="+44">UK (+44)</option>
-                                <option value="+45">DK (+45)</option>
-                                <option value="+46">SE (+46)</option>
-                                <option value="+47">NO (+47)</option>
-                                <option value="+48">PL (+48)</option>
-                                <option value="+49">DE (+49)</option>
-                                <option value="+51">PE (+51)</option>
-                                <option value="+52">MX (+52)</option>
-                                <option value="+53">CU (+53)</option>
-                                <option value="+54">AR (+54)</option>
-                                <option value="+55">BR (+55)</option>
-                                <option value="+56">CL (+56)</option>
-                                <option value="+57">CO (+57)</option>
-                                <option value="+58">VE (+58)</option>
-                                <option value="+60">MY (+60)</option>
-                                <option value="+61">AU (+61)</option>
-                                <option value="+62">ID (+62)</option>
-                                <option value="+63">PH (+63)</option>
-                                <option value="+64">NZ (+64)</option>
-                                <option value="+65">SG (+65)</option>
-                                <option value="+66">TH (+66)</option>
-                                <option value="+81">JP (+81)</option>
-                                <option value="+82">KR (+82)</option>
-                                <option value="+84">VN (+84)</option>
-                                <option value="+86">CN (+86)</option>
-                                <option value="+90">TR (+90)</option>
-                                <option value="+91">IN (+91)</option>
-                                <option value="+92" selected>PK (+92)</option>
-                                <option value="+93">AF (+93)</option>
-                                <option value="+94">LK (+94)</option>
-                                <option value="+95">MM (+95)</option>
-                                <option value="+98">IR (+98)</option>
-                                <option value="+211">SS (+211)</option>
-                                <option value="+212">MA (+212)</option>
-                                <option value="+213">DZ (+213)</option>
-                                <option value="+216">TN (+216)</option>
-                                <option value="+218">LY (+218)</option>
-                                <option value="+220">GM (+220)</option>
-                                <option value="+221">SN (+221)</option>
-                                <option value="+223">ML (+223)</option>
-                                <option value="+224">GN (+224)</option>
-                                <option value="+225">CI (+225)</option>
-                                <option value="+226">BF (+226)</option>
-                                <option value="+227">NE (+227)</option>
-                                <option value="+228">TG (+228)</option>
-                                <option value="+229">BJ (+229)</option>
-                                <option value="+230">MU (+230)</option>
-                                <option value="+231">LR (+231)</option>
-                                <option value="+232">SL (+232)</option>
-                                <option value="+233">GH (+233)</option>
-                                <option value="+234">NG (+234)</option>
-                                <option value="+235">TD (+235)</option>
-                                <option value="+236">CF (+236)</option>
-                                <option value="+237">CM (+237)</option>
-                                <option value="+238">CV (+238)</option>
-                                <option value="+239">ST (+239)</option>
-                                <option value="+240">GQ (+240)</option>
-                                <option value="+241">GA (+241)</option>
-                                <option value="+242">CG (+242)</option>
-                                <option value="+243">CD (+243)</option>
-                                <option value="+244">AO (+244)</option>
-                                <option value="+245">GW (+245)</option>
-                                <option value="+246">IO (+246)</option>
-                                <option value="+248">SC (+248)</option>
-                                <option value="+249">SD (+249)</option>
-                                <option value="+250">RW (+250)</option>
-                                <option value="+251">ET (+251)</option>
-                                <option value="+252">SO (+252)</option>
-                                <option value="+253">DJ (+253)</option>
-                                <option value="+254">KE (+254)</option>
-                                <option value="+255">TZ (+255)</option>
-                                <option value="+256">UG (+256)</option>
-                                <option value="+257">BI (+257)</option>
-                                <option value="+258">MZ (+258)</option>
-                                <option value="+260">ZM (+260)</option>
-                                <option value="+261">MG (+261)</option>
-                                <option value="+263">ZW (+263)</option>
-                                <option value="+264">NA (+264)</option>
-                                <option value="+265">MW (+265)</option>
-                                <option value="+266">LS (+266)</option>
-                                <option value="+267">BW (+267)</option>
-                                <option value="+268">SZ (+268)</option>
-                                <option value="+269">KM (+269)</option>
-                            </select>
-                            <input type="tel" name="phone" id="phone" placeholder="Phone" required class="w-full px-4 py-4 bg-transparent outline-none font-medium">
-                        </div>
-                        <p class="field-error-msg">Please enter your phone number.</p>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 block">
-                        Select Required Capabilities
-                    </label>
-
-                    @php
-                        $items = [
-                            ['n' => 'Web Dev',        'i' => 'fa-laptop-code'],
-                            ['n' => 'Software Dev',   'i' => 'fa-code'],
-                            ['n' => 'Mobile Apps',    'i' => 'fa-mobile-alt'],
-                            ['n' => 'UI/UX Design',   'i' => 'fa-palette'],
-                            ['n' => 'Marketing',      'i' => 'fa-bullhorn'],
-                            ['n' => 'SEO',            'i' => 'fa-chart-line'],
-                            ['n' => 'PPC',            'i' => 'fa-ad'],
-                            ['n' => 'SMM',            'i' => 'fa-hashtag'],
-                            ['n' => 'E-Commerce',     'i' => 'fa-shopping-cart'],
-                            ['n' => 'Cloud',          'i' => 'fa-cloud'],
-                            ['n' => 'IT Consulting',  'i' => 'fa-user-tie'],
-                            ['n' => 'Other',          'i' => 'fa-ellipsis-h'],
-                        ];
-                    @endphp
-
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        @foreach($items as $item)
-                            <label class="cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="services[]"
-                                    value="{{ $item['n'] }}"
-                                    class="hidden service-checkbox"
-                                    @if($item['n'] === 'Other') id="otherServiceCheckbox" @endif
-                                >
-                                <div class="service-card p-4 rounded-2xl border-2 border-slate-100 flex flex-col items-center gap-2 hover:bg-slate-50">
-                                    <i class="fas {{ $item['i'] }} text-slate-400 transition-colors"></i>
-                                    <span class="text-[11px] font-black uppercase tracking-tighter">
-                                        {{ $item['n'] }}
-                                    </span>
-                                </div>
-                            </label>
-                        @endforeach
-                    </div>
-                    <p class="field-error-msg" id="servicesError">Please select at least one capability.</p>
-
-                    <div id="otherServiceWrapper" class="hidden mt-4">
-                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block">
-                            Please Specify Other Service
-                        </label>
-                        <input
-                            type="text"
-                            name="otherService"
-                            placeholder="Describe your requirement"
-                            class="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-500/20 outline-none font-medium placeholder:text-slate-400"
-                        >
-                    </div>
-                </div>
-
-                <div class="group">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block group-focus-within:text-blue-500">How much are you planning to invest?</label>
-                    <select name="budget" id="budget" required
-                        class="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-500/20 outline-none appearance-none font-bold text-slate-700">
-                        <option value="" disabled selected>Select Budget Range</option>
-                        <option value="1k-5k">$1,000 - $5,000</option>
-                        <option value="5k-10k">$5,000 - $10,000</option>
-                        <option value="10k+">$10,000+</option>
-                    </select>
-                    <p class="field-error-msg">Please select a budget range.</p>
-                </div>
-
-                <div class="group">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block group-focus-within:text-blue-500">
-                        Project Details / Message
-                    </label>
-                    <textarea
-                        name="comments"
-                        rows="4"
-                        placeholder="Briefly describe your project requirements, goals, or expectations..."
-                        class="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-500/20 outline-none font-medium placeholder:text-slate-400 resize-none"
-                    ></textarea>
-                </div>
-
-                {{-- Human verification --}}
-                <div class="group">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block">
-                        Human Verification
-                    </label>
-                    <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}" data-callback="onCaptchaVerified" data-expired-callback="onCaptchaExpired"></div>
-                    <p class="field-error-msg" id="captchaError">Please confirm you're not a robot.</p>
-                </div>
-
-                <div class="flex items-start gap-3">
-                    <input
-                        type="checkbox"
-                        name="agreement"
-                        id="agreement"
-                        value="1"
-                        required
-                        class="mt-1 accent-blue-600"
-                    >
-                    <p class="text-[11px] text-slate-500 font-medium leading-relaxed">
-                        I agree to be contacted regarding my inquiry and accept the processing of my information.
-                    </p>
-                </div>
-                <p class="field-error-msg" id="agreementError">Please accept to proceed.</p>
-
-                <button type="submit" id="submitBtn"
-                    class="relative w-full overflow-hidden group py-5 bg-slate-900 text-white font-black uppercase tracking-widest rounded-2xl shadow-2xl hover:bg-blue-600 transition-all duration-500 flex items-center justify-center gap-3">
-                    <span class="btn-spinner"></span>
-                    <span class="btn-label relative z-10 flex items-center justify-center gap-3">
-                        Ignite My Growth <i class="fas fa-fire-alt animate-pulse text-orange-400"></i>
+                <div class="inline-flex items-center gap-2 rounded-full
+                            border border-teal-300/25 bg-teal-300/10
+                            px-4 py-2 mb-6">
+                    <span class="h-2 w-2 rounded-full bg-teal-300"></span>
+                    <span class="text-teal-100 text-xs font-bold uppercase tracking-widest">
+                        Available for New Projects
                     </span>
-                    <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                </button>
+                </div>
 
-                <p class="text-center text-[11px] text-slate-400 font-bold uppercase tracking-widest">
-                    Response time: <span class="text-slate-900">&lt; 24 Hours</span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black
+                           tracking-tight text-white leading-tight mb-5">
+                    Let's Build Your
+                    <span class="block text-transparent bg-clip-text
+                                 bg-gradient-to-r from-teal-300 via-cyan-300 to-blue-400">
+                        Next Big Idea.
+                    </span>
+                </h1>
+
+                <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
+                    Tell us a little about yourself and your project.
+                    Our team will review your requirements and prepare a tailored proposal.
                 </p>
+            </header>
 
-                <input type="hidden" name="form_type" value="proposal">
-                <input type="hidden" name="page_url" value="{{ url()->current() }}">
-            </form>
+            {{-- Main panel --}}
+            <div class="proposal-panel max-w-6xl mx-auto rounded-3xl
+                        overflow-hidden lg:grid lg:grid-cols-12" data-aos="fade-up">
+
+                {{-- Left information panel --}}
+                <aside class="relative overflow-hidden bg-slate-950/60
+                              p-7 sm:p-10 lg:p-10 lg:col-span-4 text-white">
+
+                    <div class="absolute -top-16 -right-16 w-48 h-48
+                                rounded-full bg-blue-500/10 blur-3xl"></div>
+
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl flex items-center
+                                    justify-center mb-7
+                                    bg-gradient-to-br from-blue-500 to-teal-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                                aria-hidden="true">
+                                <path d="M12 20h9" />
+                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z" />
+                            </svg>
+                        </div>
+
+                        <h2 class="text-2xl sm:text-3xl font-extrabold mb-4">
+                            Your project starts here.
+                        </h2>
+
+                        <p class="text-sm text-slate-400 leading-7 mb-9">
+                            Share your details with us. We'll help you identify
+                            the right solution for your business goals.
+                        </p>
+
+                        <div class="space-y-7">
+                            <div class="proposal-step">
+                                <div class="proposal-step-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.8" aria-hidden="true">
+                                        <circle cx="11" cy="11" r="7" />
+                                        <path d="m20 20-4-4" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-sm mb-1">Understand your needs</h3>
+                                    <p class="text-xs text-slate-400 leading-5">
+                                        We review your inquiry and project objectives.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="proposal-step">
+                                <div class="proposal-step-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.8" aria-hidden="true">
+                                        <path d="M12 3v18M3 12h18" />
+                                        <circle cx="12" cy="12" r="9" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-sm mb-1">Explore the right solution</h3>
+                                    <p class="text-xs text-slate-400 leading-5">
+                                        We discuss an approach tailored to your requirements.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="proposal-step">
+                                <div class="proposal-step-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.8" aria-hidden="true">
+                                        <path d="M4 4h16v16H4z" />
+                                        <path d="m8 12 3 3 5-6" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-sm mb-1">Receive your proposal</h3>
+                                    <p class="text-xs text-slate-400 leading-5">
+                                        Get the next steps for moving your project forward.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 mt-10 pt-6 border-t border-slate-800">
+                        <p class="text-xs text-slate-400 mb-2">Prefer to talk?</p>
+                        <a href="tel:+447308649119" class="inline-flex items-center gap-2 text-teal-300
+                                  hover:text-teal-200 font-bold text-sm">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" aria-hidden="true">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2
+                                         19.8 19.8 0 0 1-8.63-3.07
+                                         19.5 19.5 0 0 1-6-6
+                                         19.8 19.8 0 0 1-3.07-8.67
+                                         A2 2 0 0 1 4.11 2h3
+                                         a2 2 0 0 1 2 1.72
+                                         c.12.96.36 1.9.7 2.8
+                                         a2 2 0 0 1-.45 2.11L8.1 9.9
+                                         a16 16 0 0 0 6 6l1.27-1.27
+                                         a2 2 0 0 1 2.11-.45
+                                         c.9.34 1.84.58 2.8.7
+                                         a2 2 0 0 1 1.72 2.04Z" />
+                            </svg>
+                            +44 7308 649119
+                        </a>
+                    </div>
+                </aside>
+
+                {{-- Right form --}}
+                <div class="p-6 sm:p-9 lg:p-11 lg:col-span-8">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-extrabold text-white mb-2">
+                            Get Your Free Proposal
+                        </h2>
+                        <p class="text-sm text-slate-400">
+                            Complete the fields below. Fields marked
+                            <span class="text-teal-300">*</span> are required.
+                        </p>
+                    </div>
+
+                    <form id="proposalForm" action="{{ route('proposals.store') }}" method="POST" novalidate
+                        class="space-y-6">
+
+                        @csrf
+
+                        {{-- Honeypot --}}
+                        <div class="proposal-honeypot" aria-hidden="true">
+                            <label for="hp_website">Leave this field empty</label>
+                            <input type="text" name="hp_website" id="hp_website" tabindex="-1" autocomplete="off">
+                        </div>
+
+                        {{-- Name + Location --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                            <div class="proposal-field has-icon">
+                                <label for="fullName" class="proposal-label">
+                                    Full Name <span class="required">*</span>
+                                </label>
+                                <div class="relative">
+                                    <svg class="proposal-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                        <circle cx="12" cy="8" r="4" />
+                                        <path d="M5 21v-2a7 7 0 0 1 14 0v2" />
+                                    </svg>
+                                    <input type="text" name="fullName" id="fullName" placeholder="John Doe"
+                                        autocomplete="name" required class="proposal-input">
+                                </div>
+                                <p class="proposal-error">Please enter your full name.</p>
+                            </div>
+
+                            <div class="proposal-field has-icon">
+                                <label for="location" class="proposal-label">
+                                    Your Location
+                                </label>
+                                <div class="relative">
+                                    <svg class="proposal-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                        <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+                                        <circle cx="12" cy="10" r="2.5" />
+                                    </svg>
+                                    <input type="text" name="location" id="location" placeholder="City, Country"
+                                        autocomplete="country-name" class="proposal-input">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {{-- Email + Website --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                            <div class="proposal-field has-icon">
+                                <label for="email" class="proposal-label">
+                                    Email Address <span class="required">*</span>
+                                </label>
+                                <div class="relative">
+                                    <svg class="proposal-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                        <rect x="3" y="5" width="18" height="14" rx="2" />
+                                        <path d="m3 7 9 6 9-6" />
+                                    </svg>
+                                    <input type="email" name="email" id="email" placeholder="john@example.com"
+                                        autocomplete="email" required class="proposal-input">
+                                </div>
+                                <p class="proposal-error">Please enter a valid email address.</p>
+                            </div>
+
+                            <div class="proposal-field has-icon">
+                                <label for="website" class="proposal-label">
+                                    Website <span class="text-slate-500">(Optional)</span>
+                                </label>
+                                <div class="relative">
+                                    <svg class="proposal-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <path d="M2 12h20" />
+                                        <path d="M12 2a15 15 0 0 1 0 20
+                                                 15 15 0 0 1 0-20Z" />
+                                    </svg>
+                                    <input type="url" name="website" id="website" placeholder="https://example.com"
+                                        autocomplete="url" class="proposal-input">
+                                </div>
+                                <p class="proposal-error">Please enter a valid website URL.</p>
+                            </div>
+
+                        </div>
+
+                        {{-- Phone --}}
+                        <div class="proposal-field">
+                            <label for="phone" class="proposal-label">
+                                Phone Number <span class="required">*</span>
+                            </label>
+
+                            <div class="grid grid-cols-[115px_minmax(0,1fr)] gap-3">
+                                <select name="countryCode" id="countryCode" aria-label="Country calling code"
+                                    class="proposal-input !px-3 text-sm font-semibold">
+                                    <option value="+92" selected>PK +92</option>
+                                    <option value="+1">US +1</option>
+                                    <option value="+44">UK +44</option>
+                                    <option value="+91">IN +91</option>
+                                    <option value="+971">UAE +971</option>
+                                    <option value="+61">AU +61</option>
+                                    <option value="+49">DE +49</option>
+                                    <option value="+966">SA +966</option>
+                                </select>
+
+                                <input type="tel" name="phone" id="phone" placeholder="3001234567"
+                                    autocomplete="tel-national" inputmode="tel" required class="proposal-input">
+                            </div>
+                            <p class="proposal-error">Please enter your phone number.</p>
+                        </div>
+
+                        {{-- Extra Details --}}
+                        <div class="proposal-field">
+                            <label for="comments" class="proposal-label">
+                                Extra Details
+                                <span class="text-slate-500">(Optional)</span>
+                            </label>
+                            <textarea name="comments" id="comments" rows="4"
+                                placeholder="Briefly describe your needs, project goals, or requirements..."
+                                class="proposal-input resize-y"></textarea>
+                        </div>
+
+                        {{-- reCAPTCHA --}}
+                        <div class="proposal-field">
+                            <label class="proposal-label">Human Verification</label>
+                            <div class="overflow-x-auto">
+                                <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"
+                                    data-callback="onProposalCaptchaVerified"
+                                    data-expired-callback="onProposalCaptchaExpired">
+                                </div>
+                            </div>
+                            <p class="proposal-error" id="captchaError">
+                                Please confirm you're not a robot.
+                            </p>
+                        </div>
+
+                        {{-- Submit --}}
+                        <div class="pt-2">
+                            <button type="submit" id="submitBtn" class="proposal-submit w-full rounded-xl py-4 px-6
+                                           text-white font-extrabold text-sm sm:text-base
+                                           flex items-center justify-center gap-3">
+
+                                <span class="proposal-spinner" aria-hidden="true"></span>
+
+                                <span class="proposal-btn-text flex items-center gap-3">
+                                    Send My Inquiry
+                                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" aria-hidden="true">
+                                        <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg>
+                                </span>
+                            </button>
+
+                            <p class="text-center text-xs text-slate-400 mt-4 leading-6">
+                                Your information will be used to respond to your inquiry.
+                                <br>
+                                <span class="text-teal-300 font-semibold">
+                                    We look forward to hearing about your project.
+                                </span>
+                            </p>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Status modal --}}
+    <div id="formModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md
+                items-center justify-center p-4 hidden z-[100]">
+
+        <div id="modalBox" class="bg-white rounded-3xl max-w-md w-full p-8 sm:p-10
+                    text-center shadow-2xl">
+
+            <div id="modalIcon" class="w-16 h-16 bg-teal-50 text-teal-600 rounded-2xl
+                        flex items-center justify-center mx-auto mb-6">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="m5 12 4 4L19 6" />
+                </svg>
+            </div>
+
+            <h2 id="modalTitle" class="text-2xl font-extrabold text-slate-900 mb-3">
+                Thank You!
+            </h2>
+
+            <p id="modalMessage" class="text-slate-600 leading-7 mb-7"></p>
+
+            <button type="button" id="closeModal" class="w-full py-3.5 bg-slate-900 text-white
+                           font-bold rounded-xl hover:bg-slate-800 transition">
+                Close
+            </button>
         </div>
     </div>
-</section>
-
-<div id="formModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4 hidden z-50">
-    <div class="bg-white rounded-[3rem] max-w-md w-full p-10 text-center relative shadow-[0_0_50px_rgba(0,0,0,0.3)] scale-90 transition-transform duration-500" id="modalBox">
-        <div class="w-24 h-24 bg-gradient-to-tr from-green-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg shadow-green-200" id="modalIcon">
-            <i class="fas fa-paper-plane text-white text-3xl animate-bounce"></i>
-        </div>
-        <h3 class="text-3xl font-black text-slate-900 mb-4 tracking-tight" id="modalTitle">System Launching!</h3>
-        <p id="modalMessage" class="text-slate-500 mb-10 leading-relaxed font-medium"></p>
-        <button id="closeModal" class="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-2xl hover:shadow-xl transition-all">
-            Understood
-        </button>
-    </div>
-</div>
 @endsection
 
 @push('custom_js')
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script>
-    let captchaVerified = false;
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-    function onCaptchaVerified() { captchaVerified = true; }
-    function onCaptchaExpired() { captchaVerified = false; }
+    <script>
+        let proposalCaptchaVerified = false;
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const modal = document.getElementById("formModal");
-        const modalBox = document.getElementById("modalBox");
-        const closeModalBtn = document.getElementById("closeModal");
+        function onProposalCaptchaVerified() {
+            proposalCaptchaVerified = true;
 
-        const hideModal = () => {
-            modalBox.classList.add("scale-90");
-            setTimeout(() => modal.classList.add("hidden"), 300);
-        };
-
-        closeModalBtn.addEventListener("click", hideModal);
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const otherCheckbox = document.getElementById("otherServiceCheckbox");
-        const otherWrapper  = document.getElementById("otherServiceWrapper");
-
-        if (!otherCheckbox) return;
-
-        otherCheckbox.addEventListener("change", function () {
-            if (this.checked) {
-                otherWrapper.classList.remove("hidden");
-            } else {
-                otherWrapper.classList.add("hidden");
-                otherWrapper.querySelector("input").value = "";
-            }
-        });
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.getElementById("proposalForm");
-        const submitBtn = document.getElementById("submitBtn");
-
-        function markInvalid(el, show) {
-            const wrapper = el.closest('.group') || el.closest('div');
-            const msg = wrapper ? wrapper.querySelector('.field-error-msg') : null;
-            if (show) {
-                el.classList.add('field-invalid');
-                if (msg) msg.classList.add('show');
-            } else {
-                el.classList.remove('field-invalid');
-                if (msg) msg.classList.remove('show');
-            }
+            const error = document.getElementById('captchaError');
+            if (error) error.classList.remove('show');
         }
 
-        function validateForm() {
-            let valid = true;
-
-            ['fullName', 'company', 'email', 'phone', 'budget'].forEach(function (id) {
-                const el = document.getElementById(id);
-                const ok = el.checkValidity();
-                markInvalid(el, !ok);
-                if (!ok) valid = false;
-            });
-
-            const servicesChecked = form.querySelectorAll('.service-checkbox:checked').length > 0;
-            const servicesError = document.getElementById('servicesError');
-            servicesError.classList.toggle('show', !servicesChecked);
-            if (!servicesChecked) valid = false;
-
-            const agreement = document.getElementById('agreement');
-            const agreementOk = agreement.checked;
-            document.getElementById('agreementError').classList.toggle('show', !agreementOk);
-            if (!agreementOk) valid = false;
-
-            const captchaError = document.getElementById('captchaError');
-            captchaError.classList.toggle('show', !captchaVerified);
-            if (!captchaVerified) valid = false;
-
-            return valid;
+        function onProposalCaptchaExpired() {
+            proposalCaptchaVerified = false;
         }
 
-        // Clear a field's error state as soon as the user fixes it
-        form.querySelectorAll('input, select, textarea').forEach(function (el) {
-            el.addEventListener('input', function () {
-                if (el.checkValidity && el.checkValidity()) markInvalid(el, false);
-            });
-            el.addEventListener('change', function () {
-                if (el.checkValidity && el.checkValidity()) markInvalid(el, false);
-            });
-        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('proposalForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const modal = document.getElementById('formModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMessage = document.getElementById('modalMessage');
+            const modalIcon = document.getElementById('modalIcon');
+            const closeModal = document.getElementById('closeModal');
 
-        form.addEventListener("submit", function (e) {
-            e.preventDefault();
+            if (!form || !submitBtn || !modal) return;
 
-            // Honeypot: if this hidden field got filled, silently drop the
-            // submission — a real visitor can never see or type into it.
-            const honeypot = document.getElementById('hp_website');
-            if (honeypot && honeypot.value.trim() !== '') {
-                console.warn('Spam submission blocked.');
-                return;
+            function showModal(title, message, success) {
+                modalTitle.textContent = title;
+                modalMessage.textContent = message;
+
+                modalIcon.className = success
+                    ? 'w-16 h-16 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6'
+                    : 'w-16 h-16 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center mx-auto mb-6';
+
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                closeModal.focus();
             }
 
-            if (!validateForm()) {
-                const firstError = form.querySelector('.field-invalid, .field-error-msg.show');
-                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
+            function hideModal() {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
             }
 
-            submitBtn.disabled = true;
-            submitBtn.classList.add('is-loading');
+            closeModal.addEventListener('click', hideModal);
 
-            const formData = new FormData(form);
-            formData.append('g-recaptcha-response', grecaptcha.getResponse());
+            modal.addEventListener('click', function (event) {
+                if (event.target === modal) hideModal();
+            });
 
-            fetch(form.action, {
-                method: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
-                    "Accept": "application/json",
-                },
-                body: formData
-            })
-            .then(res => res.json().then(data => ({ ok: res.ok, data })))
-            .then(({ ok, data }) => {
-                if (ok && data.status === "success") {
-                    document.getElementById("modalMessage").innerText = data.message;
-                    document.getElementById("formModal").classList.remove("hidden");
-                    setTimeout(() => document.getElementById("modalBox").classList.remove("scale-90"), 50);
-                    form.reset();
-                    grecaptcha.reset();
-                    captchaVerified = false;
-                    document.getElementById('otherServiceWrapper').classList.add('hidden');
-                } else {
-                    const message = data.message || "Please check the highlighted fields and try again.";
-                    document.getElementById("modalMessage").innerText = message;
-                    document.getElementById("modalTitle").innerText = "Something Needs Attention";
-                    document.getElementById("formModal").classList.remove("hidden");
-                    setTimeout(() => document.getElementById("modalBox").classList.remove("scale-90"), 50);
-                    grecaptcha.reset();
-                    captchaVerified = false;
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    hideModal();
                 }
-            })
-            .catch(() => {
-                document.getElementById("modalMessage").innerText = "Something went wrong. Please try again in a moment.";
-                document.getElementById("modalTitle").innerText = "Connection Error";
-                document.getElementById("formModal").classList.remove("hidden");
-                setTimeout(() => document.getElementById("modalBox").classList.remove("scale-90"), 50);
-                grecaptcha.reset();
-                captchaVerified = false;
-            })
-            .finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('is-loading');
+            });
+
+            function setError(el, show) {
+                const field = el.closest('.proposal-field');
+                if (!field) return;
+
+                el.classList.toggle('field-invalid', show);
+
+                const error = field.querySelector('.proposal-error');
+                if (error && el.id !== 'phone' && el.id !== 'countryCode') {
+                    error.classList.toggle('show', show);
+                } else if (error) {
+                    error.classList.toggle('show', show);
+                }
+            }
+
+            function validateForm() {
+                let valid = true;
+                let firstInvalid = null;
+
+                ['fullName', 'email', 'website', 'phone'].forEach(function (id) {
+                    const el = document.getElementById(id);
+
+                    // Website is optional, but must be valid if supplied.
+                    const fieldValid = el.checkValidity();
+
+                    if (!fieldValid) {
+                        valid = false;
+                        firstInvalid ||= el;
+                    }
+
+                    setError(el, !fieldValid);
+                });
+
+                const captchaError = document.getElementById('captchaError');
+
+                if (!proposalCaptchaVerified) {
+                    valid = false;
+                    captchaError.classList.add('show');
+                    firstInvalid ||= captchaError;
+                } else {
+                    captchaError.classList.remove('show');
+                }
+
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+
+                    if (typeof firstInvalid.focus === 'function') {
+                        setTimeout(() => firstInvalid.focus({ preventScroll: true }), 250);
+                    }
+                }
+
+                return valid;
+            }
+
+            form.querySelectorAll('input, textarea, select').forEach(function (el) {
+                if (el.name === 'hp_website' || el.name === '_token') return;
+
+                function clearError() {
+                    if (el.checkValidity()) setError(el, false);
+                }
+
+                el.addEventListener('input', clearError);
+                el.addEventListener('change', clearError);
+            });
+
+            function resetCaptcha() {
+                proposalCaptchaVerified = false;
+
+                if (window.grecaptcha && typeof grecaptcha.reset === 'function') {
+                    grecaptcha.reset();
+                }
+            }
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const honeypot = document.getElementById('hp_website');
+
+                if (honeypot && honeypot.value.trim() !== '') {
+                    // Silently discard automated spam submissions.
+                    return;
+                }
+
+                if (!validateForm()) return;
+
+                if (!window.grecaptcha ||
+                    typeof grecaptcha.getResponse !== 'function' ||
+                    !grecaptcha.getResponse()) {
+                    proposalCaptchaVerified = false;
+                    document.getElementById('captchaError').classList.add('show');
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.classList.add('is-loading');
+
+                try {
+                    const formData = new FormData(form);
+
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': form.querySelector('[name="_token"]').value,
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    });
+
+                    const contentType = response.headers.get('content-type') || '';
+
+                    if (!contentType.includes('application/json')) {
+                        throw new Error(
+                            'The server returned an unexpected response. Please check the form endpoint and try again.'
+                        );
+                    }
+
+                    const data = await response.json();
+
+                    if (!response.ok || data.status !== 'success') {
+                        showModal(
+                            'Unable to Submit',
+                            data.message || 'Please check your details and try again.',
+                            false
+                        );
+
+                        resetCaptcha();
+                        return;
+                    }
+
+                    showModal(
+                        'Inquiry Sent Successfully!',
+                        data.message || 'Thank you! We have received your inquiry and will get back to you.',
+                        true
+                    );
+
+                    form.reset();
+                    resetCaptcha();
+
+                    form.querySelectorAll('.field-invalid').forEach(function (el) {
+                        el.classList.remove('field-invalid');
+                    });
+
+                    form.querySelectorAll('.proposal-error').forEach(function (el) {
+                        el.classList.remove('show');
+                    });
+
+                } catch (error) {
+                    showModal(
+                        'Connection Error',
+                        error.message || 'Something went wrong. Please try again in a moment.',
+                        false
+                    );
+
+                    resetCaptcha();
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('is-loading');
+                }
             });
         });
-    });
-</script>
+    </script>
 @endpush

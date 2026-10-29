@@ -36,6 +36,8 @@
     ================================ -->
     <title>{{ $seoTitle }}</title>
 
+    <link rel="icon" type="image/png" href="{{ asset('favicon-bg.png') }}">
+
     <meta name="description" content="{{ $seoDescription }}">
     <link rel="canonical" href="{{ $canonicalUrl }}">
 

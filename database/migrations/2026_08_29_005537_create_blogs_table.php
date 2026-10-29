@@ -12,11 +12,11 @@ return new class extends Migration
 
         Schema::create('blogs', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('blog_category_id')->nullable();
-            $table->foreignId('author_id')
-                    ->nullable()
-                    ->constrained('users')
-                    ->nullOnDelete();
+            $table->unsignedInteger('author_id')->nullable();
+            $table->foreign('author_id')
+                ->references('id')
+                ->on('users')
+                ->nullOnDelete();
             $table->string('title')->nullable();
             $table->string('slug')->nullable()->unique();
             $table->text('excerpt')->nullable();

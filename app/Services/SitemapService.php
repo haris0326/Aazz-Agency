@@ -35,11 +35,19 @@ class SitemapService
                 $this->generatePackagesSitemap(),
             ];
 
-            $this->generateSitemapIndex(array_values(array_filter($entries)));
+            $this->generateSitemapIndex(
+                array_values(array_filter($entries))
+            );
 
             Log::info('Sitemaps regenerated successfully.');
         } catch (\Throwable $e) {
-            Log::error('Sitemap generation failed.', ['message' => $e->getMessage()]);
+            Log::error('Sitemap generation failed.', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+
+            throw $e;
         }
     }
 
@@ -68,11 +76,6 @@ class SitemapService
             'lastmod' => now()->toAtomString(),
         ];
     }
-
-    /**
-     * Every published blog post. Skipped entirely (and left out of the
-     * index) if there are no published posts yet.
-     */
     protected function generateBlogSitemap(): ?array
     {
         $posts = Blog::published()

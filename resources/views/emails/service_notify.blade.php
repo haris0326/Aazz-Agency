@@ -1,147 +1,337 @@
-@php
-    // Ensure services is always array
-    $services = $services ?? [];
-
-    // Human readable budget mapping
-    $budgetMap = [
-        'under-1k'  => 'Under $1,000',
-        '1k-5k'     => '$1,000 – $5,000',
-        '5k-10k'    => '$5,000 – $10,000',
-        '10k-plus'  => '$10,000+'
-    ];
-
-    $formattedBudget = $budgetMap[$proposal->budget] ?? $proposal->budget;
-@endphp
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>New Service Inquiry</title>
-<style>
-body { font-family: Arial, sans-serif; background:#f8fafc; margin:0; padding:0; }
-.wrapper { padding:40px 10px; }
-.card { max-width:600px; margin:0 auto; background:#fff; border-radius:12px; border:1px solid #e2e8f0; overflow:hidden; }
-.header { background:#0f172a; padding:30px; text-align:center; color:#fff; }
-.header h1 { margin:0; font-size:20px; }
-.source { font-size:12px; margin-top:8px; color:#cbd5e1; }
-.content { padding:30px; }
-.section-title { font-size:12px; font-weight:bold; color:#64748b; text-transform:uppercase; margin-bottom:15px; }
-.table { width:100%; border-collapse:collapse; margin-bottom:25px; }
-.table td { padding:8px 0; font-size:14px; }
-.label { color:#64748b; width:140px; }
-.value { color:#0f172a; font-weight:600; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Service Inquiry</title>
 
-.badge { display:inline-block; background:#eff6ff; color:#2563eb; padding:6px 12px; border-radius:6px; font-size:12px; margin:4px 4px 4px 0; }
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f1f5f9;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #0f172a;
+        }
 
-.budget-box { background:#f0f9ff; padding:20px; border-radius:10px; text-align:center; border:1px solid #bae6fd; margin-bottom:25px; }
-.budget-box strong { font-size:20px; color:#0369a1; }
+        .wrapper {
+            width: 100%;
+            padding: 35px 12px;
+            box-sizing: border-box;
+        }
 
-.comment-box { background:#f8fafc; padding:15px; border-left:4px solid #6366f1; border-radius:8px; font-size:14px; color:#334155; }
+        .card {
+            max-width: 620px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            overflow: hidden;
+        }
 
-.footer { background:#f8fafc; padding:20px; text-align:center; border-top:1px solid #e2e8f0; font-size:12px; color:#94a3b8; }
-.btn { display:inline-block; background:#2563eb; color:#fff !important; padding:12px 24px; border-radius:8px; text-decoration:none; margin-top:20px; }
-</style>
+        .header {
+            background: #0f172a;
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            font-size: 23px;
+            line-height: 1.4;
+            margin: 0 0 8px;
+        }
+
+        .header p {
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .content {
+            padding: 28px;
+        }
+
+        .intro {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #475569;
+            margin: 0 0 25px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            margin: 0 0 12px;
+        }
+
+        .details {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        .details td {
+            padding: 13px 10px;
+            border-bottom: 1px solid #eaeef3;
+            font-size: 14px;
+            line-height: 1.6;
+            vertical-align: top;
+            overflow-wrap: anywhere;
+        }
+
+        .details tr:last-child td {
+            border-bottom: none;
+        }
+
+        .label {
+            width: 115px;
+            color: #64748b;
+            font-weight: bold;
+        }
+
+        .value {
+            color: #0f172a;
+            font-weight: 500;
+        }
+
+        .value a {
+            color: #2563eb;
+            text-decoration: none;
+            overflow-wrap: anywhere;
+        }
+
+        .message-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #2563eb;
+            border-radius: 8px;
+            padding: 17px;
+            color: #334155;
+            font-size: 14px;
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+            white-space: pre-line;
+        }
+
+        .source-box {
+            margin-top: 24px;
+            padding: 14px;
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            border-radius: 8px;
+        }
+
+        .source-label {
+            display: block;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            margin-bottom: 7px;
+        }
+
+        .source-link {
+            font-size: 13px;
+            color: #1d4ed8;
+            text-decoration: none;
+            overflow-wrap: anywhere;
+            line-height: 1.7;
+        }
+
+        .button-wrap {
+            text-align: center;
+            margin-top: 28px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 13px 25px;
+            background: #2563eb;
+            color: #ffffff !important;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 7px;
+        }
+
+        .footer {
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            padding: 20px 25px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer p {
+            margin: 3px 0;
+        }
+
+        @media only screen and (max-width: 480px) {
+            .wrapper {
+                padding: 15px 8px;
+            }
+
+            .header {
+                padding: 25px 16px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .content {
+                padding: 20px 16px;
+            }
+
+            .details td {
+                padding: 11px 5px;
+                font-size: 13px;
+            }
+
+            .label {
+                width: 95px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-<div class="wrapper">
-<div class="card">
+    @php
+        $fullName = $proposal->full_name ?? null;
+        $email = $proposal->email ?? null;
+        $location = $proposal->location ?? null;
+        $website = $proposal->website ?? null;
+        $countryCode = $proposal->country_code ?? null;
+        $phone = $proposal->phone ?? null;
+        $comments = $proposal->comments ?? null;
+        $pageUrl = $page_url ?? ($proposal->page_url ?? null);
 
-<div class="header">
-<h1>🚀 New Project Proposal Received</h1>
-@if(!empty($page_url))
-<div class="source">Captured From: {{ $page_url }}</div>
-@endif
-</div>
+        $phoneNumber = trim(
+            ($countryCode ? $countryCode . ' ' : '') . ($phone ?? '')
+        );
+    @endphp
 
-<div class="content">
+    <div class="wrapper">
+        <div class="card">
 
-<div class="section-title">Client Information</div>
-<table class="table">
-<tr>
-<td class="label">Full Name</td>
-<td class="value">{{ $proposal->full_name }}</td>
-</tr>
+            <div class="header">
+                <h1>New Service Inquiry Received</h1>
+                <p>A potential client has submitted an inquiry through your website.</p>
+            </div>
 
-<tr>
-<td class="label">Company</td>
-<td class="value">{{ $proposal->company }}</td>
-</tr>
+            <div class="content">
 
-<tr>
-<td class="label">Email</td>
-<td class="value">
-<a href="mailto:{{ $proposal->email }}">{{ $proposal->email }}</a>
-</td>
-</tr>
+                <p class="intro">
+                    Hello,<br>
+                    You have received a new service inquiry. Here are the
+                    details provided by the client.
+                </p>
 
-<tr>
-<td class="label">Phone</td>
-<td class="value">{{ $proposal->country_code }} {{ $proposal->phone }}</td>
-</tr>
+                <h2 class="section-title">Client Information</h2>
 
-@if(!empty($proposal->website))
-<tr>
-<td class="label">Website</td>
-<td class="value">
-<a href="{{ $proposal->website }}" target="_blank">
-{{ $proposal->website }}
-</a>
-</td>
-</tr>
-@endif
+                <table class="details">
+                    @if(filled($fullName))
+                        <tr>
+                            <td class="label">Full Name</td>
+                            <td class="value">{{ $fullName }}</td>
+                        </tr>
+                    @endif
 
-<tr>
-<td class="label">Agreement</td>
-<td class="value">
-{{ $proposal->agreement ? 'Agreed to Terms' : 'Not Agreed' }}
-</td>
-</tr>
-</table>
+                    @if(filled($location))
+                        <tr>
+                            <td class="label">Location</td>
+                            <td class="value">{{ $location }}</td>
+                        </tr>
+                    @endif
 
-<div class="section-title">Requested Services</div>
-<div style="margin-bottom:25px;">
-@forelse($services as $service)
-<span class="badge">{{ $service }}</span>
-@empty
-<span style="color:#94a3b8;">No services selected</span>
-@endforelse
+                    @if(filled($email))
+                        <tr>
+                            <td class="label">Email Address</td>
+                            <td class="value">
+                                <a href="mailto:{{ $email }}">
+                                    {{ $email }}
+                                </a>
+                            </td>
+                        </tr>
+                    @endif
 
-@if(!empty($proposal->other_service))
-<span class="badge" style="background:#fef3c7; color:#92400e;">
-Other: {{ $proposal->other_service }}
-</span>
-@endif
-</div>
+                    @if(filled($phone))
+                        <tr>
+                            <td class="label">Phone Number</td>
+                            <td class="value">
+                                <a href="tel:{{ $phoneNumber }}">
+                                    {{ $phoneNumber }}
+                                </a>
+                            </td>
+                        </tr>
+                    @endif
 
-<div class="section-title">Allocated Budget</div>
-<div class="budget-box">
-<strong>{{ $formattedBudget }}</strong>
-</div>
+                    @if(filled($website))
+                        <tr>
+                            <td class="label">Website</td>
+                            <td class="value">
+                                <a href="{{ $website }}">
+                                    {{ $website }}
+                                </a>
+                            </td>
+                        </tr>
+                    @endif
+                </table>
 
-@if(!empty($proposal->comments))
-<div class="section-title">Additional Comments</div>
-<div class="comment-box">
-"{{ $proposal->comments }}"
-</div>
-@endif
+                @if(filled($comments))
+                    <h2 class="section-title">Inquiry Message</h2>
 
-<div style="text-align:center;">
-<a href="mailto:{{ $proposal->email }}?subject=Re: Your Project Proposal" class="btn">
-Respond to Client
-</a>
-</div>
+                    <div class="message-box">{{ $comments }}</div>
+                @endif
 
-</div>
+                @if(filled($pageUrl) && in_array(parse_url($pageUrl, PHP_URL_SCHEME), ['http', 'https'], true))
+                    <div class="source-box">
+                        <span class="source-label">Submitted From</span>
+                        <a href="{{ $pageUrl }}" class="source-link">{{ $pageUrl }}</a>
+                    </div>
+                @endif
 
-<div class="footer">
-<p><strong>Proposal ID:</strong> #{{ $proposal->id }}</p>
-<p>Submitted on {{ optional($proposal->created_at)->format('l, F j, Y h:i A') }}</p>
-<p>© {{ date('Y') }} {{ config('app.name') }}</p>
-</div>
+                @if(filled($email))
+                    <div class="button-wrap">
+                        <a href="mailto:{{ $email }}?subject={{ rawurlencode('Re: Your Service Inquiry') }}" class="button">
+                            Reply to Client
+                        </a>
+                    </div>
+                @endif
 
-</div>
-</div>
+            </div>
+
+            <div class="footer">
+                <p>
+                    <strong>Inquiry Reference:</strong>
+                    #{{ $proposal->id }}
+                </p>
+
+                @if($proposal->created_at)
+                    <p>
+                        Received on
+                        {{ $proposal->created_at->format('F j, Y \a\t g:i A') }}
+                    </p>
+                @endif
+
+                <p>
+                    This is an automated notification from
+                    {{ config('app.name', 'Your Website') }}.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
 </body>
+
 </html>
