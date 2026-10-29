@@ -14,10 +14,28 @@ use App\Models\ServiceModel\ServiceCategory;
 class WebPagesController extends Controller
 {
     // Display a listing of the resource
-    public function index()
+    public function index(Request $request)
     {
-        $webPages = WebPages::all();
-        return view('admin_panel.web_pages.index_pages', compact('webPages'));
+        $query = WebPages::query();
+
+        if ($request->filled('search')) {
+            $search = trim($request->input('search'));
+
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('slug', 'like', "%{$search}%");
+            });
+        }
+
+        $webPages = $query
+            ->orderByDesc('updated_at')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view(
+            'admin_panel.web_pages.index_pages',
+            compact('webPages')
+        );
     }
 
     // Show the form for creating a new resource
@@ -43,7 +61,7 @@ class WebPagesController extends Controller
     }
 
     // Display the specified resource
-        public function show($slug)
+    public function show($slug)
     {
 
         // Fetch the specific web page based on slug
