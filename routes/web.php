@@ -239,10 +239,6 @@
 
     Route::get('/our/clients', [ClientLogoController::class, 'showClients'])->name('show_clients');
 
-    Route::get('/pricing/{pkg_cat}/{city?}', [PackageController::class, 'showPkg'])
-        ->where(['pkg_cat' => '[a-z0-9\-]+', 'city' => '[a-z0-9\-]*'])
-        ->name('show_pkg');
-
     Route::get('/trigger-500', function () {
         abort(500);  // This will trigger the 500 error page
     });
