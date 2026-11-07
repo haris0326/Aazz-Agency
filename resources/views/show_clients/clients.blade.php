@@ -1,4 +1,3 @@
-blade
 @extends(config('web_assets.layouts.main'))
 
 @section('title', 'Our Clients | Trusted Business Partners - Aazz Agency')
