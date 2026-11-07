@@ -281,7 +281,9 @@
     </section>
 
 
-    @include('show_reviews.reviews')
+    @include('show_reviews.partials._home-slider', [
+        'reviews' => $reviews
+    ])
 
 
 
@@ -522,18 +524,18 @@
                 <div class="bg-gray-100 rounded-xl p-6 shadow-md overflow-y-auto custom-scrollbar transform hover:scale-[1.02] transition duration-300"
                     data-aos="fade-right" style="max-height: 400px;">
                     {!! $content->first()->content_2 ?? '
-                          <h3 class="text-2xl font-bold mb-4">Your Trusted IT & Digital Solutions Partner</h3>
-                          <p class="text-base leading-relaxed text-gray-700 mb-4">Default left column content goes here...</p>
-                          ' !!}
+                              <h3 class="text-2xl font-bold mb-4">Your Trusted IT & Digital Solutions Partner</h3>
+                              <p class="text-base leading-relaxed text-gray-700 mb-4">Default left column content goes here...</p>
+                              ' !!}
                 </div>
 
                 <!-- Right Column -->
                 <div class="bg-gray-100 rounded-xl p-6 shadow-md overflow-y-auto custom-scrollbar transform hover:scale-[1.02] transition duration-300"
                     data-aos="fade-left" style="max-height: 400px;">
                     {!! $content->first()->content_3 ?? '
-                          <h3 class="text-2xl font-bold mb-4">Unlocking Your Digital Potential</h3>
-                          <p class="text-base leading-relaxed text-gray-700 mb-4">Default right column content goes here...</p>
-                          ' !!}
+                              <h3 class="text-2xl font-bold mb-4">Unlocking Your Digital Potential</h3>
+                              <p class="text-base leading-relaxed text-gray-700 mb-4">Default right column content goes here...</p>
+                              ' !!}
                 </div>
 
             </div>

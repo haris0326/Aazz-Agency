@@ -140,7 +140,6 @@ class ServiceReviewController extends Controller
             return redirect()
                 ->route('reviews.index')
                 ->with('success', 'Review created successfully.');
-
         } catch (\Throwable $e) {
 
             Log::error('Failed to create service review.', [
@@ -265,7 +264,6 @@ class ServiceReviewController extends Controller
             return redirect()
                 ->route('reviews.index')
                 ->with('success', 'Review updated successfully.');
-
         } catch (\Throwable $e) {
 
             Log::error('Failed to update service review.', [
@@ -298,7 +296,6 @@ class ServiceReviewController extends Controller
             return redirect()
                 ->route('reviews.index')
                 ->with('success', 'Review deleted successfully.');
-
         } catch (\Throwable $e) {
 
             Log::error('Failed to delete service review.', [
@@ -316,15 +313,31 @@ class ServiceReviewController extends Controller
     /**
      * Display reviews on the public website.
      */
+
+    /**
+     * Display all testimonials on the public website.
+     */
     public function showReviews()
     {
-        $showreviews = ServiceReview::all();
+        $reviews = ServiceReview::with('category')
+            ->latest()
+            ->paginate(9)
+            ->withQueryString();
+
+        $totalReviews = ServiceReview::count();
+
+        $averageRating = round(
+            ServiceReview::avg('rating') ?? 0,
+            1
+        );
 
         $headerlinks = WebHeaderLink::all();
 
-        return view(
-            'show_reviews.reviews',
-            compact('showreviews', 'headerlinks')
-        );
+        return view('show_reviews.index', compact(
+            'reviews',
+            'headerlinks',
+            'totalReviews',
+            'averageRating'
+        ));
     }
 }
